@@ -42,3 +42,6 @@ Thumbs.db
 .agent/settings.local.json
 .agent/*.local.json
 
+
+# Claude Code local settings + skills symlink (skills live in .agent/)
+.claude/
