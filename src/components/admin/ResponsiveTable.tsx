@@ -24,7 +24,7 @@ export function ResponsiveTable<T extends { id: string | number }>({
 }: ResponsiveTableProps<T>) {
   if (items.length === 0) {
     return (
-      <div className="text-center py-12 border border-dashed border-slate-200 rounded-2xl bg-white select-none" /* unslop-ignore */>
+      <div className="text-center py-12 border border-dashed border-slate-200 rounded-card bg-white select-none">
         <p className="text-sm text-slate-400 font-medium">{emptyMessage}</p>
       </div>
     );
@@ -40,7 +40,7 @@ export function ResponsiveTable<T extends { id: string | number }>({
         {items.map((item) => (
           <div
             key={item.id}
-            className="border border-slate-200 bg-white rounded-2xl p-5 space-y-4 shadow-sm" /* unslop-ignore */
+            className="border border-slate-200 bg-white rounded-card p-5 space-y-4 shadow-sm"
           >
             {/* Primary Header/Title */}
             <div className="border-b border-slate-100 pb-3 flex justify-between items-start gap-4">
@@ -74,7 +74,7 @@ export function ResponsiveTable<T extends { id: string | number }>({
       </div>
 
       {/* Desktop Grid Table View (hidden on mobile/sm) */}
-      <div className="hidden md:block overflow-hidden border border-slate-200 bg-white rounded-2xl shadow-sm" /* unslop-ignore */>
+      <div className="hidden md:block overflow-hidden border border-slate-200 bg-white rounded-card shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-left text-xs">
             <thead className="bg-slate-50 border-b border-slate-200">

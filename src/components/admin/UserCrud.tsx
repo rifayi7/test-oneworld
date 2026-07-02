@@ -92,7 +92,7 @@ export function UserCrud({ users, currentUser }: UserCrudProps) {
 
         <button
           onClick={() => setFormOpen(!formOpen)}
-          className="flex items-center gap-2 px-5 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black shadow-md shadow-blue-600/10 transition cursor-pointer"
+          className="flex items-center gap-2 px-5 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl text-xs font-black shadow-md shadow-primary-600/10 transition cursor-pointer"
         >
           <UserPlus className="w-4 h-4 stroke-[2.2]" />
           Create User Account
@@ -101,7 +101,7 @@ export function UserCrud({ users, currentUser }: UserCrudProps) {
 
       {/* Add User Expandable Form */}
       {formOpen && (
-        <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm max-w-xl text-left space-y-4" /* unslop-ignore */>
+        <div className="bg-white border border-slate-200 rounded-card p-6 shadow-sm max-w-xl text-left space-y-4">
           <h3 className="text-xs font-extrabold text-[#1F2744] uppercase tracking-wider">
             New Staff Member Details
           </h3>
@@ -127,7 +127,7 @@ export function UserCrud({ users, currentUser }: UserCrudProps) {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="e.g. Rahul Sharma"
-                  className="px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
+                  className="px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-600 transition"
                 />
               </div>
 
@@ -143,7 +143,7 @@ export function UserCrud({ users, currentUser }: UserCrudProps) {
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="name@cleanworld.solutions"
-                  className="px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
+                  className="px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-600 transition"
                 />
               </div>
 
@@ -160,7 +160,7 @@ export function UserCrud({ users, currentUser }: UserCrudProps) {
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   placeholder="Min 6 characters"
                   minLength={6}
-                  className="px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
+                  className="px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-600 transition"
                 />
               </div>
 
@@ -174,7 +174,7 @@ export function UserCrud({ users, currentUser }: UserCrudProps) {
                   disabled={isPending}
                   value={formData.role}
                   onChange={(e) => setFormData({ ...formData, role: e.target.value as Role })}
-                  className="px-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
+                  className="px-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-600 transition"
                 >
                   {ROLES.map((r) => (
                     <option key={r} value={r}>
@@ -198,7 +198,7 @@ export function UserCrud({ users, currentUser }: UserCrudProps) {
               <button
                 type="submit"
                 disabled={isPending}
-                className="flex items-center gap-1.5 px-5 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold shadow-sm transition cursor-pointer"
+                className="flex items-center gap-1.5 px-5 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl text-xs font-bold shadow-sm transition cursor-pointer"
               >
                 {isPending && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
                 Add Account
@@ -210,18 +210,18 @@ export function UserCrud({ users, currentUser }: UserCrudProps) {
       )}
 
       {/* Users Responsive List Table */}
-      <div className="overflow-hidden border border-slate-200 bg-white rounded-2xl shadow-sm" /* unslop-ignore */>
+      <div className="overflow-hidden border border-slate-200 bg-white rounded-card shadow-sm">
         
         {/* Mobile View */}
         <div className="grid grid-cols-1 gap-4 md:hidden p-4 bg-slate-50/50">
           {users.map((u) => (
-            <div key={u.id} className="border border-slate-200 bg-white rounded-2xl p-5 space-y-4 shadow-sm" /* unslop-ignore */>
+            <div key={u.id} className="border border-slate-200 bg-white rounded-card p-5 space-y-4 shadow-sm">
               <div className="flex justify-between items-start gap-4">
                 <div className="text-sm font-bold text-slate-900 leading-tight">
                   {u.name || "N/A"}
                 </div>
                 {u.id === currentUser.id && (
-                  <span className="bg-blue-50 text-blue-600 text-[0.65rem] font-bold px-2 py-0.5 rounded-md">
+                  <span className="bg-primary-50 text-primary-600 text-[0.65rem] font-bold px-2 py-0.5 rounded-md">
                     You
                   </span>
                 )}
@@ -283,7 +283,7 @@ export function UserCrud({ users, currentUser }: UserCrudProps) {
                   <div className="flex items-center gap-2">
                     {u.name || "N/A"}
                     {u.id === currentUser.id && (
-                      <span className="bg-blue-50 text-blue-600 text-[0.55rem] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-md">
+                      <span className="bg-primary-50 text-primary-600 text-[0.55rem] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-md">
                         You
                       </span>
                     )}
@@ -295,7 +295,7 @@ export function UserCrud({ users, currentUser }: UserCrudProps) {
                     disabled={u.id === currentUser.id}
                     value={u.role}
                     onChange={(e) => handleRoleChange(u.id, e.target.value as Role)}
-                    className="px-3 py-1.5 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
+                    className="px-3 py-1.5 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-600 transition"
                   >
                     {ROLES.map((r) => (
                       <option key={r} value={r}>

@@ -2,7 +2,8 @@
 
 import { useActionState } from "react";
 import { loginAction } from "@/app/admin/actions";
-import { Home, ShieldAlert } from "lucide-react";
+import { ShieldAlert } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function LoginPage() {
@@ -13,18 +14,18 @@ export default function LoginPage() {
       
       {/* Background ambient glowing circles */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[35rem] h-[35rem] rounded-full bg-blue-500/5 blur-[120px]" /* unslop-ignore */ />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[35rem] h-[35rem] rounded-full bg-primary-500/5 blur-[120px]" /> {/* unslop-ignore — ambient ellipse is circular by definition */}
       </div>
 
       <div className="w-full max-w-md relative z-10 space-y-8 select-none">
         
         {/* Brand logo */}
         <div className="flex flex-col items-center space-y-4">
-          <Link href="/" className="w-11 h-11 rounded-full bg-gradient-to-br from-blue-600 to-green-500 flex items-center justify-center text-white shadow-md hover:opacity-90 transition">
-            <Home className="w-5.5 h-5.5 stroke-[2.5]" />
+          <Link href="/" className="hover:opacity-90 transition">
+            <Image src="/brand/logo-mark.png" alt="CleanWorld logo" width={215} height={170} className="h-11 w-auto" />
           </Link>
           <div className="text-center leading-none">
-            <span className="text-xl font-black tracking-tight text-blue-900">
+            <span className="text-xl font-black tracking-tight text-neutral-900">
               Clean World Solutions
             </span>
             <span className="block text-[0.6rem] font-extrabold tracking-[0.25em] text-green-500 uppercase mt-1">
@@ -34,7 +35,7 @@ export default function LoginPage() {
         </div>
 
         {/* Login Box */}
-        <div className="bg-white border border-slate-200 rounded-3xl p-8 shadow-xl" /* unslop-ignore */>
+        <div className="bg-white border border-slate-200 rounded-card p-8 shadow-xl">
           
           <form action={formAction} className="space-y-6">
             
@@ -57,7 +58,7 @@ export default function LoginPage() {
                   required
                   disabled={pending}
                   placeholder="admin@cleanworld.solutions"
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-600 transition disabled:opacity-50"
+                  className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-600 transition disabled:opacity-50"
                 />
               </div>
 
@@ -72,7 +73,7 @@ export default function LoginPage() {
                   required
                   disabled={pending}
                   placeholder="••••••••••••"
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-600 transition disabled:opacity-50"
+                  className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-600 transition disabled:opacity-50"
                 />
               </div>
             </div>
@@ -80,7 +81,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={pending}
-              className="w-full py-3.5 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 text-white rounded-xl text-xs font-black shadow-md shadow-blue-600/10 transition cursor-pointer"
+              className="w-full py-3.5 bg-primary-600 hover:bg-primary-700 disabled:bg-primary-600/50 text-white rounded-xl text-xs font-black shadow-md shadow-primary-600/10 transition cursor-pointer"
             >
               {pending ? "Signing in..." : "Secure Sign In"}
             </button>
@@ -93,7 +94,7 @@ export default function LoginPage() {
         <div className="text-center">
           <Link
             href="/"
-            className="text-xs font-bold text-slate-400 hover:text-blue-600 transition"
+            className="text-xs font-bold text-slate-400 hover:text-primary-600 transition"
           >
             ← Back to Public Site
           </Link>

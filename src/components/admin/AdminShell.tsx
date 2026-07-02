@@ -3,6 +3,7 @@
 import { ReactNode, useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 import { User, canManageUsers } from "@/lib/roles";
 import { logoutAction } from "@/app/admin/actions";
 import { AnimatePresence } from "motion/react";
@@ -69,7 +70,7 @@ export function AdminShell({ children, user }: AdminShellProps) {
               aria-current={isActive ? "page" : undefined}
               className={`flex items-center gap-3 px-4 py-3 text-xs font-bold rounded-xl transition duration-200 ${
                 isActive
-                  ? "bg-blue-600 text-white shadow-md shadow-blue-600/10"
+                  ? "bg-primary-600 text-white shadow-md shadow-primary-600/10"
                   : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
               }`}
             >
@@ -93,11 +94,9 @@ export function AdminShell({ children, user }: AdminShellProps) {
       <aside className="hidden md:flex flex-col w-64 bg-white border-r border-slate-200 p-6 flex-shrink-0">
         {/* Brand Header */}
         <div className="flex items-center gap-2.5 pb-8 select-none">
-          <span className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-600 to-green-500 flex items-center justify-center text-white font-bold text-sm shadow-sm">
-            C
-          </span>
+          <Image src="/brand/logo-mark.png" alt="CleanWorld logo" width={215} height={170} className="h-8 w-auto" />
           <div className="flex flex-col leading-none">
-            <span className="text-sm font-black tracking-tight text-blue-900">
+            <span className="text-sm font-black tracking-tight text-neutral-900">
               Clean World
             </span>
             <span className="text-[0.5rem] font-extrabold tracking-[0.2em] text-green-500 uppercase mt-0.5">
@@ -112,7 +111,7 @@ export function AdminShell({ children, user }: AdminShellProps) {
         {/* Sidebar Footer details */}
         <div className="border-t border-slate-100 pt-6 space-y-4">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 font-extrabold flex items-center justify-center text-xs select-none">
+            <div className="w-9 h-9 rounded-xl bg-primary-50 text-primary-600 font-extrabold flex items-center justify-center text-xs select-none">
               {user.email.substring(0, 2).toUpperCase()}
             </div>
             <div className="leading-tight">
@@ -158,11 +157,9 @@ export function AdminShell({ children, user }: AdminShellProps) {
 
               {/* Brand Logo */}
               <div className="flex items-center gap-2.5 pb-8 select-none">
-                <span className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-600 to-green-500 flex items-center justify-center text-white font-bold text-sm">
-                  C
-                </span>
+                <Image src="/brand/logo-mark.png" alt="CleanWorld logo" width={215} height={170} className="h-8 w-auto" />
                 <div className="flex flex-col leading-none">
-                  <span className="text-sm font-black tracking-tight text-blue-900">
+                  <span className="text-sm font-black tracking-tight text-neutral-900">
                     Clean World
                   </span>
                   <span className="text-[0.5rem] font-extrabold tracking-[0.2em] text-green-500 uppercase mt-0.5">
@@ -177,7 +174,7 @@ export function AdminShell({ children, user }: AdminShellProps) {
               {/* Sidebar Footer details */}
               <div className="border-t border-slate-100 pt-6 space-y-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 font-extrabold flex items-center justify-center text-xs">
+                  <div className="w-9 h-9 rounded-xl bg-primary-50 text-primary-600 font-extrabold flex items-center justify-center text-xs">
                     {user.email.substring(0, 2).toUpperCase()}
                   </div>
                   <div className="leading-tight">
@@ -229,7 +226,7 @@ export function AdminShell({ children, user }: AdminShellProps) {
             <Link
               href="/"
               target="_blank"
-              className="hidden sm:flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-blue-600 transition"
+              className="hidden sm:flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-primary-600 transition"
             >
               <Globe className="w-3.5 h-3.5" />
               View Site

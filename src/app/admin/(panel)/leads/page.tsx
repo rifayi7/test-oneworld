@@ -39,7 +39,7 @@ export default async function AdminLeadsPage() {
     {
       header: "Phone",
       accessor: (l) => (
-        <a href={`tel:${l.phone}`} className="text-blue-600 hover:underline">
+        <a href={`tel:${l.phone}`} className="text-primary-600 hover:underline">
           {l.phone}
         </a>
       ),

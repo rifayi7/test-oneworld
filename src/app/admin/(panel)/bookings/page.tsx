@@ -47,7 +47,7 @@ export default async function AdminBookingsPage() {
     {
       header: "Phone",
       accessor: (b) => (
-        <a href={`tel:${b.phone}`} className="text-blue-600 hover:underline">
+        <a href={`tel:${b.phone}`} className="text-primary-600 hover:underline">
           {b.phone}
         </a>
       ),
