@@ -43,7 +43,7 @@ export function FeaturedServices() {
         <div className="container mx-auto max-w-7xl space-y-14">
 
           {/* Header Block — left-aligned on purpose to break the centered rhythm of the surrounding sections */}
-          <div className="max-w-2xl space-y-4 text-left">
+          <div className="max-w-2xl space-y-6 text-left">
             <span className="inline-block text-xs font-bold text-primary-600 uppercase tracking-widest bg-primary-50 px-4 py-1.5 rounded-badge">
               Most requested
             </span>
