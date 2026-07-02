@@ -1,23 +1,23 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { SITE_INFO, NAV_LINKS } from "@/content";
-import { useLead } from "@/lead";
 import { Button } from "@/components/ui/Button";
 import { Phone, ChevronDown } from "lucide-react";
 
 export function Navbar() {
-  const { openModal } = useLead();
-  const [activeTab, setActiveTab] = useState("Home");
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-slate-200/40 px-6 lg:px-12 py-3 flex items-center justify-between shadow-navbar transition-all duration-300">
       
-      {/* Brand logo (Left side) - real CleanWorld mark */}
-      <div className="flex items-center gap-2.5 select-none">
+      {/* Brand logo (Left side) - Clickable link to home */}
+      <Link href="/" className="flex items-center gap-2.5 select-none hover:opacity-90 transition-opacity">
         <Image
-          src="/brand/logo-mark.png"
+          src="https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/brand/logo-mark.webp"
           alt="CleanWorld logo"
           width={215}
           height={170}
@@ -32,18 +32,30 @@ export function Navbar() {
             {SITE_INFO.brandSuffix}
           </span>
         </div>
-      </div>
+      </Link>
 
       {/* Nav Links & CTAs (Right side) */}
       <div className="flex items-center gap-6">
         <div className="hidden lg:flex items-center gap-6">
           {NAV_LINKS.map((link) => {
-            const isActive = activeTab === link.label;
+            let href = link.href;
+            let isActive = false;
+
+            if (link.label === "Services") {
+              href = "/services";
+              isActive = pathname.startsWith("/services");
+            } else if (link.label === "Home") {
+              href = "/";
+              isActive = pathname === "/";
+            } else {
+              href = isHome ? link.href : `/${link.href}`;
+              isActive = false; // Only highlight primary top-level routes
+            }
+
             return (
-              <a
+              <Link
                 key={link.label}
-                href={link.href}
-                onClick={() => setActiveTab(link.label)}
+                href={href}
                 className={`relative py-2 text-[0.85rem] font-bold transition-all duration-200 flex items-center gap-1 ${
                   isActive
                     ? "text-primary-600"
@@ -58,7 +70,7 @@ export function Navbar() {
                 {isActive && (
                   <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-600 rounded-full" />
                 )}
-              </a>
+              </Link>
             );
           })}
         </div>
@@ -76,7 +88,7 @@ export function Navbar() {
           </Button>
 
           <Button
-            onClick={openModal}
+            href="/checkout"
             variant="solid"
             color="blue"
             className="px-6 py-2.5 text-xs font-extrabold shadow-primary-600/20"

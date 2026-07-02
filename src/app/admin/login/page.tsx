@@ -22,7 +22,7 @@ export default function LoginPage() {
         {/* Brand logo */}
         <div className="flex flex-col items-center space-y-4">
           <Link href="/" className="hover:opacity-90 transition">
-            <Image src="/brand/logo-mark.png" alt="CleanWorld logo" width={215} height={170} className="h-11 w-auto" />
+            <Image src="https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/brand/logo-mark.webp" alt="CleanWorld logo" width={215} height={170} className="h-11 w-auto" />
           </Link>
           <div className="text-center leading-none">
             <span className="text-xl font-black tracking-tight text-neutral-900">

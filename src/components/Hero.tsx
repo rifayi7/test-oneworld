@@ -1,16 +1,14 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { HERO_CONTENT } from "@/content";
-import { useLead } from "@/lead";
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/Button";
 import { motion } from "motion/react";
 import { ArrowUpRight, Shield, Clock, Award, Wallet } from "lucide-react";
 
 export function Hero() {
-  const { openModal } = useLead();
-
   return (
     <section
       id="home"
@@ -60,7 +58,7 @@ export function Hero() {
           <Reveal direction="up" delay={0.2}>
             <div className="flex items-center gap-3">
               <Button
-                onClick={openModal}
+                href="/checkout"
                 variant="solid"
                 color="blue"
                 className="px-8 py-4 text-sm font-extrabold shadow-soft"
@@ -69,14 +67,18 @@ export function Hero() {
               </Button>
               
               {/* Circular blue icon button containing arrow */}
-              <motion.button
-                whileHover={{ rotate: 45 }} // unslop-ignore — directional cue: arrow turns toward the action; hover-grow removed
-                whileTap={{ scale: 0.95 }}
-                onClick={openModal}
+              <Link
+                href="/checkout"
                 className="w-12 h-12 rounded-full bg-primary-600 hover:bg-primary-700 text-white flex items-center justify-center shadow-md shadow-primary-600/20 cursor-pointer"
               >
-                <ArrowUpRight className="w-5 h-5 stroke-[2.5]" />
-              </motion.button>
+                <motion.div
+                  whileHover={{ rotate: 45 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-full h-full flex items-center justify-center"
+                >
+                  <ArrowUpRight className="w-5 h-5 stroke-[2.5]" />
+                </motion.div>
+              </Link>
             </div>
           </Reveal>
 
@@ -86,10 +88,10 @@ export function Hero() {
               {/* Avatar Group */}
               <div className="flex -space-x-3.5 select-none">
                 <div className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-white bg-slate-200">
-                  <Image src="/hero/avatar.jpg" alt="Customer avatar" fill className="object-cover" />
+                  <Image src="https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/hero/avatar.webp" alt="Customer avatar" fill className="object-cover" />
                 </div>
                 <div className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-white bg-slate-200">
-                  <Image src="/hero/avatar2.jpg" alt="Customer avatar" fill className="object-cover" />
+                  <Image src="https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/hero/avatar2.webp" alt="Customer avatar" fill className="object-cover" />
                 </div>
                 <div className="w-9 h-9 rounded-full bg-slate-900 text-white flex items-center justify-center text-xs font-bold border-2 border-white">
                   +

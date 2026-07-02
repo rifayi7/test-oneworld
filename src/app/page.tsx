@@ -1,5 +1,9 @@
 import { SiteShell } from "@/components/SiteShell";
+import { getAllServices } from "@/db/queries";
 
-export default function Home() {
-  return <SiteShell />;
+export const revalidate = 60; // Cache for 60 seconds (ISR)
+
+export default async function Home() {
+  const services = await getAllServices();
+  return <SiteShell initialServices={services} />;
 }

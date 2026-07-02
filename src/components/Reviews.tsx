@@ -19,7 +19,7 @@ const REVIEWS_DATA: ReviewItem[] = [
     author: "Ragesh Nair",
     location: "Kochi, Ernakulam",
     service: "Water Tank Cleaning",
-    avatar: "/hero/avatar2.jpg"
+    avatar: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/hero/avatar2.webp"
   },
   {
     rating: 5,
@@ -27,7 +27,7 @@ const REVIEWS_DATA: ReviewItem[] = [
     author: "Anitha Kurian",
     location: "Kottayam",
     service: "Grass Cutting & Weed Removal",
-    avatar: "/hero/avatar.jpg"
+    avatar: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/hero/avatar.webp"
   },
   {
     rating: 5,
@@ -35,7 +35,7 @@ const REVIEWS_DATA: ReviewItem[] = [
     author: "Deepak Menon",
     location: "Trivandrum",
     service: "CCTV Installation",
-    avatar: "/hero/avatar2.jpg"
+    avatar: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/hero/avatar2.webp"
   }
 ];
 

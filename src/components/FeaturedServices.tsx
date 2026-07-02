@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useLead } from "@/lead";
+import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/Button";
 import { ShieldCheck, ArrowRight } from "lucide-react";
@@ -15,28 +15,28 @@ const LEAD_CHECKLIST = [
 
 const SUPPORTING = [
   {
-    img: "/services/cctv_install.jpg",
+    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/cctv-install.webp",
     alt: "Technician installing a CCTV camera",
     eyebrow: "Power & security",
     title: "Solar power & CCTV",
     body: "System design, panel installation, and the KSEB subsidy paperwork handled for you. CCTV comes with night vision and motion alerts on your phone.",
     points: ["Up to 40% subsidy, paperwork included", "Live camera feed on mobile"],
     cta: "Get a solar quote",
+    href: "/checkout?serviceId=24", // Solar Installation ID
   },
   {
-    img: "/services/grass_trimming.jpg",
+    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/grass-trimming.webp",
     alt: "Worker trimming an overgrown lawn with a brushcutter",
     eyebrow: "Home & outdoors",
     title: "Water purifiers & lawn care",
     body: "RO or UV purifier fitting with TDS calibration, and quick lawn trims with commercial brushcutters. We bag the cuttings and take them with us.",
     points: ["RO / UV setup with TDS calibration", "Lawn trimmed within 24 hours"],
     cta: "Book a lawn trim",
+    href: "/checkout?serviceId=25", // Grass Cutting ID
   },
 ];
 
 export function FeaturedServices() {
-  const { openModal } = useLead();
-
   return (
     <section id="featured" className="py-20 bg-slate-50 px-6 lg:px-12 scroll-mt-20">
       <Reveal>
@@ -60,7 +60,7 @@ export function FeaturedServices() {
             <div className="lg:col-span-7 relative">
               <div className="relative h-[22rem] md:h-[26rem] rounded-image overflow-hidden shadow-soft border border-slate-200/25">
                 <Image
-                  src="/services/water_tank.jpg"
+                  src="https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/water-tank.webp"
                   alt="Crew deep-cleaning a domestic water tank"
                   fill
                   sizes="(max-width: 1024px) 100vw, 640px"
@@ -101,7 +101,7 @@ export function FeaturedServices() {
               </ul>
 
               <div className="pt-2">
-                <Button onClick={openModal} variant="solid" color="blue">
+                <Button href="/checkout?serviceId=3" variant="solid" color="blue">
                   Book tank cleaning
                 </Button>
               </div>
@@ -144,13 +144,13 @@ export function FeaturedServices() {
                       </li>
                     ))}
                   </ul>
-                  <button
-                    onClick={openModal}
+                  <Link
+                    href={item.href}
                     className="group inline-flex items-center gap-1.5 pt-1 text-sm font-extrabold text-primary-600 hover:text-primary-700 cursor-pointer"
                   >
                     {item.cta}
                     <ArrowRight className="w-4 h-4 stroke-[2.5] transition-transform group-hover:translate-x-0.5" />
-                  </button>
+                  </Link>
                 </div>
               </div>
             ))}
