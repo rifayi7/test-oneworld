@@ -230,9 +230,9 @@ export function CheckoutForm({ services }: CheckoutFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="w-full">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
         
-        {/* Checkout Form Card (Left Column - Scrollable with main body) */}
+        {/* Checkout Form Card (Left Column) */}
         <div className="lg:col-span-8 bg-white border border-slate-200/60 rounded-card p-6 md:p-8 shadow-soft text-left">
           
           {/* Back Link */}
@@ -451,8 +451,9 @@ export function CheckoutForm({ services }: CheckoutFormProps) {
           </div>
         </div>
 
-        {/* Order Summary (Right Column - Sticky and Fixed) */}
-        <div className="lg:col-span-4 lg:sticky lg:top-28 bg-white border border-slate-200/60 rounded-card p-6 md:p-8 shadow-soft text-left space-y-6">
+        {/* Order Summary (Right Column Wrapper) */}
+        <div className="lg:col-span-4">
+          <div className="lg:sticky lg:top-28 bg-white border border-slate-200/60 rounded-card p-6 md:p-8 shadow-soft text-left space-y-6">
           <h3 className="text-sm font-extrabold text-neutral-900 font-display pb-3 border-b border-slate-100">
             Order Summary
           </h3>
@@ -555,8 +556,9 @@ export function CheckoutForm({ services }: CheckoutFormProps) {
             </button>
           </div>
         </div>
-
       </div>
-    </form>
+
+    </div>
+  </form>
   );
 }

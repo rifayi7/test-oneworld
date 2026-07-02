@@ -2,19 +2,19 @@ import { getServiceById, getAllServices } from "@/db/queries";
 import { notFound } from "next/navigation";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { ServiceBookingForm } from "@/components/ServiceBookingForm";
-import { SITE_INFO } from "@/content";
+import { Button } from "@/components/ui/Button";
 import Image from "next/image";
 import Link from "next/link";
+import { ServiceImageCarousel } from "@/components/ServiceImageCarousel";
 import {
   ArrowLeft,
+  ArrowRight,
   ShieldCheck,
   Star,
   Clock,
   Check,
   HelpCircle,
   ChevronRight,
-  ShieldAlert,
   Award
 } from "lucide-react";
 
@@ -152,6 +152,18 @@ export default async function ServiceDetailPage({ params }: PageProps) {
   const inclusions = INCLUSIONS_BY_CATEGORY[service.category] || DEFAULT_INCLUSIONS;
   const faqs = FAQS_BY_CATEGORY[service.category] || DEFAULT_FAQS;
 
+  // Generate list of images for the spotlight carousel
+  const galleryImages = [service.img];
+  if (service.category === "Water Services") {
+    galleryImages.push("/portfolio/tank-cleaning.jpg", "/services/home_services.jpg");
+  } else if (service.category === "Home Safety") {
+    galleryImages.push("/portfolio/solar-cleaning.jpg", "/services/cctv_install.jpg");
+  } else if (service.category === "Outdoor Services") {
+    galleryImages.push("/portfolio/garden-care.jpg", "/services/grass_trimming.jpg");
+  } else {
+    galleryImages.push("/services/home_services.jpg", "/services/water_tank.jpg");
+  }
+
   return (
     <div className="relative min-h-screen flex flex-col justify-between selection:bg-primary-50 bg-slate-50/50">
       <Navbar />
@@ -179,18 +191,11 @@ export default async function ServiceDetailPage({ params }: PageProps) {
 
           {/* Service Header / Hero Banner */}
           <div className="bg-white rounded-card border border-slate-200/60 p-6 md:p-8 lg:p-10 shadow-soft mb-12 flex flex-col lg:flex-row gap-8 items-center">
-            <div className="relative h-60 md:h-72 w-full lg:w-2/5 shrink-0 bg-slate-100 rounded-image overflow-hidden shadow-sm">
-              <Image
-                src={service.img}
-                alt={service.name}
-                fill
-                sizes="(max-width: 1024px) 100vw, 400px"
-                className="object-cover"
-                priority
-              />
+            <div className="relative h-72 sm:h-96 w-full lg:w-2/5 shrink-0 bg-slate-100 rounded-image overflow-hidden shadow-sm">
+              <ServiceImageCarousel images={galleryImages} alt={service.name} />
             </div>
             
-            <div className="flex-grow space-y-4 text-left w-full">
+            <div className="flex-grow space-y-5 text-left w-full">
               <div className="flex flex-wrap gap-2 items-center">
                 <span className="bg-primary-50 border border-primary-100 px-3 py-1 rounded-badge text-[0.65rem] font-black text-primary-600 uppercase tracking-wider">
                   {service.category}
@@ -207,6 +212,43 @@ export default async function ServiceDetailPage({ params }: PageProps) {
               <p className="text-sm md:text-base text-neutral-600 leading-relaxed">
                 {service.desc}
               </p>
+
+              {/* Pricing & Booking Action */}
+              <div className="flex flex-wrap items-center justify-between gap-6 pt-5 border-t border-slate-100">
+                <div>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+                    Starting price
+                  </span>
+                  {(() => {
+                    const offerVal = parseInt((service.offer_price || service.price).replace(/[^0-9]/g, "")) || 0;
+                    const mrpStr = service.mrp_price || `₹${(offerVal + 1000).toLocaleString("en-IN")}`;
+                    return (
+                      <div className="flex items-baseline gap-2 mt-0.5">
+                        <span className="text-sm text-slate-400 line-through font-semibold">
+                          {mrpStr}
+                        </span>
+                        <div className="text-3xl font-black text-primary-600 font-display">
+                          {service.offer_price || service.price}
+                        </div>
+                      </div>
+                    );
+                  })()}
+                  <span className="text-[9px] text-slate-400 block mt-0.5">
+                    Inclusive of raw materials, labor, and local taxes.
+                  </span>
+                </div>
+                <div className="flex-grow sm:flex-grow-0 min-w-[200px]">
+                  <Button
+                    href={`/checkout?serviceId=${service.id}`}
+                    variant="solid"
+                    color="blue"
+                    className="w-full py-4 text-xs font-black shadow-md shadow-primary-600/10 flex items-center justify-center gap-2"
+                  >
+                    Book This Service
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
 
               {/* Quick Trust Row */}
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-3 text-xs font-semibold text-slate-700">
@@ -226,153 +268,92 @@ export default async function ServiceDetailPage({ params }: PageProps) {
             </div>
           </div>
 
-          {/* Service Details Main Layout Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        <div className="container mx-auto max-w-4xl px-6 mt-12">
+          <div className="space-y-10">
             
-            {/* Left Content Column */}
-            <div className="lg:col-span-8 space-y-10">
-              
-              {/* Inclusions Card */}
-              <div className="bg-white border border-slate-200/60 rounded-card p-6 md:p-8 shadow-sm text-left">
-                <h3 className="text-lg font-extrabold text-neutral-900 font-display mb-6 pb-3 border-b border-slate-100">
-                  What is included in this service?
-                </h3>
-                <ul className="space-y-4 text-sm font-semibold text-slate-700">
-                  {inclusions.map((point) => (
-                    <li key={point} className="flex items-start gap-3">
-                      <span className="w-5.5 h-5.5 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center shrink-0 mt-0.5">
-                        <Check className="w-3.5 h-3.5 stroke-[3]" />
-                      </span>
-                      <span className="leading-snug text-neutral-600 font-medium">{point}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Execution Workflow (3-step) */}
-              <div className="bg-white border border-slate-200/60 rounded-card p-6 md:p-8 shadow-sm text-left">
-                <h3 className="text-lg font-extrabold text-neutral-900 font-display mb-6 pb-3 border-b border-slate-100">
-                  How the service works
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
-                  
-                  <div className="space-y-3 relative z-10">
-                    <div className="w-10 h-10 rounded-xl bg-primary-600 text-white font-black text-sm flex items-center justify-center shadow-md shadow-primary-600/10">
-                      01
-                    </div>
-                    <h4 className="text-sm font-extrabold text-neutral-900 font-display">
-                      Book Slot
-                    </h4>
-                    <p className="text-xs text-neutral-500 leading-relaxed">
-                      Fill out the sidebar request form. Our scheduling support team will reach out via WhatsApp/Call to confirm your date.
-                    </p>
-                  </div>
-
-                  <div className="space-y-3 relative z-10">
-                    <div className="w-10 h-10 rounded-xl bg-slate-900 text-white font-black text-sm flex items-center justify-center shadow-sm">
-                      02
-                    </div>
-                    <h4 className="text-sm font-extrabold text-neutral-900 font-display">
-                      Expert Execution
-                    </h4>
-                    <p className="text-xs text-neutral-500 leading-relaxed">
-                      Our vetted and background-verified technicians arrive on-time with specialized commercial-grade equipment to execute.
-                    </p>
-                  </div>
-
-                  <div className="space-y-3 relative z-10">
-                    <div className="w-10 h-10 rounded-xl bg-slate-900 text-white font-black text-sm flex items-center justify-center shadow-sm">
-                      03
-                    </div>
-                    <h4 className="text-sm font-extrabold text-neutral-900 font-display">
-                      Quality Check
-                    </h4>
-                    <p className="text-xs text-neutral-500 leading-relaxed">
-                      Verify the finished work with our team. Provide your final sign-off. Pay via secure options after you are 100% satisfied.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Category-Specific FAQs */}
-              <div className="bg-white border border-slate-200/60 rounded-card p-6 md:p-8 shadow-sm text-left">
-                <h3 className="text-lg font-extrabold text-neutral-900 font-display mb-6 pb-3 border-b border-slate-100 flex items-center gap-2">
-                  <HelpCircle className="w-5 h-5 text-primary-600" /> Frequently Asked Questions
-                </h3>
-                <div className="space-y-6">
-                  {faqs.map((faq) => (
-                    <div key={faq.q} className="space-y-2">
-                      <h4 className="text-sm font-extrabold text-neutral-900">
-                        {faq.q}
-                      </h4>
-                      <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                        {faq.a}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
+            {/* Inclusions Card */}
+            <div className="bg-white border border-slate-200/60 rounded-card p-6 md:p-8 shadow-sm text-left">
+              <h3 className="text-lg font-extrabold text-neutral-900 font-display mb-6 pb-3 border-b border-slate-100">
+                What is included in this service?
+              </h3>
+              <ul className="space-y-4 text-sm font-semibold text-slate-700">
+                {inclusions.map((point) => (
+                  <li key={point} className="flex items-start gap-3">
+                    <span className="w-5.5 h-5.5 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center shrink-0 mt-0.5">
+                      <Check className="w-3.5 h-3.5 stroke-[3]" />
+                    </span>
+                    <span className="leading-snug text-neutral-600 font-medium">{point}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            {/* Right Sidebar Booking & Pricing Card */}
-            <div className="lg:col-span-4 sticky top-28 space-y-6">
-              
-              {/* Main Booking Form Card */}
-              <div className="bg-white border border-slate-200/60 rounded-card p-6 md:p-8 shadow-soft text-left space-y-6">
-                <div>
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                    Starting price
-                  </span>
-                  {(() => {
-                    const offerVal = parseInt((service.offer_price || service.price).replace(/[^0-9]/g, "")) || 0;
-                    const mrpStr = service.mrp_price || `₹${(offerVal + 1000).toLocaleString("en-IN")}`;
-                    return (
-                      <div className="flex items-baseline gap-2 mt-1">
-                        <span className="text-sm text-slate-400 line-through font-semibold">
-                          {mrpStr}
-                        </span>
-                        <div className="text-3xl font-black text-primary-600 font-display">
-                          {service.offer_price || service.price}
-                        </div>
-                      </div>
-                    );
-                  })()}
-                  <span className="text-[10px] text-slate-400 block mt-0.5">
-                    Inclusive of raw materials, labor, and local taxes.
-                  </span>
+            {/* Execution Workflow (3-step) */}
+            <div className="bg-white border border-slate-200/60 rounded-card p-6 md:p-8 shadow-sm text-left">
+              <h3 className="text-lg font-extrabold text-neutral-900 font-display mb-6 pb-3 border-b border-slate-100">
+                How the service works
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+                
+                <div className="space-y-3 relative z-10">
+                  <div className="w-10 h-10 rounded-xl bg-primary-600 text-white font-black text-sm flex items-center justify-center shadow-md shadow-primary-600/10">
+                    01
+                  </div>
+                  <h4 className="text-sm font-extrabold text-neutral-900 font-display">
+                    Book Slot
+                  </h4>
+                  <p className="text-xs text-neutral-500 leading-relaxed">
+                    Fill out the checkout booking form. Our scheduling support team will reach out via WhatsApp/Call to confirm your date.
+                  </p>
                 </div>
 
-                <div className="border-t border-slate-100 pt-5">
-                  <ServiceBookingForm
-                    serviceName={service.name}
-                    servicePrice={service.offer_price || service.price}
-                    contactPhone={SITE_INFO.phone}
-                  />
+                <div className="space-y-3 relative z-10">
+                  <div className="w-10 h-10 rounded-xl bg-slate-900 text-white font-black text-sm flex items-center justify-center shadow-sm">
+                    02
+                  </div>
+                  <h4 className="text-sm font-extrabold text-neutral-900 font-display">
+                    Expert Execution
+                  </h4>
+                  <p className="text-xs text-neutral-500 leading-relaxed">
+                    Our vetted and background-verified technicians arrive on-time with specialized commercial-grade equipment to execute.
+                  </p>
                 </div>
 
-                {/* Guarantees Box */}
-                <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 space-y-2.5">
-                  <div className="flex gap-2.5 items-start text-[11px] font-semibold text-slate-600">
-                    <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <div>
-                      <div className="text-slate-900 font-bold">100% Satisfaction Check</div>
-                      <div className="text-slate-500 font-normal leading-normal">Pay only after the service is fully completed.</div>
-                    </div>
+                <div className="space-y-3 relative z-10">
+                  <div className="w-10 h-10 rounded-xl bg-slate-900 text-white font-black text-sm flex items-center justify-center shadow-sm">
+                    03
                   </div>
-                  <div className="flex gap-2.5 items-start text-[11px] font-semibold text-slate-600">
-                    <ShieldAlert className="w-4 h-4 text-primary-600 shrink-0 mt-0.5" />
-                    <div>
-                      <div className="text-slate-900 font-bold">No Hidden Fees</div>
-                      <div className="text-slate-500 font-normal leading-normal">Upfront estimations and flat-rate billing guarantees.</div>
-                    </div>
-                  </div>
+                  <h4 className="text-sm font-extrabold text-neutral-900 font-display">
+                    Quality Check
+                  </h4>
+                  <p className="text-xs text-neutral-500 leading-relaxed">
+                    Verify the finished work with our team. Provide your final sign-off. Pay via secure options after you are 100% satisfied.
+                  </p>
                 </div>
               </div>
+            </div>
 
+            {/* Category-Specific FAQs */}
+            <div className="bg-white border border-slate-200/60 rounded-card p-6 md:p-8 shadow-sm text-left">
+              <h3 className="text-lg font-extrabold text-neutral-900 font-display mb-6 pb-3 border-b border-slate-100 flex items-center gap-2">
+                <HelpCircle className="w-5 h-5 text-primary-600" /> Frequently Asked Questions
+              </h3>
+              <div className="space-y-6">
+                {faqs.map((faq) => (
+                  <div key={faq.q} className="space-y-2">
+                    <h4 className="text-sm font-extrabold text-neutral-900">
+                      {faq.q}
+                    </h4>
+                    <p className="text-xs text-slate-500 leading-relaxed font-medium">
+                      {faq.a}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
 
           </div>
+        </div>
 
           {/* Related / Other Services Recommendations Panel */}
           <div className="mt-20 space-y-8 text-left">
