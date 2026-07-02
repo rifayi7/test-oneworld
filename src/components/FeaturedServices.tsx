@@ -1,159 +1,242 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
+import { useState } from "react";
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/Button";
-import { ShieldCheck, ArrowRight } from "lucide-react";
+import { ServiceImageCarousel } from "@/components/ServiceImageCarousel";
+import { 
+  ShieldCheck, 
+  ArrowRight, 
+  Droplet, 
+  Zap, 
+  Leaf,
+  Check
+} from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 
-const LEAD_CHECKLIST = [
-  "Algae and mud vacuuming",
-  "Eco-friendly disinfection",
-  "Inlet filter setup",
-  "pH test before handover",
-];
-
-const SUPPORTING = [
+const SPOTLIGHT_SERVICES = [
   {
-    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/cctv-install.webp",
-    alt: "Technician installing a CCTV camera",
-    eyebrow: "Power & security",
-    title: "Solar power & CCTV",
-    body: "System design, panel installation, and the KSEB subsidy paperwork handled for you. CCTV comes with night vision and motion alerts on your phone.",
-    points: ["Up to 40% subsidy, paperwork included", "Live camera feed on mobile"],
-    cta: "Get a solar quote",
-    href: "/checkout?serviceId=24", // Solar Installation ID
+    id: 3, // Water Tank Cleaning ID
+    name: "Deep Well & Water Tank Cleaning",
+    category: "Water Care",
+    categoryIcon: Droplet,
+    desc: "Wells and tanks collect silt, leaves, and algae through the year. We drain and vacuum out the sludge, pressure-jet the walls, sterilise with UV, and test the water before handing it back.",
+    price: "₹799",
+    mrp_price: "₹1,799",
+    images: [
+      "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/water-tank.webp",
+      "/portfolio/tank-cleaning.jpg",
+      "/services/water_tank.jpg",
+      "/services/home_services.jpg"
+    ],
+    points: [
+      "Complete mud and debris vacuuming",
+      "Chemical-free disinfection & UV checks",
+      "High-pressure wall jet washing",
+      "pH quality test before handover"
+    ],
+    badgeText: "Deep sanitisation guaranteed",
+    btnLabel: "Book Tank Cleaning"
   },
   {
-    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/grass-trimming.webp",
-    alt: "Worker trimming an overgrown lawn with a brushcutter",
-    eyebrow: "Home & outdoors",
-    title: "Water purifiers & lawn care",
-    body: "RO or UV purifier fitting with TDS calibration, and quick lawn trims with commercial brushcutters. We bag the cuttings and take them with us.",
-    points: ["RO / UV setup with TDS calibration", "Lawn trimmed within 24 hours"],
-    cta: "Book a lawn trim",
-    href: "/checkout?serviceId=25", // Grass Cutting ID
+    id: 24, // Solar Installation ID
+    name: "Solar Panel & CCTV Integration",
+    category: "Power & Security",
+    categoryIcon: Zap,
+    desc: "Make your home self-sufficient and secure. We handle complete solar system design, panel mounting, and KSEB subsidy registration. CCTV includes HD night vision and active mobile notifications.",
+    price: "₹2,999",
+    mrp_price: "₹3,999",
+    images: [
+      "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/cctv-install.webp",
+      "/portfolio/solar-cleaning.jpg",
+      "/services/cctv_install.jpg"
+    ],
+    points: [
+      "Up to 40% government subsidy paperwork",
+      "Full network pairing & mobile app feed",
+      "Night-vision HD motion sensors",
+      "Authorized warranty certificates"
+    ],
+    badgeText: "KSEB registered partners",
+    btnLabel: "Book Solar & CCTV"
   },
+  {
+    id: 25, // Grass Cutting ID
+    name: "Lawn Care & Water Purifiers",
+    category: "Home & Outdoors",
+    categoryIcon: Leaf,
+    desc: "Keep your property pristine inside and out. We install domestic RO or UV water purifiers with strict TDS calibration. We also handle precision lawn trimming with commercial-grade brushcutters.",
+    price: "₹899",
+    mrp_price: "₹1,899",
+    images: [
+      "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/grass-trimming.webp",
+      "/portfolio/garden-care.jpg",
+      "/services/grass_trimming.jpg"
+    ],
+    points: [
+      "Multi-stage RO/UV mounting & plumbing",
+      "Precision brushcutter lawn trims",
+      "Green waste bagging & debris disposal",
+      "Post-work garden cleanup included"
+    ],
+    badgeText: "Same-day booking available",
+    btnLabel: "Book Lawn & Purifiers"
+  }
 ];
 
 export function FeaturedServices() {
-  return (
-    <section id="featured" className="py-20 bg-slate-50 px-6 lg:px-12 scroll-mt-20">
-      <Reveal>
-        <div className="container mx-auto max-w-7xl space-y-14">
+  const [activeTab, setActiveTab] = useState(0);
 
-          {/* Header Block — left-aligned on purpose to break the centered rhythm of the surrounding sections */}
-          <div className="max-w-2xl space-y-6 text-left">
+  const activeService = SPOTLIGHT_SERVICES[activeTab];
+
+  // Animation variants for details switching
+  const detailsVariants = {
+    initial: { opacity: 0, x: 25 },
+    animate: { opacity: 1, x: 0, transition: { duration: 0.35, ease: "easeOut" as const } },
+    exit: { opacity: 0, x: -25, transition: { duration: 0.25, ease: "easeIn" as const } }
+  };
+
+  return (
+    <section id="featured" className="py-20 bg-slate-50 px-6 lg:px-12 scroll-mt-20 overflow-hidden">
+      <Reveal>
+        <div className="container mx-auto max-w-7xl space-y-10">
+
+          {/* Header Block */}
+          <div className="max-w-2xl space-y-4 text-left">
             <span className="inline-block text-xs font-bold text-primary-600 uppercase tracking-widest bg-primary-50 px-4 py-1.5 rounded-badge">
-              Most requested
+              Service Spotlight
             </span>
             <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-neutral-900 font-display">
               The jobs we get called for most
             </h2>
             <p className="text-sm text-neutral-600">
-              Three services make up most of our bookings. Here is exactly what each one includes.
+              Three premium services make up most of our bookings. Switch tabs below to explore details, view real-work images, and book instantly.
             </p>
           </div>
 
-          {/* Lead feature: Deep Well & Water Tank Cleaning */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            <div className="lg:col-span-7 relative">
-              <div className="relative h-[22rem] md:h-[26rem] rounded-image overflow-hidden shadow-soft border border-slate-200/25">
-                <Image
-                  src="https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/water-tank.webp"
-                  alt="Crew deep-cleaning a domestic water tank"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 640px"
-                  className="object-cover"
-                />
-              </div>
-              {/* Overlapping proof card, same language as the hero KPI card */}
-              <div className="absolute -bottom-5 left-6 sm:left-10 bg-white rounded-card px-5 py-4 shadow-soft border border-slate-200/50 flex items-center gap-3 select-none">
+          {/* Interactive Navigation Tabs */}
+          <div className="flex flex-wrap items-center gap-3 pb-2 border-b border-slate-200/60 scrollbar-none overflow-x-auto">
+            {SPOTLIGHT_SERVICES.map((service, index) => {
+              const Icon = service.categoryIcon;
+              const isActive = activeTab === index;
+              return (
+                <button
+                  key={service.name}
+                  onClick={() => {
+                    setActiveTab(index);
+                  }}
+                  className="relative px-5 py-3 rounded-xl text-xs font-extrabold transition-all duration-300 cursor-pointer flex items-center gap-2 select-none outline-none"
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeSpotlightTab"
+                      className="absolute inset-0 bg-primary-600 rounded-xl"
+                      transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                    />
+                  )}
+                  <span className={`relative z-10 flex items-center gap-2 transition-colors duration-300 ${
+                    isActive ? "text-white" : "text-slate-600 hover:text-slate-900"
+                  }`}>
+                    <Icon className={`w-4 h-4 transition-colors duration-300 ${isActive ? "text-white" : "text-primary-600"}`} />
+                    <span>{service.category}</span>
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Spotlight Layout Box */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
+            
+            {/* LEFT COLUMN: Autoplay Image Carousel (7 Columns) */}
+            <div className="lg:col-span-7 relative h-[22rem] md:h-[28rem] rounded-image overflow-hidden shadow-soft border border-slate-200/25 shrink-0">
+              {/* Reset key resets state of Carousel when tab changes */}
+              <ServiceImageCarousel key={activeService.id} images={activeService.images} alt={activeService.name} />
+              
+              {/* Overlapping proof card */}
+              <div className="absolute -bottom-5 left-6 sm:left-10 bg-white rounded-card px-5 py-4 shadow-soft border border-slate-200/50 flex items-center gap-3 select-none z-10">
                 <span className="w-9 h-9 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center">
                   <ShieldCheck className="w-5 h-5 stroke-[2.5]" />
                 </span>
                 <span className="text-xs font-extrabold text-neutral-900 leading-snug">
-                  Deep sanitisation<br />guaranteed
+                  {activeService.badgeText}
                 </span>
               </div>
             </div>
 
-            <div className="lg:col-span-5 space-y-6 text-left">
-              <div className="space-y-2">
-                <span className="text-xs font-black text-primary-600 uppercase tracking-widest">
-                  Water care
-                </span>
-                <h3 className="text-2xl font-black text-neutral-900 font-display leading-tight">
-                  Deep well & water tank cleaning
-                </h3>
-              </div>
-              <p className="text-sm text-neutral-600 leading-relaxed">
-                Wells and tanks collect silt, leaves, and algae through the year. We drain and vacuum out the sludge, pressure-jet the walls, sterilise with UV, and test the water before handing it back.
-              </p>
+            {/* RIGHT COLUMN: Service Details Stack (5 Columns) */}
+            <div className="lg:col-span-5 flex flex-col justify-between text-left">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeTab}
+                  variants={detailsVariants}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  className="space-y-6 flex-grow flex flex-col justify-between"
+                >
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <span className="text-[10px] font-black text-primary-600 uppercase tracking-widest block">
+                        {activeService.category} Spotlight
+                      </span>
+                      <h3 className="text-2xl md:text-3xl font-black text-neutral-900 font-display leading-tight">
+                        {activeService.name}
+                      </h3>
+                    </div>
 
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-semibold text-slate-700">
-                {LEAD_CHECKLIST.map((item) => (
-                  <li key={item} className="flex items-center gap-2">
-                    <ShieldCheck className="w-4.5 h-4.5 text-primary-600 shrink-0" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
+                    <p className="text-sm text-neutral-600 leading-relaxed">
+                      {activeService.desc}
+                    </p>
 
-              <div className="pt-2">
-                <Button href="/checkout?serviceId=3" variant="solid" color="blue">
-                  Book tank cleaning
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          {/* Supporting features: compact media cards, link CTAs keep the lead CTA dominant */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-4">
-            {SUPPORTING.map((item) => (
-              <div
-                key={item.title}
-                className="bg-white rounded-card shadow-soft border border-slate-200/50 overflow-hidden flex flex-col sm:flex-row"
-              >
-                <div className="relative h-48 sm:h-auto sm:w-2/5 shrink-0 bg-slate-100">
-                  <Image
-                    src={item.img}
-                    alt={item.alt}
-                    fill
-                    sizes="(max-width: 640px) 100vw, 280px"
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-6 sm:p-7 space-y-3 text-left">
-                  <div className="space-y-1">
-                    <span className="text-[0.65rem] font-black text-primary-600 uppercase tracking-widest">
-                      {item.eyebrow}
-                    </span>
-                    <h3 className="text-lg font-black text-neutral-900 font-display leading-tight">
-                      {item.title}
-                    </h3>
+                    {/* Inclusion bullet points */}
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-semibold text-slate-700 pt-2">
+                      {activeService.points.map((point) => (
+                        <li key={point} className="flex items-start gap-2.5">
+                          <span className="w-5 h-5 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5">
+                            <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                          </span>
+                          <span className="text-neutral-700 font-medium leading-normal">{point}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <p className="text-xs text-neutral-600 leading-relaxed">
-                    {item.body}
-                  </p>
-                  <ul className="space-y-1.5 text-xs font-semibold text-slate-700">
-                    {item.points.map((point) => (
-                      <li key={point} className="flex items-center gap-2">
-                        <ShieldCheck className="w-4 h-4 text-primary-600 shrink-0" />
-                        {point}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link
-                    href={item.href}
-                    className="group inline-flex items-center gap-1.5 pt-1 text-sm font-extrabold text-primary-600 hover:text-primary-700 cursor-pointer"
-                  >
-                    {item.cta}
-                    <ArrowRight className="w-4 h-4 stroke-[2.5] transition-transform group-hover:translate-x-0.5" />
-                  </Link>
-                </div>
-              </div>
-            ))}
+
+                  {/* Pricing and Booking Action */}
+                  <div className="flex flex-wrap items-center justify-between gap-6 pt-6 border-t border-slate-200/60 mt-6">
+                    <div>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+                        Starting price
+                      </span>
+                      <div className="flex items-baseline gap-2 mt-0.5 font-display">
+                        <span className="text-sm text-slate-400 line-through font-semibold">
+                          {activeService.mrp_price}
+                        </span>
+                        <div className="text-3xl font-black text-primary-600">
+                          {activeService.price}
+                        </div>
+                      </div>
+                      <span className="text-[9px] text-slate-400 block mt-0.5">
+                        Inclusive of professional tools, safety gear, and setup.
+                      </span>
+                    </div>
+
+                    <div className="flex-grow sm:flex-grow-0 min-w-[200px]">
+                      <Button
+                        href={`/checkout?serviceId=${activeService.id}`}
+                        variant="solid"
+                        color="blue"
+                        className="w-full py-4 text-xs font-black shadow-md shadow-primary-600/10 flex items-center justify-center gap-2 group cursor-pointer select-none"
+                      >
+                        {activeService.btnLabel}
+                        <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                      </Button>
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
           </div>
 
         </div>
