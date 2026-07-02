@@ -1,12 +1,18 @@
 import type { Metadata } from "next";
-import { Elms_Sans } from "next/font/google";
+import { Elms_Sans, Plus_Jakarta_Sans } from "next/font/google";
 import { LeadProvider } from "@/lead";
 import { SITE_INFO } from "@/content";
 import "./globals.css";
 
-const elmsSans = Elms_Sans({ // unslop-ignore
+const elmsSans = Elms_Sans({
   subsets: ["latin"],
   variable: "--font-elms",
+  display: "swap",
+});
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-jakarta",
   display: "swap",
 });
 
@@ -21,8 +27,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${elmsSans.variable}`}>
-      <body className={`antialiased ${elmsSans.className}`}>
+    <html lang="en" className={`${elmsSans.variable} ${plusJakartaSans.variable}`}>
+      <body className="antialiased">
         <LeadProvider>{children}</LeadProvider>
       </body>
     </html>

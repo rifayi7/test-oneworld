@@ -14,12 +14,12 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center pt-28 pb-16 overflow-hidden bg-gradient-to-b from-[#EEF3FF] to-[#FFFFFF] px-6 lg:px-12"
+      className="relative min-h-screen flex items-center pt-28 pb-16 overflow-hidden bg-gradient-to-b from-primary-50 to-white px-6 lg:px-12"
     >
       {/* Background ambient glowing circles */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[35rem] h-[35rem] rounded-full bg-blue-500/5 blur-[120px]" /> {/* unslop-ignore */}
-        <div className="absolute bottom-10 right-1/4 translate-x-1/2 w-[30rem] h-[30rem] rounded-full bg-green-500/5 blur-[100px]" /> {/* unslop-ignore */}
+        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[35rem] h-[35rem] rounded-full bg-primary-500/5 blur-[120px]" /> {/* unslop-ignore — ambient ellipse is circular by definition; blob bgs cleared by the data */}
+        <div className="absolute bottom-10 right-1/4 translate-x-1/2 w-[30rem] h-[30rem] rounded-full bg-primary-400/5 blur-[100px]" /> {/* unslop-ignore — ambient ellipse is circular by definition; blob bgs cleared by the data */}
       </div>
 
       <div className="container mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
@@ -29,16 +29,16 @@ export function Hero() {
           
           {/* Tagline Badge */}
           <Reveal direction="up" delay={0.05}>
-            <div className="inline-flex items-center bg-white border border-slate-200/40 rounded-full px-5 py-2 text-xs font-bold text-blue-600 shadow-navbar select-none" /* unslop-ignore */>
+            <div className="inline-flex items-center bg-white border border-slate-200/40 rounded-badge px-5 py-2 text-xs font-bold text-primary-600 shadow-navbar select-none">
               {HERO_CONTENT.eyebrow}
             </div>
           </Reveal>
 
           {/* Main Heading */}
           <Reveal direction="up" delay={0.1}>
-            <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold tracking-tight leading-[1.12] text-[#1F2744] font-display">
+            <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold tracking-tight leading-[1.12] text-neutral-900 font-display">
               {HERO_CONTENT.title}{" "}
-              <span className="text-blue-600">
+              <span className="text-primary-600">
                 {HERO_CONTENT.titleHighlight}
               </span>
             </h1>
@@ -47,10 +47,10 @@ export function Hero() {
           {/* Supporting Paragraph & Trust Statement */}
           <Reveal direction="up" delay={0.15}>
             <div className="space-y-4">
-              <p className="text-base md:text-lg text-[#5E6475] leading-relaxed max-w-md">
+              <p className="text-base md:text-lg text-neutral-600 leading-relaxed max-w-md">
                 {HERO_CONTENT.description}
               </p>
-              <p className="text-sm font-extrabold text-[#1F2744]">
+              <p className="text-sm font-extrabold text-neutral-900">
                 {HERO_CONTENT.descriptionExtra}
               </p>
             </div>
@@ -70,17 +70,17 @@ export function Hero() {
               
               {/* Circular blue icon button containing arrow */}
               <motion.button
-                whileHover={{ scale: 1.05, rotate: 45 }} // unslop-ignore
+                whileHover={{ rotate: 45 }} // unslop-ignore — directional cue: arrow turns toward the action; hover-grow removed
                 whileTap={{ scale: 0.95 }}
                 onClick={openModal}
-                className="w-12 h-12 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center shadow-md shadow-blue-600/20 cursor-pointer"
+                className="w-12 h-12 rounded-full bg-primary-600 hover:bg-primary-700 text-white flex items-center justify-center shadow-md shadow-primary-600/20 cursor-pointer"
               >
                 <ArrowUpRight className="w-5 h-5 stroke-[2.5]" />
               </motion.button>
             </div>
           </Reveal>
 
-          {/* Customer Proof (5 avatars) */}
+          {/* Customer Proof — only distinct photos; the count chip stands in for the rest */}
           <Reveal direction="up" delay={0.25}>
             <div className="flex items-center gap-4 pt-2">
               {/* Avatar Group */}
@@ -91,15 +91,6 @@ export function Hero() {
                 <div className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-white bg-slate-200">
                   <Image src="/hero/avatar2.jpg" alt="Customer avatar" fill className="object-cover" />
                 </div>
-                <div className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-white bg-slate-200">
-                  <Image src="/hero/avatar.jpg" alt="Customer avatar" fill className="object-cover" />
-                </div>
-                <div className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-white bg-slate-200">
-                  <Image src="/hero/avatar2.jpg" alt="Customer avatar" fill className="object-cover" />
-                </div>
-                <div className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-white bg-slate-200">
-                  <Image src="/hero/avatar.jpg" alt="Customer avatar" fill className="object-cover" />
-                </div>
                 <div className="w-9 h-9 rounded-full bg-slate-900 text-white flex items-center justify-center text-xs font-bold border-2 border-white">
                   +
                 </div>
@@ -107,7 +98,7 @@ export function Hero() {
               
               {/* Trust Details */}
               <div className="flex flex-col text-left leading-none gap-1">
-                <span className="text-xs font-extrabold text-[#1F2744]">
+                <span className="text-xs font-extrabold text-neutral-900">
                   {HERO_CONTENT.customerCount}
                 </span>
                 <div className="flex items-center gap-0.5">
@@ -126,7 +117,7 @@ export function Hero() {
             <div className="border border-slate-200/40 bg-white rounded-card p-5 grid grid-cols-2 sm:grid-cols-4 gap-4 shadow-soft">
               {HERO_CONTENT.valueProps.map((prop) => (
                 <div key={prop.label} className="flex flex-col items-center sm:items-start text-center sm:text-left space-y-2">
-                  <span className="w-9 h-9 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shadow-sm">
+                  <span className="w-9 h-9 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center shadow-sm">
                     {prop.icon === "shield" && (
                       <Shield className="w-5 h-5 stroke-[2.5]" />
                     )}
@@ -163,7 +154,7 @@ export function Hero() {
                   alt="Window Cleaning Service"
                   fill
                   sizes="(max-width: 768px) 100vw, 410px"
-                  className="object-cover object-center hover:scale-103 transition-transform duration-500" // unslop-ignore
+                  className="object-cover object-center"
                   priority
                 />
               </div>
@@ -177,7 +168,7 @@ export function Hero() {
                   alt="Appliance Repair Technician"
                   fill
                   sizes="(max-width: 768px) 100vw, 390px"
-                  className="object-cover object-center hover:scale-103 transition-transform duration-500" // unslop-ignore
+                  className="object-cover object-center"
                 />
               </div>
             </Reveal>
@@ -185,7 +176,7 @@ export function Hero() {
             {/* 3. Floating Arrow (Top-right corner, Circular Blue button) */}
             <Reveal direction="down" delay={0.32}>
               <div className="absolute top-[-1rem] right-[-1rem] z-20">
-                <span className="w-11 h-11 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xl shadow-md cursor-pointer hover:bg-blue-700 transition">
+                <span className="w-11 h-11 rounded-full bg-primary-600 text-white flex items-center justify-center font-bold text-xl shadow-md cursor-pointer hover:bg-primary-700 transition">
                   <ArrowUpRight className="w-5 h-5 stroke-[2.5]" />
                 </span>
               </div>
@@ -193,11 +184,11 @@ export function Hero() {
 
             {/* 5. Customer Satisfaction KPI Card (Bottom Right, Soft Blue BG) */}
             <Reveal direction="up" delay={0.6}>
-              <div className="absolute bottom-[4%] right-[-1.5rem] sm:right-[-2.5rem] bg-[#EAF1FF] border border-blue-100 rounded-card p-5 w-40 text-center shadow-soft z-30">
+              <div className="absolute bottom-[4%] right-[-1.5rem] sm:right-[-2.5rem] bg-primary-50 border border-primary-100 rounded-card p-5 w-40 text-center shadow-soft z-30">
                 <span className="block text-[0.65rem] font-bold text-slate-500 uppercase tracking-widest leading-none">
                   {HERO_CONTENT.satisfaction.label}
                 </span>
-                <span className="block text-4xl font-black text-blue-600 mt-2">
+                <span className="block text-4xl font-black text-primary-600 mt-2">
                   {HERO_CONTENT.satisfaction.value}
                 </span>
               </div>

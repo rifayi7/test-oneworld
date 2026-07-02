@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { SITE_INFO, NAV_LINKS } from "@/content";
 import { useLead } from "@/lead";
 import { Button } from "@/components/ui/Button";
-import { Home, Phone, ChevronDown } from "lucide-react";
+import { Phone, ChevronDown } from "lucide-react";
 
 export function Navbar() {
   const { openModal } = useLead();
@@ -13,17 +14,21 @@ export function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-slate-200/40 px-6 lg:px-12 py-3 flex items-center justify-between shadow-navbar transition-all duration-300">
       
-      {/* Brand logo (Left side) - Stacked with globe-home circular icon */}
+      {/* Brand logo (Left side) - real CleanWorld mark */}
       <div className="flex items-center gap-2.5 select-none">
-        {/* Globe + Home icon in green/blue */}
-        <span className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-green-500 flex items-center justify-center text-white relative shadow-sm">
-          <Home className="w-5 h-5 stroke-[2.5]" />
-        </span>
+        <Image
+          src="/brand/logo-mark.png"
+          alt="CleanWorld logo"
+          width={215}
+          height={170}
+          className="h-10 w-auto"
+          priority
+        />
         <div className="flex flex-col leading-none">
-          <span className="text-lg font-black tracking-tight text-blue-900">
+          <span className="text-lg font-black tracking-tight text-neutral-900">
             {SITE_INFO.brandName}
           </span>
-          <span className="text-[0.6rem] font-extrabold tracking-[0.25em] text-green-500 uppercase mt-0.5">
+          <span className="text-[0.6rem] font-extrabold tracking-[0.25em] text-primary-500 uppercase mt-0.5">
             {SITE_INFO.brandSuffix}
           </span>
         </div>
@@ -41,8 +46,8 @@ export function Navbar() {
                 onClick={() => setActiveTab(link.label)}
                 className={`relative py-2 text-[0.85rem] font-bold transition-all duration-200 flex items-center gap-1 ${
                   isActive
-                    ? "text-blue-600"
-                    : "text-slate-600 hover:text-blue-600"
+                    ? "text-primary-600"
+                    : "text-slate-600 hover:text-primary-600"
                 }`}
               >
                 {link.label}
@@ -51,7 +56,7 @@ export function Navbar() {
                 )}
                 {/* Active Underline Indicator */}
                 {isActive && (
-                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full" />
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-600 rounded-full" />
                 )}
               </a>
             );
@@ -74,7 +79,7 @@ export function Navbar() {
             onClick={openModal}
             variant="solid"
             color="blue"
-            className="px-6 py-2.5 text-xs font-extrabold shadow-blue-600/20" // unslop-ignore
+            className="px-6 py-2.5 text-xs font-extrabold shadow-primary-600/20"
           >
             {SITE_INFO.ctaLabel}
           </Button>

@@ -30,7 +30,7 @@ export function Reveal({
         opacity: 0,
         ...directions[direction],
       }}
-      whileInView={{ // unslop-ignore
+      whileInView={{ // unslop-ignore — applied once per section (not per element); reduced-motion via MotionConfig in SiteShell
         opacity: 1,
         x: 0,
         y: 0,

@@ -1,27 +1,33 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-elms);
+  --font-sans: var(--font-jakarta);
   --font-display: var(--font-elms);
 
-  --color-primary-50: #eff6ff;
-  --color-primary-100: #dbeafe;
-  --color-primary-500: #2d5bff; /* Royal Blue */
-  --color-primary-600: #1d4ed8;
-  --color-primary-700: #1e40af;
+  /* Brand ramp sampled from the CleanWorld logo (public/brand/logo.png):
+     hands teal #5fbccb / #54a1ae, wordmark indigo #3d4188.
+     primary-500 is the logo teal; 600/700 are deepened for AA contrast under white text. */
+  --color-primary-50: #eef8fa;
+  --color-primary-100: #d9eff3;
+  --color-primary-200: #b4e0e8;
+  --color-primary-400: #5fbccb; /* logo light teal */
+  --color-primary-500: #2fa9bc;
+  --color-primary-600: #17828f; /* CTA fill — 4.5:1 with white text */
+  --color-primary-700: #136e7a;
+  --color-primary-800: #0f5762;
+  --color-primary-900: #0c4650;
 
-  --color-accent-green-500: #dff8e7; /* Accent Green for painting */
-  --color-accent-green-600: #16a34a;
-  
-  --color-neutral-900: #1f2744; /* Dark Text */
-  --color-neutral-950: #0f1325;
+  /* Neutrals carry the wordmark indigo */
+  --color-neutral-600: #5b5e7b; /* Muted Text */
+  --color-neutral-900: #3d4188; /* Dark Text — exact logo wordmark indigo */
+  --color-neutral-950: #2b2e63;
 }
 
 :root {
   --bg-primary: #ffffff;
-  --text-primary: #1f2744;
-  --text-secondary: #5e6475;
-  --accent: #2d5bff;
+  --text-primary: #3d4188;
+  --text-secondary: #5b5e7b;
+  --accent: #17828f;
 }
 
 html,
@@ -29,8 +35,14 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font-sans);
-  scroll-behavior: smooth;
   overflow-x: hidden;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html,
+  body {
+    scroll-behavior: smooth;
+  }
 }
 
 /* Custom scrollbar and utilities */
@@ -44,7 +56,7 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: rgba(31, 39, 68, 0.1);
-  border-radius: 9999px; /* unslop-ignore */
+  border-radius: 9999px; /* unslop-ignore — scrollbar thumbs are pill-shaped by convention */
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -73,7 +85,7 @@ body {
 }
 
 .rounded-badge {
-  border-radius: 999px; /* unslop-ignore */
+  border-radius: 999px; /* unslop-ignore — spec decision: badges/eyebrows are pills; buttons and cards use the 16/20/32px scale above */
 }
 
 /* Cinematic glassmorphism */

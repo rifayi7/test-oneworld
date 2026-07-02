@@ -29,30 +29,29 @@ export function Button({
   
   const colors = {
     blue: {
-      solid: "bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-600/10",
-      outline: "border-2 border-blue-600 text-blue-600 hover:bg-blue-50",
-      "icon-circle": "bg-blue-600 hover:bg-blue-700 text-white rounded-full p-3.5", // unslop-ignore
+      solid: "bg-primary-600 hover:bg-primary-700 text-white shadow-md shadow-primary-600/10",
+      outline: "border-2 border-primary-600 text-primary-600 hover:bg-primary-50",
+      "icon-circle": "bg-primary-600 hover:bg-primary-700 text-white rounded-full p-3.5", // unslop-ignore — icon-circle variant is circular by definition
     },
     dark: {
       solid: "bg-slate-900 hover:bg-slate-800 text-white",
       outline: "border border-slate-900 text-slate-900 hover:bg-slate-50",
-      "icon-circle": "bg-slate-900 hover:bg-slate-800 text-white rounded-full p-3.5", // unslop-ignore
+      "icon-circle": "bg-slate-900 hover:bg-slate-800 text-white rounded-full p-3.5", // unslop-ignore — icon-circle variant is circular by definition
     },
     white: {
       solid: "bg-white hover:bg-slate-50 text-slate-900 shadow-md",
       outline: "border border-white/50 text-white hover:bg-white/10",
-      "icon-circle": "bg-white hover:bg-slate-50 text-slate-900 rounded-full p-3.5", // unslop-ignore
+      "icon-circle": "bg-white hover:bg-slate-50 text-slate-900 rounded-full p-3.5", // unslop-ignore — icon-circle variant is circular by definition
     },
   };
 
-  // Button: 16px radius, icon-circle: rounded-full (pill) // unslop-ignore
-  const borderStyles = variant === "icon-circle" ? "rounded-full" : "rounded-[16px] px-8 py-3.5 text-sm"; // unslop-ignore
+  // Button: 16px radius (site scale), icon-circle: circular by geometry
+  const borderStyles = variant === "icon-circle" ? "rounded-full" /* unslop-ignore — circle geometry */ : "rounded-button px-8 py-3.5 text-sm";
   const finalStyles = `${baseStyles} ${colors[color][variant]} ${borderStyles} ${className}`;
 
   const content = (
     <motion.span
-      whileHover={{ scale: 1.02 }} // unslop-ignore
-      whileTap={{ scale: 0.98 }}
+      whileTap={{ scale: 0.98 }} // unslop-ignore — tap feedback communicates the press; hover-grow removed
       className="inline-flex items-center gap-2"
     >
       {children}

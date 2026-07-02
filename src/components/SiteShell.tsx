@@ -3,12 +3,23 @@
 import { useState, FormEvent } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
+import { ServicesOverview } from "@/components/ServicesOverview";
+import { WhyChoose } from "@/components/WhyChoose";
+import { Offers } from "@/components/Offers";
+import { FeaturedServices } from "@/components/FeaturedServices";
+import { HowItWorks } from "@/components/HowItWorks";
+import { SlotBooking } from "@/components/SlotBooking";
+import { BeforeAfter } from "@/components/BeforeAfter";
+import { Reviews } from "@/components/Reviews";
+import { ServiceAreas } from "@/components/ServiceAreas";
+import { Faqs } from "@/components/Faqs";
+import { FinalCta } from "@/components/FinalCta";
 import { Footer } from "@/components/Footer";
 import { useLenis } from "@/hooks/useLenis";
 import { useLead } from "@/lead";
 import { submitLead } from "@/app/actions/submit-lead";
 import { FOOTER_CONTENT } from "@/content";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, MotionConfig } from "motion/react";
 import { Check } from "lucide-react";
 
 export function SiteShell() {
@@ -24,7 +35,6 @@ export function SiteShell() {
     setErrorMsg("");
     setLoading(false);
 
-    // Construct form data for Server Action
     const data = new FormData();
     data.append("name", formData.name);
     data.append("email", formData.email);
@@ -38,14 +48,12 @@ export function SiteShell() {
       if (response.ok) {
         setSubmitted(true);
         
-        // Clean phone number from contact info for WhatsApp URL
         const cleanWaPhone = FOOTER_CONTENT.phone.replace(/[^0-9]/g, "");
         const waMsg = encodeURIComponent(
           `Hi Clean World Solutions! I just booked a cleaning slot online. My name is ${formData.name}. Looking forward to connecting!`
         );
         const waUrl = `https://wa.me/${cleanWaPhone}?text=${waMsg}`;
 
-        // Redirect to WhatsApp in a new tab after 1.5 seconds so user sees success screen
         setTimeout(() => {
           window.open(waUrl, "_blank");
         }, 1500);
@@ -62,7 +70,6 @@ export function SiteShell() {
 
   const handleClose = () => {
     closeModal();
-    // Reset states after transition closes
     setTimeout(() => {
       setSubmitted(false);
       setErrorMsg("");
@@ -71,11 +78,23 @@ export function SiteShell() {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col justify-between selection:bg-[#EAF1FF]">
+    <MotionConfig reducedMotion="user">
+    <div className="relative min-h-screen flex flex-col justify-between selection:bg-primary-50">
       <Navbar />
 
       <main className="flex-grow">
         <Hero />
+        <ServicesOverview />
+        <WhyChoose />
+        <Offers />
+        <FeaturedServices />
+        <HowItWorks />
+        <SlotBooking />
+        <BeforeAfter />
+        <Reviews />
+        <ServiceAreas />
+        <Faqs />
+        <FinalCta />
       </main>
 
       <Footer />
@@ -86,7 +105,7 @@ export function SiteShell() {
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             {/* Backdrop */}
             <motion.div
-              initial={{ opacity: 0 }} // unslop-ignore
+              initial={{ opacity: 0 }} // unslop-ignore — modal enter/exit communicates a state change; reduced-motion handled by MotionConfig
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={handleClose}
@@ -95,11 +114,11 @@ export function SiteShell() {
 
             {/* Modal Box */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }} // unslop-ignore
+              initial={{ opacity: 0, scale: 0.95, y: 20 }} // unslop-ignore — modal enter/exit communicates a state change; reduced-motion handled by MotionConfig
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ type: "spring", duration: 0.5 }}
-              className="relative w-full max-w-md overflow-hidden rounded-3xl bg-white p-8 shadow-2xl border border-slate-200 z-10" // unslop-ignore
+              className="relative w-full max-w-md overflow-hidden rounded-card bg-white p-8 shadow-2xl border border-slate-200 z-10"
             >
               {!submitted ? (
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -113,7 +132,7 @@ export function SiteShell() {
                   </div>
 
                   {errorMsg && (
-                    <div className="p-3.5 text-xs text-red-600 bg-red-50 border border-red-200 rounded-xl">
+                    <div className="p-3.5 text-xs text-red-600 bg-red-50 border border-red-200 rounded-button">
                       {errorMsg}
                     </div>
                   )}
@@ -138,7 +157,7 @@ export function SiteShell() {
                         disabled={loading}
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-600 transition disabled:opacity-50"
+                        className="w-full px-4 py-3 rounded-button border border-slate-200 bg-slate-50 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-600 transition disabled:opacity-50"
                         placeholder="John Doe"
                       />
                     </div>
@@ -153,7 +172,7 @@ export function SiteShell() {
                         disabled={loading}
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-600 transition disabled:opacity-50"
+                        className="w-full px-4 py-3 rounded-button border border-slate-200 bg-slate-50 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-600 transition disabled:opacity-50"
                         placeholder="john@example.com"
                       />
                     </div>
@@ -168,7 +187,7 @@ export function SiteShell() {
                         disabled={loading}
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-600 transition disabled:opacity-50"
+                        className="w-full px-4 py-3 rounded-button border border-slate-200 bg-slate-50 text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-600 transition disabled:opacity-50"
                         placeholder="+1 (555) 000-0000"
                       />
                     </div>
@@ -179,14 +198,14 @@ export function SiteShell() {
                       type="button"
                       onClick={handleClose}
                       disabled={loading}
-                      className="w-1/2 py-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold transition disabled:opacity-50 cursor-pointer"
+                      className="w-1/2 py-3 rounded-button border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold transition disabled:opacity-50 cursor-pointer"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
                       disabled={loading}
-                      className="w-1/2 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold shadow-md shadow-blue-600/10 transition disabled:opacity-50 cursor-pointer"
+                      className="w-1/2 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-button font-semibold shadow-md shadow-primary-600/10 transition disabled:opacity-50 cursor-pointer"
                     >
                       {loading ? "Submitting..." : "Submit"}
                     </button>
@@ -207,7 +226,7 @@ export function SiteShell() {
                   </div>
                   <button
                     onClick={handleClose}
-                    className="px-6 py-2.5 bg-slate-900 text-white font-semibold rounded-xl text-sm hover:opacity-90 transition cursor-pointer"
+                    className="px-6 py-2.5 bg-slate-900 text-white font-semibold rounded-button text-sm hover:opacity-90 transition cursor-pointer"
                   >
                     Close Window
                   </button>
@@ -218,5 +237,6 @@ export function SiteShell() {
         )}
       </AnimatePresence>
     </div>
+    </MotionConfig>
   );
 }
