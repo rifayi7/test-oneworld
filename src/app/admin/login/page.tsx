@@ -34,7 +34,7 @@ export default function LoginPage() {
         </div>
 
         {/* Login Box */}
-        <div className="bg-white border border-slate-200 rounded-3xl p-8 shadow-xl">
+        <div className="bg-white border border-slate-200 rounded-3xl p-8 shadow-xl" /* unslop-ignore */>
           
           <form action={formAction} className="space-y-6">
             

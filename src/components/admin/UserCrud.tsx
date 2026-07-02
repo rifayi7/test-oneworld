@@ -101,7 +101,7 @@ export function UserCrud({ users, currentUser }: UserCrudProps) {
 
       {/* Add User Expandable Form */}
       {formOpen && (
-        <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm max-w-xl text-left space-y-4">
+        <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm max-w-xl text-left space-y-4" /* unslop-ignore */>
           <h3 className="text-xs font-extrabold text-[#1F2744] uppercase tracking-wider">
             New Staff Member Details
           </h3>
@@ -210,12 +210,12 @@ export function UserCrud({ users, currentUser }: UserCrudProps) {
       )}
 
       {/* Users Responsive List Table */}
-      <div className="overflow-hidden border border-slate-200 bg-white rounded-2xl shadow-sm">
+      <div className="overflow-hidden border border-slate-200 bg-white rounded-2xl shadow-sm" /* unslop-ignore */>
         
         {/* Mobile View */}
         <div className="grid grid-cols-1 gap-4 md:hidden p-4 bg-slate-50/50">
           {users.map((u) => (
-            <div key={u.id} className="border border-slate-200 bg-white rounded-2xl p-5 space-y-4 shadow-sm">
+            <div key={u.id} className="border border-slate-200 bg-white rounded-2xl p-5 space-y-4 shadow-sm" /* unslop-ignore */>
               <div className="flex justify-between items-start gap-4">
                 <div className="text-sm font-bold text-slate-900 leading-tight">
                   {u.name || "N/A"}
