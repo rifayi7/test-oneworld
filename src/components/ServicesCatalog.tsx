@@ -40,7 +40,7 @@ export function ServicesCatalog({ services }: ServicesCatalogProps) {
   return (
     <div className="container mx-auto max-w-7xl px-6 lg:px-12 py-12 space-y-12">
       {/* Title block */}
-      <div className="space-y-4 max-w-3xl mx-auto text-center">
+      <div className="space-y-6 max-w-3xl mx-auto text-center">
         <span className="inline-flex items-center gap-1.5 text-xs font-bold text-primary-600 uppercase tracking-widest bg-primary-50 px-4 py-1.5 rounded-badge">
           <Sparkles className="w-3.5 h-3.5" /> Professional Catalog
         </span>
