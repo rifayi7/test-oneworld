@@ -298,6 +298,8 @@ export function SlotBooking({ servicesList = SERVICES_LIST }: SlotBookingProps) 
                   disabled={loading}
                   value={formData.bookingDate}
                   onChange={(e) => setFormData({ ...formData, bookingDate: e.target.value })}
+                  onClick={(e) => { try { (e.target as any).showPicker(); } catch (err) {} }}
+                  onFocus={(e) => { try { (e.target as any).showPicker(); } catch (err) {} }}
                   className="px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-600 transition"
                 />
               </div>
