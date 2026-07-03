@@ -30,7 +30,12 @@
   --accent: #17828f;
 }
 
-html,
+html {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+}
+
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);

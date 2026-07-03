@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { MessageSquare, X, Send, Phone, Mail, Mic } from "lucide-react";
 import { SITE_INFO } from "@/content";
 import Image from "next/image";
@@ -8,13 +8,6 @@ import Image from "next/image";
 export function FloatingWhatsApp() {
   const [isOpen, setIsOpen] = useState(false);
   const [pulse, setPulse] = useState(true);
-
-  // Stop pulsing after drawer is opened once
-  useEffect(() => {
-    if (isOpen) {
-      setPulse(false);
-    }
-  }, [isOpen]);
 
   const cleanPhone = SITE_INFO.phone.replace(/[^0-9]/g, "");
   const waLink = `https://wa.me/${cleanPhone}?text=Hi%20Clean%20World%20Solutions,%20I%20want%20to%20inquire%20about%20your%20services%20(Deep%20Well%20Cleaning,%20Solar%20Installation,%20Water%20Tank%20Cleaning,%20etc.)`;
@@ -110,7 +103,7 @@ export function FloatingWhatsApp() {
 
       {/* Floating Action Button */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => { setIsOpen(!isOpen); if (!isOpen) setPulse(false); }}
         className={`w-14 h-14 rounded-full text-white flex items-center justify-center shadow-lg transition duration-300 cursor-pointer ${
           isOpen
             ? "bg-slate-800 hover:bg-slate-900"

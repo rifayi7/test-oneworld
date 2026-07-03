@@ -311,7 +311,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                         Book Slot
                       </h4>
                       <p className="text-[10px] text-neutral-500 leading-relaxed">
-                        Fill out the checkout form. We'll coordinate your date via WhatsApp/Call.
+                        Fill out the checkout form. We&apos;ll coordinate your date via WhatsApp/Call.
                       </p>
                     </div>
                   </div>
