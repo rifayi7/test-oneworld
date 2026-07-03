@@ -9,7 +9,8 @@ interface GalleryItem {
   name: string;
   beforeDesc: string;
   afterDesc: string;
-  img: string;
+  beforeImg: string;
+  afterImg: string;
 }
 
 const GALLERY_DATA: Record<string, GalleryItem> = {
@@ -17,25 +18,29 @@ const GALLERY_DATA: Record<string, GalleryItem> = {
     name: "Water Tank Cleaning",
     beforeDesc: "Silt deposits, algae growth, and bacterial sludge gathered at the bottom and walls.",
     afterDesc: "High pressure jet washing, antibacterial sanitization, and spotless vacuumed surface.",
-    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/water-tank.webp"
+    beforeImg: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/work-showcase/watertank-cleaning/before.webp",
+    afterImg: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/work-showcase/watertank-cleaning/after.webp"
   },
   "Grass Cutting": {
     name: "Grass & Wild Weed Clearing",
     beforeDesc: "Overgrown weed vegetation, safety hazard, potential snake/pest shelter.",
     afterDesc: "Neatly cut lawns, trimmed edges, clean visible compound boundaries.",
-    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/grass-trimming.webp"
+    beforeImg: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/work-showcase/grassremove/before.webp",
+    afterImg: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/work-showcase/grassremove/after.webp"
   },
   "Roof Waterproofing": {
     name: "Roof Leakage Coating",
     beforeDesc: "Cracked concrete slab, water dampness, interior wall fungus build-up.",
     afterDesc: "Elastomeric multi-coat protective chemical sealing applied, leak-proof finish.",
-    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/roof-waterproof.webp"
+    beforeImg: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/work-showcase/roof/before.webp",
+    afterImg: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/work-showcase/roof/after.webp"
   },
   "Deep Well": {
     name: "Deep Well Restoration",
     beforeDesc: "Fallen leaves, mud accumulation, murky colored drinking water.",
     afterDesc: "Debris vacuumed, descaled wall surface, clear clean groundwater.",
-    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/home-services.webp"
+    beforeImg: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/work-showcase/deepwell/before.webp",
+    afterImg: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/work-showcase/deepwell/after.webp"
   }
 };
 
@@ -92,7 +97,7 @@ export function BeforeAfter() {
             {/* After Image (Full width) */}
             <div className="absolute inset-0 w-full h-full">
               <Image
-                src={activeItem.img}
+                src={activeItem.afterImg}
                 alt="After cleaning results"
                 fill
                 sizes="(max-width: 768px) 100vw, 650px"
@@ -110,11 +115,11 @@ export function BeforeAfter() {
             >
               <div className="absolute inset-0 w-[650px] h-full min-w-full">
                 <Image
-                  src={activeItem.img}
+                  src={activeItem.beforeImg}
                   alt="Before cleaning state"
                   fill
                   sizes="(max-width: 768px) 100vw, 650px"
-                  className="object-cover filter grayscale contrast-125 brightness-50 sepia-[15%]" // simulated dirty before look
+                  className="object-cover"
                 />
               </div>
               <span className="absolute bottom-4 left-4 bg-slate-900 text-white text-[0.65rem] font-black uppercase px-3 py-1 rounded-md z-20">
