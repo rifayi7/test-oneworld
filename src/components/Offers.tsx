@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/Button";
 import { Droplet, Scissors, ShieldCheck, Zap, AlertTriangle } from "lucide-react";
+import { Service } from "@/db/queries";
 
 interface OfferItem {
   service: string;
@@ -15,61 +16,69 @@ interface OfferItem {
   serviceId: number;
 }
 
-const OFFERS_DATA: OfferItem[] = [
-  {
-    service: "Water Tank Cleaning",
-    badge: "Special Entry Rate",
-    discount: "Starting from ₹799",
-    validity: "Valid till July 31, 2026",
-    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/water-tank.webp",
-    desc: "Complete disinfection and high pressure deep cleaning at lowest entry rates.",
-    serviceId: 3
-  },
-  {
-    service: "Grass Cutting Offer",
-    badge: "Seasonal Deal",
-    discount: "20% OFF Total Bill",
-    validity: "Valid till July 15, 2026",
-    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/grass-trimming.webp",
-    desc: "Clear out your compound and backyard gardens at customized discount rates.",
-    serviceId: 12
-  },
-  {
-    service: "Roof Waterproofing",
-    badge: "Free Consultation",
-    discount: "Free Inspection",
-    validity: "Limited Slots Available",
-    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/roof-waterproof.webp",
-    desc: "Schedule a complete roof dampness checkup and leakage report by engineers.",
-    serviceId: 10
-  },
-  {
-    service: "Solar Installation",
-    badge: "Subsidy Support",
-    discount: "Government Subsidy Available",
-    validity: "Subject to KSEB approval",
-    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/whatsapp-image-2026-07-03-at-11-09-36-1-1783060609361-6w1nh0.webp",
-    desc: "Get full subsidy integration guidance and custom capacity modeling free.",
-    serviceId: 11
-  },
-  {
-    service: "Gas Leak Detector",
-    badge: "Home Protection",
-    discount: "Free Safety Check",
-    validity: "With any major cleaning",
-    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/whatsapp-image-2026-07-03-at-11-09-36-1783059944261-e0slhn.webp",
-    desc: "Get a free LPG kitchen gas valve safety inspection and sensor calibration.",
-    serviceId: 9
-  }
-];
+export function Offers({ initialServices = [] }: { initialServices?: Service[] }) {
+  const getServiceImg = (id: number, fallback: string) => {
+    return initialServices.find((s) => s.id === id)?.img || fallback;
+  };
 
-export function Offers() {
-  const offerIcons: Record<string, React.ReactNode> = {
-    "Water Tank Cleaning": <Droplet className="w-4.5 h-4.5 text-primary-600 stroke-[2.5]" />,
-    "Grass Cutting Offer": <Scissors className="w-4.5 h-4.5 text-primary-600 stroke-[2.5]" />,
-    "Roof Waterproofing": <ShieldCheck className="w-4.5 h-4.5 text-primary-600 stroke-[2.5]" />,
-    "Solar Installation": <Zap className="w-4.5 h-4.5 text-primary-600 stroke-[2.5]" />,
-    "Gas Leak Detector": <AlertTriangle className="w-4.5 h-4.5 text-primary-600 stroke-[2.5]" />
+  const getServiceName = (id: number, fallback: string) => {
+    return initialServices.find((s) => s.id === id)?.name || fallback;
+  };
+
+  const offersData: OfferItem[] = [
+    {
+      service: getServiceName(3, "Water Tank Cleaning"),
+      badge: "Special Entry Rate",
+      discount: "Starting from ₹799",
+      validity: "Valid till July 31, 2026",
+      img: getServiceImg(3, "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/water-tank.webp"),
+      desc: "Complete disinfection and high pressure deep cleaning at lowest entry rates.",
+      serviceId: 3
+    },
+    {
+      service: getServiceName(12, "Grass Cutting Offer"),
+      badge: "Seasonal Deal",
+      discount: "20% OFF Total Bill",
+      validity: "Valid till July 15, 2026",
+      img: getServiceImg(12, "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/grass-trimming.webp"),
+      desc: "Clear out your compound and backyard gardens at customized discount rates.",
+      serviceId: 12
+    },
+    {
+      service: getServiceName(10, "Roof Waterproofing"),
+      badge: "Free Consultation",
+      discount: "Free Inspection",
+      validity: "Limited Slots Available",
+      img: getServiceImg(10, "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/roof-waterproof.webp"),
+      desc: "Schedule a complete roof dampness checkup and leakage report by engineers.",
+      serviceId: 10
+    },
+    {
+      service: getServiceName(11, "Solar Installation"),
+      badge: "Subsidy Support",
+      discount: "Government Subsidy Available",
+      validity: "Subject to KSEB approval",
+      img: getServiceImg(11, "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/whatsapp-image-2026-07-03-at-11-09-36-1-1783060609361-6w1nh0.webp"),
+      desc: "Get full subsidy integration guidance and custom capacity modeling free.",
+      serviceId: 11
+    },
+    {
+      service: getServiceName(9, "Gas Leak Detector"),
+      badge: "Home Protection",
+      discount: "Free Safety Check",
+      validity: "With any major cleaning",
+      img: getServiceImg(9, "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/whatsapp-image-2026-07-03-at-11-09-36-1783059944261-e0slhn.webp"),
+      desc: "Get a free LPG kitchen gas valve safety inspection and sensor calibration.",
+      serviceId: 9
+    }
+  ];
+
+  const offerIcons: Record<number, React.ReactNode> = {
+    3: <Droplet className="w-4.5 h-4.5 text-primary-600 stroke-[2.5]" />,
+    12: <Scissors className="w-4.5 h-4.5 text-primary-600 stroke-[2.5]" />,
+    10: <ShieldCheck className="w-4.5 h-4.5 text-primary-600 stroke-[2.5]" />,
+    11: <Zap className="w-4.5 h-4.5 text-primary-600 stroke-[2.5]" />,
+    9: <AlertTriangle className="w-4.5 h-4.5 text-primary-600 stroke-[2.5]" />
   };
 
   return (
@@ -92,8 +101,8 @@ export function Offers() {
 
           {/* Grid List */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {OFFERS_DATA.map((offer) => (
-              <div key={offer.service} className="group border border-slate-200/50 bg-white rounded-card overflow-hidden shadow-soft flex flex-col h-full hover:-translate-y-1.5 transition-all duration-300">
+            {offersData.map((offer) => (
+              <div key={offer.serviceId} className="group border border-slate-200/50 bg-white rounded-card overflow-hidden shadow-soft flex flex-col h-full hover:-translate-y-1.5 transition-all duration-300">
                 {/* Image & Badges */}
                 <div className="relative h-56 w-full bg-slate-100 overflow-hidden">
                   <Image
@@ -111,7 +120,7 @@ export function Offers() {
 
                   {/* Floating Right Icon */}
                   <div className="absolute top-4 right-4 bg-white w-9 h-9 rounded-full flex items-center justify-center shadow-sm select-none">
-                    {offerIcons[offer.service]}
+                    {offerIcons[offer.serviceId]}
                   </div>
                 </div>
 

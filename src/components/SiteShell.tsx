@@ -36,7 +36,7 @@ export function SiteShell({ initialServices, initialFeedbacks }: SiteShellProps)
           <Hero />
           <ServicesOverview initialServices={initialServices} />
           <WhyChoose />
-          <Offers />
+          <Offers initialServices={initialServices} />
           <FeaturedServices initialServices={initialServices} />
           <HowItWorks />
           <SlotBooking servicesList={initialServices.map((s) => s.name)} />
