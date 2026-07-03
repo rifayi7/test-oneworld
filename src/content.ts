@@ -29,8 +29,8 @@ export const HERO_CONTENT = {
   primaryCta: "Book Your Service Now",
   customerCount: "12k+ Happy Customers",
   images: {
-    cleaners: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/hero/cleaners-window.webp",
-    plumber: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/hero/plumber-sink.webp",
+    cleaners: "/spotlight-images/dfdfdfdf.jpeg",
+    plumber: "/spotlight-images/sfgfghghg.jpeg",
   },
   valueProps: [
     { label: "Verified Professionals", icon: "shield" },

@@ -153,19 +153,18 @@ export function Hero() {
 
         </div>
 
-        {/* Right Column (Collage visual section) - 55% approx width */}
         <div className="lg:col-span-7 relative flex items-center justify-center">
-          {/* Collage Container (Generous whitespace & overlapping layout) */}
-          <div className="relative h-[650px] w-full max-w-[580px] mx-auto pb-12 pt-6 select-none">
+          {/* Collage Container (Responsive fluid height & overlapping layout) */}
+          <div className="relative h-[500px] sm:h-[650px] w-full max-w-[580px] mx-auto pb-12 pt-6 select-none">
             
             {/* 1. Main Vertical Image (Top Right, rounded corners 32px) */}
             <Reveal direction="left" delay={0.2}>
-              <div className="absolute top-0 right-0 w-[380px] sm:w-[410px] h-[520px] rounded-image overflow-hidden shadow-soft border border-slate-200/10">
+              <div className="absolute top-0 right-0 w-[82%] sm:w-[410px] h-[400px] sm:h-[520px] rounded-image overflow-hidden shadow-soft border border-slate-200/10">
                 <Image
                   src={HERO_CONTENT.images.cleaners}
                   alt="Window Cleaning Service"
                   fill
-                  sizes="(max-width: 768px) 100vw, 410px"
+                  sizes="(max-width: 768px) 82vw, 410px"
                   className="object-cover object-center"
                   priority
                 />
@@ -174,12 +173,12 @@ export function Hero() {
 
             {/* 2. Bottom Landscape Image (Bottom Center, rounded corners, overlaps vertical) */}
             <Reveal direction="up" delay={0.28}>
-              <div className="absolute bottom-4 left-0 w-[360px] sm:w-[390px] h-[240px] rounded-image overflow-hidden border-8 border-white shadow-soft z-10">
+              <div className="absolute bottom-4 left-0 w-[72%] sm:w-[390px] h-[170px] sm:h-[240px] rounded-image overflow-hidden border-4 sm:border-8 border-white shadow-soft z-10">
                 <Image
                   src={HERO_CONTENT.images.plumber}
                   alt="Appliance Repair Technician"
                   fill
-                  sizes="(max-width: 768px) 100vw, 390px"
+                  sizes="(max-width: 768px) 72vw, 390px"
                   className="object-cover object-center"
                 />
               </div>
@@ -187,7 +186,7 @@ export function Hero() {
 
             {/* 3. Floating Arrow (Top-right corner, Circular Blue button) */}
             <Reveal direction="down" delay={0.32}>
-              <div className="absolute top-[-1rem] right-[-1rem] z-20">
+              <div className="absolute top-[-1rem] right-[-0.5rem] sm:right-[-1rem] z-20">
                 <span className="w-11 h-11 rounded-full bg-primary-600 text-white flex items-center justify-center font-bold text-xl shadow-md cursor-pointer hover:bg-primary-700 transition">
                   <ArrowUpRight className="w-5 h-5 stroke-[2.5]" />
                 </span>
@@ -196,11 +195,11 @@ export function Hero() {
 
             {/* 5. Customer Satisfaction KPI Card (Bottom Right, Soft Blue BG) */}
             <Reveal direction="up" delay={0.6}>
-              <div className="absolute bottom-[4%] right-[-1.5rem] sm:right-[-2.5rem] bg-primary-50 border border-primary-100 rounded-card p-5 w-40 text-center shadow-soft z-30">
+              <div className="absolute bottom-[4%] right-[-0.5rem] sm:right-[-2.5rem] bg-primary-50 border border-primary-100 rounded-card p-5 w-36 sm:w-40 text-center shadow-soft z-30">
                 <span className="block text-[0.65rem] font-bold text-slate-500 uppercase tracking-widest leading-none">
                   {HERO_CONTENT.satisfaction.label}
                 </span>
-                <span className="block text-4xl font-black text-primary-600 mt-2">
+                <span className="block text-3xl sm:text-4xl font-black text-primary-600 mt-2">
                   {HERO_CONTENT.satisfaction.value}
                 </span>
               </div>
