@@ -30,17 +30,12 @@
   --accent: #17828f;
 }
 
-html {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: var(--font-sans);
-}
-
+html,
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font-sans);
-  overflow-x: hidden;
+  overflow-x: clip; /* clip — NOT hidden — avoids creating a scroll container, so position:sticky works */
 }
 
 @media (prefers-reduced-motion: no-preference) {
