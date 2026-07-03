@@ -6,8 +6,14 @@ export const SITE_INFO = {
   description: "Premium professional cleaning and housekeeping services tailored to your needs. Spotless spaces, eco-friendly products, and trusted service partners.",
   descriptionMalayalam: "Deep Well Cleaning, Pond Cleaning, Water Tank Cleaning & UV Treatment, Pipeline Cleaning, Water Purifier Installation, Home Safety Services, CCTV Installation, Gas Leak Detector, Roof Waterproofing, Solar Installation, Grass Cutting, Termite Control, Disinfection Spraying മുതൽ Farm Services വരെ... എല്ലാം ഇനി ഒരു ഫോൺ കോളിൽ !",
   ctaLabel: "Book Now",
-  phone: "+91 94460 56789",
-  email: "info@cleanworldsolutions.com",
+  phone: "+91 85899 93400",
+  phones: [
+    "+91 85899 93400",
+    "+91 85899 93500",
+    "+91 85899 93800",
+    "+91 85899 93900"
+  ],
+  email: "Cleanworld46@gmail.com",
 };
 
 export const NAV_LINKS = [
@@ -47,8 +53,14 @@ export const HERO_CONTENT = {
 export const FOOTER_CONTENT = {
   copyright: "© 2026 Clean World Solutions. All rights reserved.",
   address: "Clean World Solutions, Madhavi Gardens, Nellickal, Koipuram.PO, Thiruvalla Taluk, Pathanamthitta Dist, Kerala-689531",
-  email: "info@cleanworldsolutions.com",
-  phone: "+91 94460 56789",
+  email: "Cleanworld46@gmail.com",
+  phone: "+91 85899 93400",
+  phones: [
+    "+91 85899 93400",
+    "+91 85899 93500",
+    "+91 85899 93800",
+    "+91 85899 93900"
+  ],
   links: [
     { label: "Privacy Policy", href: "/privacy" },
     { label: "Terms of Service", href: "/terms" },
