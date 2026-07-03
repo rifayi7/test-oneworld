@@ -24,7 +24,7 @@ const SPOTLIGHT_SERVICES = [
     price: "₹799",
     mrp_price: "₹1,799",
     images: [
-      "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/water-tank.webp",
+      "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/water-tank.webp",
       "/portfolio/tank-cleaning.jpg",
       "/services/water_tank.jpg",
       "/services/home_services.jpg"
@@ -47,7 +47,7 @@ const SPOTLIGHT_SERVICES = [
     price: "₹2,999",
     mrp_price: "₹3,999",
     images: [
-      "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/cctv-install.webp",
+      "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/cctv-install.webp",
       "/portfolio/solar-cleaning.jpg",
       "/services/cctv_install.jpg"
     ],
@@ -69,7 +69,7 @@ const SPOTLIGHT_SERVICES = [
     price: "₹899",
     mrp_price: "₹1,899",
     images: [
-      "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/grass-trimming.webp",
+      "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/grass-trimming.webp",
       "/portfolio/garden-care.jpg",
       "/services/grass_trimming.jpg"
     ],
@@ -149,12 +149,14 @@ export function FeaturedServices() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
             
             {/* LEFT COLUMN: Autoplay Image Carousel (7 Columns) */}
-            <div className="lg:col-span-7 relative h-[22rem] md:h-[28rem] rounded-image overflow-hidden shadow-soft border border-slate-200/25 shrink-0">
+            <div className="lg:col-span-7 relative h-[16rem] sm:h-[22rem] md:h-[28rem] shrink-0 z-10">
               {/* Reset key resets state of Carousel when tab changes */}
-              <ServiceImageCarousel key={activeService.id} images={activeService.images} alt={activeService.name} />
+              <div className="w-full h-full rounded-image overflow-hidden shadow-soft border border-slate-200/25">
+                <ServiceImageCarousel key={activeService.id} images={activeService.images} alt={activeService.name} />
+              </div>
               
               {/* Overlapping proof card */}
-              <div className="absolute -bottom-5 left-6 sm:left-10 bg-white rounded-card px-5 py-4 shadow-soft border border-slate-200/50 flex items-center gap-3 select-none z-10">
+              <div className="absolute -bottom-4 left-6 sm:left-10 bg-white rounded-card px-5 py-4 shadow-soft border border-slate-200/50 flex items-center gap-3 select-none z-20">
                 <span className="w-9 h-9 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center">
                   <ShieldCheck className="w-5 h-5 stroke-[2.5]" />
                 </span>

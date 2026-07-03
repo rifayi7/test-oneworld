@@ -12,11 +12,11 @@ interface ServicesCrudProps {
 }
 
 const PRESET_IMAGES = [
-  { label: "Home Services (Default)", value: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/home-services.webp" },
-  { label: "Water Tank Cleaning", value: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/water-tank.webp" },
-  { label: "CCTV Installation", value: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/cctv-install.webp" },
-  { label: "Roof Waterproofing", value: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/roof-waterproof.webp" },
-  { label: "Grass Trimming", value: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/grass-trimming.webp" },
+  { label: "Home Services (Default)", value: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/home-services.webp" },
+  { label: "Water Tank Cleaning", value: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/water-tank.webp" },
+  { label: "CCTV Installation", value: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/cctv-install.webp" },
+  { label: "Roof Waterproofing", value: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/roof-waterproof.webp" },
+  { label: "Grass Trimming", value: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/grass-trimming.webp" },
 ];
 
 export function ServicesCrud({ services, canEdit }: ServicesCrudProps) {

@@ -17,25 +17,25 @@ const GALLERY_DATA: Record<string, GalleryItem> = {
     name: "Water Tank Cleaning",
     beforeDesc: "Silt deposits, algae growth, and bacterial sludge gathered at the bottom and walls.",
     afterDesc: "High pressure jet washing, antibacterial sanitization, and spotless vacuumed surface.",
-    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/water-tank.webp"
+    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/water-tank.webp"
   },
   "Grass Cutting": {
     name: "Grass & Wild Weed Clearing",
     beforeDesc: "Overgrown weed vegetation, safety hazard, potential snake/pest shelter.",
     afterDesc: "Neatly cut lawns, trimmed edges, clean visible compound boundaries.",
-    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/grass-trimming.webp"
+    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/grass-trimming.webp"
   },
   "Roof Waterproofing": {
     name: "Roof Leakage Coating",
     beforeDesc: "Cracked concrete slab, water dampness, interior wall fungus build-up.",
     afterDesc: "Elastomeric multi-coat protective chemical sealing applied, leak-proof finish.",
-    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/roof-waterproof.webp"
+    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/roof-waterproof.webp"
   },
   "Deep Well": {
     name: "Deep Well Restoration",
     beforeDesc: "Fallen leaves, mud accumulation, murky colored drinking water.",
     afterDesc: "Debris vacuumed, descaled wall surface, clear clean groundwater.",
-    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/home-services.webp"
+    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/home-services.webp"
   }
 };
 

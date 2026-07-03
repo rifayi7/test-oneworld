@@ -6,9 +6,13 @@ import { BookingSchema } from "@/lib/booking-schema";
 import { isValidPhoneNumber, parsePhoneNumber } from "libphonenumber-js";
 
 async function verifyRecaptcha(token: string, action: string) {
-  // If the secret key is not set, skip verification for easier testing/development
-  if (!process.env.RECAPTCHA_SECRET_KEY) {
-    console.warn("RECAPTCHA_SECRET_KEY is missing. Skipping verification.");
+  // If the secret key is missing, or is the google test secret key, or if running in local development mode, bypass the check
+  if (
+    !process.env.RECAPTCHA_SECRET_KEY ||
+    process.env.RECAPTCHA_SECRET_KEY === "6LeIxAcTAAAAAGG-vFI1TnFTxWfnysA5a6597I5J" ||
+    process.env.NODE_ENV === "development"
+  ) {
+    console.warn("reCAPTCHA check bypassed for local development/testing.");
     return 1.0;
   }
   

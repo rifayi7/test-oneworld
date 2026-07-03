@@ -24,7 +24,7 @@ export function FloatingWhatsApp() {
             <div className="flex items-center gap-3">
               <div className="relative w-10 h-10 rounded-full overflow-hidden border border-white/20 bg-primary-700">
                 <Image
-                  src="https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/hero/avatar.webp"
+                  src="https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/hero/avatar.webp"
                   alt="Support Representative"
                   fill
                   className="object-cover"

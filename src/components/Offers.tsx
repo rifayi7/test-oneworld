@@ -21,7 +21,7 @@ const OFFERS_DATA: OfferItem[] = [
     badge: "Special Entry Rate",
     discount: "Starting from ₹799",
     validity: "Valid till July 31, 2026",
-    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/water-tank.webp",
+    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/water-tank.webp",
     desc: "Complete disinfection and high pressure deep cleaning at lowest entry rates.",
     serviceId: 3
   },
@@ -30,7 +30,7 @@ const OFFERS_DATA: OfferItem[] = [
     badge: "Seasonal Deal",
     discount: "20% OFF Total Bill",
     validity: "Valid till July 15, 2026",
-    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/grass-trimming.webp",
+    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/grass-trimming.webp",
     desc: "Clear out your compound and backyard gardens at customized discount rates.",
     serviceId: 25
   },
@@ -39,7 +39,7 @@ const OFFERS_DATA: OfferItem[] = [
     badge: "Free Consultation",
     discount: "Free Inspection",
     validity: "Limited Slots Available",
-    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/roof-waterproof.webp",
+    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/roof-waterproof.webp",
     desc: "Schedule a complete roof dampness checkup and leakage report by engineers.",
     serviceId: 23
   },
@@ -48,7 +48,7 @@ const OFFERS_DATA: OfferItem[] = [
     badge: "Subsidy Support",
     discount: "Government Subsidy Available",
     validity: "Subject to KSEB approval",
-    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/home-services.webp",
+    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/home-services.webp",
     desc: "Get full subsidy integration guidance and custom capacity modeling free.",
     serviceId: 24
   },
@@ -57,7 +57,7 @@ const OFFERS_DATA: OfferItem[] = [
     badge: "Home Protection",
     discount: "Free Safety Check",
     validity: "With any major cleaning",
-    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/home-services.webp",
+    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/home-services.webp",
     desc: "Get a free LPG kitchen gas valve safety inspection and sensor calibration.",
     serviceId: 22
   }

@@ -95,7 +95,7 @@ export function AdminShell({ children, user }: AdminShellProps) {
       <aside className="hidden md:flex flex-col w-64 bg-white border-r border-slate-200 p-6 flex-shrink-0">
         {/* Brand Header */}
         <div className="flex items-center gap-2.5 pb-8 select-none">
-          <Image src="https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/brand/logo-mark.webp" alt="CleanWorld logo" width={215} height={170} className="h-8 w-auto" />
+          <Image src="https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/brand/logo-mark.webp" alt="CleanWorld logo" width={215} height={170} className="h-8 w-auto" />
           <div className="flex flex-col leading-none">
             <span className="text-sm font-black tracking-tight text-neutral-900">
               Clean World
@@ -158,7 +158,7 @@ export function AdminShell({ children, user }: AdminShellProps) {
 
               {/* Brand Logo */}
               <div className="flex items-center gap-2.5 pb-8 select-none">
-                <Image src="https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/brand/logo-mark.webp" alt="CleanWorld logo" width={215} height={170} className="h-8 w-auto" />
+                <Image src="https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/brand/logo-mark.webp" alt="CleanWorld logo" width={215} height={170} className="h-8 w-auto" />
                 <div className="flex flex-col leading-none">
                   <span className="text-sm font-black tracking-tight text-neutral-900">
                     Clean World

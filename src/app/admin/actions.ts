@@ -251,7 +251,7 @@ export async function createServiceAction(formData: FormData) {
   const offerPriceVal = offerPrice || null;
 
   const imageFile = formData.get("imageFile") as File | null;
-  let img = String(formData.get("img") ?? "").trim() || "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/home-services.webp";
+  let img = String(formData.get("img") ?? "").trim() || "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/home-services.webp";
 
   if (imageFile && imageFile.size > 0 && imageFile.name !== "undefined") {
     try {
@@ -343,7 +343,7 @@ export async function updateServiceAction(id: number, formData: FormData) {
   const offerPriceVal = offerPrice || null;
 
   const imageFile = formData.get("imageFile") as File | null;
-  let img = String(formData.get("img") ?? "").trim() || "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/home-services.webp";
+  let img = String(formData.get("img") ?? "").trim() || "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/home-services.webp";
 
   if (imageFile && imageFile.size > 0 && imageFile.name !== "undefined") {
     try {

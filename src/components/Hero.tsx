@@ -98,10 +98,10 @@ export function Hero() {
               {/* Avatar Group */}
               <div className="flex -space-x-3.5 select-none">
                 <div className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-white bg-slate-200">
-                  <Image src="https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/hero/avatar.webp" alt="Customer avatar" fill className="object-cover" />
+                  <Image src="https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/hero/avatar.webp" alt="Customer avatar" fill className="object-cover" />
                 </div>
                 <div className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-white bg-slate-200">
-                  <Image src="https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/hero/avatar2.webp" alt="Customer avatar" fill className="object-cover" />
+                  <Image src="https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/hero/avatar2.webp" alt="Customer avatar" fill className="object-cover" />
                 </div>
                 <div className="w-9 h-9 rounded-full bg-slate-900 text-white flex items-center justify-center text-xs font-bold border-2 border-white">
                   +

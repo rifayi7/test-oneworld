@@ -17,7 +17,7 @@ export function Navbar() {
       {/* Brand logo (Left side) - Clickable link to home */}
       <Link href="/" className="flex items-center gap-2.5 select-none hover:opacity-90 transition-opacity">
         <Image
-          src="https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/brand/logo-mark.webp"
+          src="https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/brand/logo-mark.webp"
           alt="CleanWorld logo"
           width={215}
           height={170}

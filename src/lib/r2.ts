@@ -7,7 +7,7 @@ const secretAccessKey = process.env.R2_SECRET_ACCESS_KEY;
 const bucket = process.env.R2_BUCKET;
 
 /** Root folder for this project inside the shared bucket. */
-export const R2_PROJECT = (process.env.R2_PROJECT_PREFIX || "laccadives-coral-trails").replace(/\/+$/, "");
+export const R2_PROJECT = (process.env.R2_PROJECT_PREFIX || "clean-world-solutions").replace(/\/+$/, "");
 
 /** True only when every R2 credential is present. */
 export function r2Configured(): boolean {
