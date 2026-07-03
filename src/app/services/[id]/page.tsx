@@ -268,92 +268,107 @@ export default async function ServiceDetailPage({ params }: PageProps) {
             </div>
           </div>
 
-        <div className="container mx-auto max-w-4xl px-6 mt-12">
-          <div className="space-y-10">
+          {/* Detailed Info Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
             
-            {/* Inclusions Card */}
-            <div className="bg-white border border-slate-200/60 rounded-card p-6 md:p-8 shadow-sm text-left">
-              <h3 className="text-lg font-extrabold text-neutral-900 font-display mb-6 pb-3 border-b border-slate-100">
-                What is included in this service?
-              </h3>
-              <ul className="space-y-4 text-sm font-semibold text-slate-700">
-                {inclusions.map((point) => (
-                  <li key={point} className="flex items-start gap-3">
-                    <span className="w-5.5 h-5.5 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center shrink-0 mt-0.5">
-                      <Check className="w-3.5 h-3.5 stroke-[3]" />
-                    </span>
-                    <span className="leading-snug text-neutral-600 font-medium">{point}</span>
-                  </li>
-                ))}
-              </ul>
+            {/* Left side (8 cols): Inclusions */}
+            <div className="lg:col-span-8">
+              
+              {/* Inclusions Card */}
+              <div className="bg-white border border-slate-200/60 rounded-card p-6 md:p-8 shadow-soft text-left h-full">
+                <h3 className="text-lg font-extrabold text-neutral-900 font-display mb-6 pb-3 border-b border-slate-100 flex items-center gap-2">
+                  <Award className="w-5 h-5 text-primary-600" /> What is included in this service?
+                </h3>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm font-semibold text-slate-700">
+                  {inclusions.map((point) => (
+                    <li key={point} className="flex items-start gap-3 bg-slate-50/50 p-3 rounded-xl border border-slate-100">
+                      <span className="w-5 h-5 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
+                        <Check className="w-3.5 h-3.5 stroke-[3.5]" />
+                      </span>
+                      <span className="leading-snug text-neutral-700 font-medium text-xs">{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
             </div>
 
-            {/* Execution Workflow (3-step) */}
-            <div className="bg-white border border-slate-200/60 rounded-card p-6 md:p-8 shadow-sm text-left">
-              <h3 className="text-lg font-extrabold text-neutral-900 font-display mb-6 pb-3 border-b border-slate-100">
-                How the service works
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
-                
-                <div className="space-y-3 relative z-10">
-                  <div className="w-10 h-10 rounded-xl bg-primary-600 text-white font-black text-sm flex items-center justify-center shadow-md shadow-primary-600/10">
-                    01
+            {/* Right side (4 cols): How the Service Works timeline */}
+            <div className="lg:col-span-4">
+              
+              <div className="bg-white border border-slate-200/60 rounded-card p-6 md:p-8 shadow-soft text-left h-full">
+                <h3 className="text-lg font-extrabold text-neutral-900 font-display mb-6 pb-3 border-b border-slate-100">
+                  How the service works
+                </h3>
+                <div className="space-y-8 relative before:absolute before:left-5 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-100">
+                  
+                  <div className="flex gap-4 relative">
+                    <div className="w-10 h-10 rounded-xl bg-primary-600 text-white font-black text-xs flex items-center justify-center shrink-0 shadow-md shadow-primary-600/10 z-10">
+                      01
+                    </div>
+                    <div className="space-y-1 mt-1">
+                      <h4 className="text-xs font-extrabold text-neutral-900 font-display">
+                        Book Slot
+                      </h4>
+                      <p className="text-[10px] text-neutral-500 leading-relaxed">
+                        Fill out the checkout form. We'll coordinate your date via WhatsApp/Call.
+                      </p>
+                    </div>
                   </div>
-                  <h4 className="text-sm font-extrabold text-neutral-900 font-display">
-                    Book Slot
-                  </h4>
-                  <p className="text-xs text-neutral-500 leading-relaxed">
-                    Fill out the checkout booking form. Our scheduling support team will reach out via WhatsApp/Call to confirm your date.
-                  </p>
-                </div>
 
-                <div className="space-y-3 relative z-10">
-                  <div className="w-10 h-10 rounded-xl bg-slate-900 text-white font-black text-sm flex items-center justify-center shadow-sm">
-                    02
+                  <div className="flex gap-4 relative">
+                    <div className="w-10 h-10 rounded-xl bg-slate-900 text-white font-black text-xs flex items-center justify-center shrink-0 shadow-sm z-10">
+                      02
+                    </div>
+                    <div className="space-y-1 mt-1">
+                      <h4 className="text-xs font-extrabold text-neutral-900 font-display">
+                        Expert Execution
+                      </h4>
+                      <p className="text-[10px] text-neutral-500 leading-relaxed">
+                        Vetted and verified professionals arrive with advanced machinery.
+                      </p>
+                    </div>
                   </div>
-                  <h4 className="text-sm font-extrabold text-neutral-900 font-display">
-                    Expert Execution
-                  </h4>
-                  <p className="text-xs text-neutral-500 leading-relaxed">
-                    Our vetted and background-verified technicians arrive on-time with specialized commercial-grade equipment to execute.
-                  </p>
-                </div>
 
-                <div className="space-y-3 relative z-10">
-                  <div className="w-10 h-10 rounded-xl bg-slate-900 text-white font-black text-sm flex items-center justify-center shadow-sm">
-                    03
+                  <div className="flex gap-4 relative">
+                    <div className="w-10 h-10 rounded-xl bg-slate-900 text-white font-black text-xs flex items-center justify-center shrink-0 shadow-sm z-10">
+                      03
+                    </div>
+                    <div className="space-y-1 mt-1">
+                      <h4 className="text-xs font-extrabold text-neutral-900 font-display">
+                        Quality Check & Pay
+                      </h4>
+                      <p className="text-[10px] text-neutral-500 leading-relaxed">
+                        Verify the completed work and pay securely. 100% satisfaction guaranteed.
+                      </p>
+                    </div>
                   </div>
-                  <h4 className="text-sm font-extrabold text-neutral-900 font-display">
-                    Quality Check
-                  </h4>
-                  <p className="text-xs text-neutral-500 leading-relaxed">
-                    Verify the finished work with our team. Provide your final sign-off. Pay via secure options after you are 100% satisfied.
-                  </p>
+
                 </div>
               </div>
-            </div>
 
-            {/* Category-Specific FAQs */}
-            <div className="bg-white border border-slate-200/60 rounded-card p-6 md:p-8 shadow-sm text-left">
-              <h3 className="text-lg font-extrabold text-neutral-900 font-display mb-6 pb-3 border-b border-slate-100 flex items-center gap-2">
-                <HelpCircle className="w-5 h-5 text-primary-600" /> Frequently Asked Questions
-              </h3>
-              <div className="space-y-6">
-                {faqs.map((faq) => (
-                  <div key={faq.q} className="space-y-2">
-                    <h4 className="text-sm font-extrabold text-neutral-900">
-                      {faq.q}
-                    </h4>
-                    <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                      {faq.a}
-                    </p>
-                  </div>
-                ))}
-              </div>
             </div>
 
           </div>
-        </div>
+
+          {/* Full-width FAQs block */}
+          <div className="bg-white border border-slate-200/60 rounded-card p-6 md:p-8 shadow-soft text-left mb-16">
+            <h3 className="text-lg font-extrabold text-neutral-900 font-display mb-6 pb-3 border-b border-slate-100 flex items-center gap-2">
+              <HelpCircle className="w-5 h-5 text-primary-600" /> Frequently Asked Questions
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {faqs.map((faq) => (
+                <div key={faq.q} className="space-y-1.5 bg-slate-50/30 p-5 rounded-xl border border-slate-100/50">
+                  <h4 className="text-xs font-extrabold text-neutral-900 leading-snug">
+                    {faq.q}
+                  </h4>
+                  <p className="text-[11px] text-slate-500 leading-relaxed font-medium">
+                    {faq.a}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
 
           {/* Related / Other Services Recommendations Panel */}
           <div className="mt-20 space-y-8 text-left">

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { HERO_CONTENT } from "@/content";
+import { HERO_CONTENT, SITE_INFO } from "@/content";
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/Button";
 import { motion } from "motion/react";
@@ -51,6 +51,16 @@ export function Hero() {
               <p className="text-sm font-extrabold text-neutral-900">
                 {HERO_CONTENT.descriptionExtra}
               </p>
+              
+              {/* Malayalam Localized Highlight */}
+              <div className="mt-6 p-4.5 border-l-4 border-primary-600 bg-primary-50/30 rounded-r-2xl max-w-xl text-left">
+                <p className="text-sm font-extrabold text-neutral-900 leading-relaxed font-display">
+                  &ldquo;{SITE_INFO.taglineMalayalam}&rdquo;
+                </p>
+                <p className="text-[11px] font-medium text-neutral-600 mt-2 leading-relaxed">
+                  {SITE_INFO.descriptionMalayalam}
+                </p>
+              </div>
             </div>
           </Reveal>
 

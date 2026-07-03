@@ -48,7 +48,7 @@ export function FinalCta() {
 
               {/* Book Service Button */}
               <Button
-                href="/checkout"
+                href="/services"
                 variant="solid"
                 color="white"
                 className="px-8 py-4 text-sm font-extrabold bg-white hover:bg-slate-50 text-primary-600 shadow-lg"

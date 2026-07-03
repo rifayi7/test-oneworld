@@ -1,7 +1,7 @@
 "use client";
 
 import { Navbar } from "@/components/Navbar";
-import { Service } from "@/db/queries";
+import { Service, Feedback } from "@/db/queries";
 import { Hero } from "@/components/Hero";
 import { ServicesOverview } from "@/components/ServicesOverview";
 import { WhyChoose } from "@/components/WhyChoose";
@@ -15,10 +15,16 @@ import { ServiceAreas } from "@/components/ServiceAreas";
 import { Faqs } from "@/components/Faqs";
 import { FinalCta } from "@/components/FinalCta";
 import { Footer } from "@/components/Footer";
+import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import { useLenis } from "@/hooks/useLenis";
 import { MotionConfig } from "motion/react";
 
-export function SiteShell({ initialServices }: { initialServices: Service[] }) {
+interface SiteShellProps {
+  initialServices: Service[];
+  initialFeedbacks: Feedback[];
+}
+
+export function SiteShell({ initialServices, initialFeedbacks }: SiteShellProps) {
   useLenis();
 
   return (
@@ -35,13 +41,14 @@ export function SiteShell({ initialServices }: { initialServices: Service[] }) {
           <HowItWorks />
           <SlotBooking servicesList={initialServices.map((s) => s.name)} />
           <BeforeAfter />
-          <Reviews />
+          <Reviews initialFeedbacks={initialFeedbacks} />
           <ServiceAreas />
           <Faqs />
           <FinalCta />
         </main>
 
         <Footer />
+        <FloatingWhatsApp />
       </div>
     </MotionConfig>
   );

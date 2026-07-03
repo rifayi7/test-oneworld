@@ -78,7 +78,7 @@ export function Offers() {
         <div className="container mx-auto max-w-7xl text-center space-y-12">
 
           {/* Title Header */}
-          <div className="space-y-6 max-w-xl mx-auto">
+          <div className="space-y-4 max-w-xl mx-auto">
             <span className="inline-block text-xs font-bold text-primary-600 uppercase tracking-widest bg-primary-50 px-4 py-1.5 rounded-badge">
               Promotions
             </span>

@@ -93,3 +93,72 @@ export async function getServiceById(id: number): Promise<Service | null> {
     return null;
   }
 }
+
+export interface Feedback {
+  id: number;
+  name: string;
+  rating: number;
+  quote: string;
+  location: string | null;
+  service: string | null;
+  approved: number;
+  created_at: string;
+}
+
+export async function getApprovedFeedbacks(): Promise<Feedback[]> {
+  try {
+    const response = await db.execute(
+      "SELECT id, name, rating, quote, location, service, approved, created_at FROM feedbacks WHERE approved = 1 ORDER BY created_at DESC"
+    );
+    
+    return response.rows.map((row) => ({
+      id: Number(row.id),
+      name: String(row.name),
+      rating: Number(row.rating),
+      quote: String(row.quote),
+      location: row.location ? String(row.location) : null,
+      service: row.service ? String(row.service) : null,
+      approved: Number(row.approved),
+      created_at: String(row.created_at),
+    }));
+  } catch (error) {
+    console.error("Failed to query approved feedbacks:", error);
+    return [];
+  }
+}
+
+export async function getAllFeedbacks(): Promise<Feedback[]> {
+  try {
+    const response = await db.execute(
+      "SELECT id, name, rating, quote, location, service, approved, created_at FROM feedbacks ORDER BY created_at DESC"
+    );
+    
+    return response.rows.map((row) => ({
+      id: Number(row.id),
+      name: String(row.name),
+      rating: Number(row.rating),
+      quote: String(row.quote),
+      location: row.location ? String(row.location) : null,
+      service: row.service ? String(row.service) : null,
+      approved: Number(row.approved),
+      created_at: String(row.created_at),
+    }));
+  } catch (error) {
+    console.error("Failed to query all feedbacks:", error);
+    return [];
+  }
+}
+
+export async function submitFeedbackAction(name: string, rating: number, quote: string, location?: string, service?: string): Promise<boolean> {
+  try {
+    await db.execute({
+      sql: "INSERT INTO feedbacks (name, rating, quote, location, service, approved) VALUES (?, ?, ?, ?, ?, 1)", // Auto-approve for demo/simplicity, or 0 if moderation is desired. Let's auto-approve 1.
+      args: [name, rating, quote, location ?? null, service ?? null],
+    });
+    return true;
+  } catch (error) {
+    console.error("Failed to submit feedback:", error);
+    return false;
+  }
+}
+

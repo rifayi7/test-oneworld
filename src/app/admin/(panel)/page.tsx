@@ -1,6 +1,6 @@
 import { db } from "@/db/client";
 import { requireUser } from "@/app/admin/actions";
-import { CalendarCheck, FileSpreadsheet, Users, UserCheck } from "lucide-react";
+import { CalendarCheck, FileSpreadsheet, Users, UserCheck, Globe } from "lucide-react";
 import Link from "next/link";
 
 export default async function AdminOverviewPage() {
@@ -90,29 +90,58 @@ export default async function AdminOverviewPage() {
 
       </div>
 
-      {/* Account Info Details */}
-      <div className="bg-white border border-slate-200 rounded-card p-8 shadow-sm text-left">
-        <h3 className="text-sm font-black text-slate-900 font-display pb-4 border-b border-slate-100 flex items-center gap-2">
-          <UserCheck className="w-4 h-4 text-primary-600 stroke-[2.5]" />
-          Active Session Details
-        </h3>
-        
-        <div className="pt-6 grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8 text-xs">
-          <div className="flex justify-between items-center py-1 border-b border-slate-50">
-            <span className="text-slate-400 font-semibold uppercase tracking-wider text-[0.65rem]">Name:</span>
-            <span className="text-slate-800 font-bold">{user.name || "N/A"}</span>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+        {/* Account Info Details */}
+        <div className="bg-white border border-slate-200 rounded-card p-8 shadow-sm text-left h-full">
+          <h3 className="text-sm font-black text-slate-900 font-display pb-4 border-b border-slate-100 flex items-center gap-2">
+            <UserCheck className="w-4 h-4 text-primary-600 stroke-[2.5]" />
+            Active Session Details
+          </h3>
+          
+          <div className="pt-6 grid grid-cols-1 gap-y-4 text-xs font-semibold">
+            <div className="flex justify-between items-center py-1 border-b border-slate-50">
+              <span className="text-slate-400 font-bold uppercase tracking-wider text-[0.65rem]">Name:</span>
+              <span className="text-slate-800">{user.name || "N/A"}</span>
+            </div>
+            <div className="flex justify-between items-center py-1 border-b border-slate-50">
+              <span className="text-slate-400 font-bold uppercase tracking-wider text-[0.65rem]">Email Address:</span>
+              <span className="text-slate-800">{user.email}</span>
+            </div>
+            <div className="flex justify-between items-center py-1 border-b border-slate-50">
+              <span className="text-slate-400 font-bold uppercase tracking-wider text-[0.65rem]">Access Level:</span>
+              <span className="text-primary-600 font-extrabold uppercase tracking-wider">{user.role}</span>
+            </div>
+            <div className="flex justify-between items-center py-1 border-b border-slate-50">
+              <span className="text-slate-400 font-bold uppercase tracking-wider text-[0.65rem]">Created At:</span>
+              <span className="text-slate-800">{new Date(user.created_at).toLocaleDateString()}</span>
+            </div>
           </div>
-          <div className="flex justify-between items-center py-1 border-b border-slate-50">
-            <span className="text-slate-400 font-semibold uppercase tracking-wider text-[0.65rem]">Email Address:</span>
-            <span className="text-slate-800 font-bold">{user.email}</span>
-          </div>
-          <div className="flex justify-between items-center py-1 border-b border-slate-50">
-            <span className="text-slate-400 font-semibold uppercase tracking-wider text-[0.65rem]">Access Level:</span>
-            <span className="text-primary-600 font-extrabold uppercase tracking-wider">{user.role}</span>
-          </div>
-          <div className="flex justify-between items-center py-1 border-b border-slate-50">
-            <span className="text-slate-400 font-semibold uppercase tracking-wider text-[0.65rem]">Created At:</span>
-            <span className="text-slate-800 font-bold">{new Date(user.created_at).toLocaleDateString()}</span>
+        </div>
+
+        {/* Domain & Gateway Details (₹) */}
+        <div className="bg-white border border-slate-200 rounded-card p-8 shadow-sm text-left h-full">
+          <h3 className="text-sm font-black text-slate-900 font-display pb-4 border-b border-slate-100 flex items-center gap-2">
+            <Globe className="w-4 h-4 text-primary-600 stroke-[2.5]" />
+            Domain & Gateway Details (₹)
+          </h3>
+          
+          <div className="pt-6 grid grid-cols-1 gap-y-4 text-xs font-semibold">
+            <div className="flex justify-between items-center py-1 border-b border-slate-50">
+              <span className="text-slate-400 font-bold uppercase tracking-wider text-[0.65rem]">Host Domain:</span>
+              <span className="text-slate-800">cleanworldsolutions.in</span>
+            </div>
+            <div className="flex justify-between items-center py-1 border-b border-slate-50">
+              <span className="text-slate-400 font-bold uppercase tracking-wider text-[0.65rem]">Annual Renewal:</span>
+              <span className="text-primary-600 font-bold">₹850 / year</span>
+            </div>
+            <div className="flex justify-between items-center py-1 border-b border-slate-50">
+              <span className="text-slate-400 font-bold uppercase tracking-wider text-[0.65rem]">Payment Gateway:</span>
+              <span className="text-slate-800">Razorpay API Integration</span>
+            </div>
+            <div className="flex justify-between items-center py-1 border-b border-slate-50">
+              <span className="text-slate-400 font-bold uppercase tracking-wider text-[0.65rem]">Transaction Fee:</span>
+              <span className="text-slate-800">2% per transaction</span>
+            </div>
           </div>
         </div>
       </div>
@@ -120,3 +149,4 @@ export default async function AdminOverviewPage() {
     </div>
   );
 }
+

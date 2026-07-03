@@ -1,103 +1,56 @@
 import { db } from "@/db/client";
 import { requireUser } from "@/app/admin/actions";
-import { canEditContent } from "@/lib/roles";
-import { ResponsiveTable, ColumnSpec } from "@/components/admin/ResponsiveTable";
-import { DeleteBookingBtn } from "@/components/admin/DeleteBookingBtn";
-
-interface BookingRow {
-  id: number;
-  name: string;
-  phone: string;
-  location: string;
-  service: string;
-  booking_date: string;
-  time_slot: string;
-  notes: string | null;
-  created_at: string;
-}
+import { BookingsManager, BookingRow } from "@/components/admin/BookingsManager";
 
 export default async function AdminBookingsPage() {
-  const user = await requireUser();
-  const editable = canEditContent(user.role);
+  await requireUser();
 
-  // Fetch all slot bookings
+  // Fetch all slot bookings with full payment and user metadata columns
   const res = await db.execute({
-    sql: "SELECT id, service, booking_date, time_slot, name, phone, location, notes, created_at FROM bookings ORDER BY created_at DESC",
+    sql: `SELECT id, service, booking_date, time_slot, name, phone, email, location, notes, created_at,
+                 total_price, advance_paid, balance_due, payment_status, payment_link,
+                 latitude, longitude, ip_address, user_agent, device_type
+           FROM bookings ORDER BY created_at DESC`,
     args: [],
   });
 
-  const bookings = res.rows.map((row) => ({
+  const bookings: BookingRow[] = res.rows.map((row) => ({
     id: Number(row.id),
     name: String(row.name),
     phone: String(row.phone),
+    email: row.email ? String(row.email) : null,
     location: String(row.location),
     service: String(row.service),
     booking_date: String(row.booking_date),
     time_slot: String(row.time_slot),
     notes: row.notes ? String(row.notes) : null,
     created_at: String(row.created_at),
+    total_price: Number(row.total_price ?? 0),
+    advance_paid: Number(row.advance_paid ?? 0),
+    balance_due: Number(row.balance_due ?? 0),
+    payment_status: String(row.payment_status ?? "Pending"),
+    payment_link: row.payment_link ? String(row.payment_link) : null,
+    latitude: row.latitude ? String(row.latitude) : null,
+    longitude: row.longitude ? String(row.longitude) : null,
+    ip_address: row.ip_address ? String(row.ip_address) : null,
+    user_agent: row.user_agent ? String(row.user_agent) : null,
+    device_type: row.device_type ? String(row.device_type) : null,
   }));
-
-  const columns: ColumnSpec<BookingRow>[] = [
-    {
-      header: "Client Name",
-      accessor: (b) => b.name,
-      isPrimary: true,
-    },
-    {
-      header: "Phone",
-      accessor: (b) => (
-        <a href={`tel:${b.phone}`} className="text-primary-600 hover:underline">
-          {b.phone}
-        </a>
-      ),
-    },
-    {
-      header: "Service Details",
-      accessor: (b) => (
-        <div className="leading-tight">
-          <span className="block text-slate-800 font-extrabold">{b.service}</span>
-          <span className="block text-[0.65rem] text-slate-400 mt-0.5">
-            {b.booking_date} • {b.time_slot}
-          </span>
-        </div>
-      ),
-      mobileLabel: "Service",
-    },
-    {
-      header: "District",
-      accessor: (b) => `${b.location} District`,
-      mobileLabel: "Location",
-    },
-    {
-      header: "Notes",
-      accessor: (b) => b.notes || <span className="text-slate-300 font-medium">None</span>,
-    },
-    {
-      header: "Submitted",
-      accessor: (b) => new Date(b.created_at).toLocaleDateString(),
-    },
-  ];
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center select-none">
+      <div className="flex justify-between items-center select-none text-left">
         <div>
           <h2 className="text-lg font-black text-slate-900 font-display">
-            Bookings Log
+            Bookings Log & Payments
           </h2>
           <p className="text-[0.65rem] text-slate-400 mt-1">
-            Real-time list of all reservation slots submitted by customers on the landing page.
+            Manage slot reservations, track collections, copy payment links, and inspect customer coordinates & network info.
           </p>
         </div>
       </div>
 
-      <ResponsiveTable
-        items={bookings}
-        columns={columns}
-        actions={editable ? (b) => <DeleteBookingBtn id={b.id} /> : undefined}
-        emptyMessage="No slot booking reservations found."
-      />
+      <BookingsManager initialBookings={bookings} />
     </div>
   );
 }
