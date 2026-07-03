@@ -151,6 +151,18 @@ export function SlotBooking({ servicesList = SERVICES_LIST }: SlotBookingProps) 
 
     const fullAddress = `${formData.address.trim()}, ${formData.city.trim()} (${formData.district.trim()} Dist) - ${formData.pinCode.trim()}`;
 
+    let token = "";
+    try {
+      const SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!;
+      token = await new Promise<string>((res) =>
+        (window as any).grecaptcha.ready(() =>
+          (window as any).grecaptcha.execute(SITE_KEY, { action: "submit" }).then(res)
+        )
+      );
+    } catch (tokenErr) {
+      console.error("Token creation error:", tokenErr);
+    }
+
     const data = new FormData();
     data.append("service", formData.service);
     data.append("bookingDate", formData.bookingDate);
@@ -161,6 +173,7 @@ export function SlotBooking({ servicesList = SERVICES_LIST }: SlotBookingProps) 
     data.append("location", fullAddress);
     data.append("notes", formData.notes);
     data.append("company", ""); // Honeypot
+    data.append("token", token);
     if (coordinates) {
       data.append("latitude", coordinates.lat);
       data.append("longitude", coordinates.lon);
@@ -443,7 +456,7 @@ export function SlotBooking({ servicesList = SERVICES_LIST }: SlotBookingProps) 
               />
             </div>
 
-            <div className="pt-2 text-center">
+            <div className="pt-2 text-center space-y-3">
               <Button
                 type="submit"
                 disabled={loading}
@@ -453,6 +466,11 @@ export function SlotBooking({ servicesList = SERVICES_LIST }: SlotBookingProps) 
               >
                 {loading ? "Processing Booking..." : "Book My Service"}
               </Button>
+              <p className="text-[10px] text-slate-400 max-w-sm mx-auto leading-relaxed select-none">
+                This site is protected by reCAPTCHA and the Google{" "}
+                <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-500">Privacy Policy</a> and{" "}
+                <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-500">Terms of Service</a> apply.
+              </p>
             </div>
 
           </form>

@@ -2,48 +2,87 @@
 
 import { db } from "@/db/client";
 import { headers } from "next/headers";
+import { BookingSchema } from "@/lib/booking-schema";
+import { isValidPhoneNumber, parsePhoneNumber } from "libphonenumber-js";
 
-export interface SubmitBookingResponse {
-  ok: boolean;
-  error?: string;
-  data?: {
-    id: number;
-    name: string;
-    service: string;
-  };
+async function verifyRecaptcha(token: string, action: string) {
+  // If the secret key is not set, skip verification for easier testing/development
+  if (!process.env.RECAPTCHA_SECRET_KEY) {
+    console.warn("RECAPTCHA_SECRET_KEY is missing. Skipping verification.");
+    return 1.0;
+  }
+  
+  try {
+    const r = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        secret: process.env.RECAPTCHA_SECRET_KEY!,
+        response: token,
+      }),
+    });
+    const d = await r.json();
+    if (!d.success || d.action !== action) {
+      console.error("reCAPTCHA validation failed:", d);
+      return null;
+    }
+    return d.score as number; // 0.0 - 1.0
+  } catch (err) {
+    console.error("reCAPTCHA connection error:", err);
+    return null;
+  }
 }
 
-export async function submitBooking(formData: FormData): Promise<SubmitBookingResponse> {
-  // Honeypot check
-  const company = formData.get("company");
-  if (company && String(company).trim() !== "") {
-    return { ok: true };
+export async function submitBooking(formData: FormData) {
+  // Extract inputs
+  const rawInput = {
+    service: String(formData.get("service") ?? "").trim(),
+    bookingDate: String(formData.get("bookingDate") ?? "").trim(),
+    timeSlot: String(formData.get("timeSlot") ?? "").trim(),
+    name: String(formData.get("name") ?? "").trim(),
+    phone: String(formData.get("phone") ?? "").trim(),
+    email: String(formData.get("email") ?? "").trim(),
+    location: String(formData.get("location") ?? "").trim(),
+    notes: String(formData.get("notes") ?? "").trim() || null,
+    company: String(formData.get("company") ?? "").trim(), // Honeypot
+    token: String(formData.get("token") ?? "").trim(),
+  };
+
+  // Run Zod validation
+  const parsed = BookingSchema.safeParse(rawInput);
+  if (!parsed.success) {
+    const errorMsg = parsed.error.issues[0]?.message || "Please check the form.";
+    return { ok: false, error: errorMsg };
+  }
+  
+  const data = parsed.data;
+  if (data.company) {
+    return { ok: true }; // Drop honeypot submission silently
   }
 
-  const service = String(formData.get("service") ?? "").trim();
-  const bookingDate = String(formData.get("bookingDate") ?? "").trim();
-  const timeSlot = String(formData.get("timeSlot") ?? "").trim();
-  const name = String(formData.get("name") ?? "").trim();
-  const phone = String(formData.get("phone") ?? "").trim();
-  const email = String(formData.get("email") ?? "").trim() || null;
-  const location = String(formData.get("location") ?? "").trim();
-  const notes = String(formData.get("notes") ?? "").trim() || null;
-  
-  // Latitude and Longitude coordinates
+  // Verify reCAPTCHA token
+  const score = await verifyRecaptcha(data.token, "submit");
+  if (score === null || score < 0.5) {
+    return { ok: false, error: "Could not verify you're human. Please try again." };
+  }
+
+  // Validate and format phone to E.164 using libphonenumber-js
+  // Since they serve Kerala, India by default, we can parse it assuming IN if no dial code is provided
+  let formattedPhone = data.phone;
+  try {
+    const phoneInputToParse = data.phone.startsWith("+") ? data.phone : `+91${data.phone}`;
+    if (!isValidPhoneNumber(phoneInputToParse)) {
+      return { ok: false, error: "Please enter a valid 10-digit phone number." };
+    }
+    const parsedPhone = parsePhoneNumber(phoneInputToParse);
+    formattedPhone = parsedPhone.number; // E.164 format
+  } catch (err) {
+    return { ok: false, error: "Please enter a valid phone number." };
+  }
+
+  // Extra metadata
   const latitude = String(formData.get("latitude") ?? "").trim() || null;
   const longitude = String(formData.get("longitude") ?? "").trim() || null;
-
-  // Validation checks
-  if (!service) return { ok: false, error: "Please select a service." };
-  if (!bookingDate) return { ok: false, error: "Please select a date." };
-  if (!timeSlot) return { ok: false, error: "Please select a preferred time slot." };
-  if (!name) return { ok: false, error: "Please enter your name." };
-  if (!location) return { ok: false, error: "Please enter your location." };
-
-  const phonePattern = /^\+?[0-9\s\-()]{7,}$/;
-  if (!phone || !phonePattern.test(phone)) {
-    return { ok: false, error: "Please enter a valid phone number (minimum 7 digits)." };
-  }
 
   // Get network and device metadata from headers
   const headersList = await headers();
@@ -64,11 +103,10 @@ export async function submitBooking(formData: FormData): Promise<SubmitBookingRe
         latitude, longitude, ip_address, user_agent, device_type
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       args: [
-        service, bookingDate, timeSlot, name, phone, email, location, notes,
+        data.service, data.bookingDate, data.timeSlot, data.name, formattedPhone, data.email, data.location, data.notes || null,
         latitude, longitude, ipAddress, userAgent, deviceType
       ],
     });
-
 
     const insertedId = Number(result.lastInsertRowid ?? 0);
 
@@ -76,8 +114,8 @@ export async function submitBooking(formData: FormData): Promise<SubmitBookingRe
       ok: true,
       data: {
         id: insertedId,
-        name,
-        service,
+        name: data.name,
+        service: data.service,
       },
     };
   } catch (error) {

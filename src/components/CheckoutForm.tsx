@@ -18,9 +18,9 @@ import {
   CheckCircle,
   Loader2,
   ArrowRight,
-  ExternalLink,
   ArrowLeft,
-  ShieldCheck
+  ShieldCheck,
+  Check
 } from "lucide-react";
 
 interface CheckoutFormProps {
@@ -165,8 +165,18 @@ export function CheckoutForm({ services }: CheckoutFormProps) {
 
     setProcessing(true);
 
-    // Simulate slot allocation (1 second)
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    // Mint reCAPTCHA v3 token
+    let token = "";
+    try {
+      const SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!;
+      token = await new Promise<string>((res) =>
+        (window as any).grecaptcha.ready(() =>
+          (window as any).grecaptcha.execute(SITE_KEY, { action: "submit" }).then(res)
+        )
+      );
+    } catch (tokenErr) {
+      console.error("Token creation error:", tokenErr);
+    }
 
     const data = new FormData();
     data.append("service", selectedService.name);
@@ -178,6 +188,7 @@ export function CheckoutForm({ services }: CheckoutFormProps) {
     data.append("notes", notes);
     data.append("email", email);
     data.append("company", ""); // Honeypot
+    data.append("token", token);
     if (coordinates) {
       data.append("latitude", coordinates.lat);
       data.append("longitude", coordinates.lon);
@@ -223,73 +234,6 @@ export function CheckoutForm({ services }: CheckoutFormProps) {
 
     window.open(`https://wa.me/${cleanPhone}?text=${waMsg}`, "_blank");
   };
-
-  // SUCCESS SCREEN
-  if (completed && selectedService) {
-    return (
-      <div className="max-w-2xl mx-auto bg-white border border-slate-200 rounded-card p-8 md:p-12 shadow-soft text-center space-y-8 animate-in fade-in zoom-in-95 duration-300">
-        <div className="w-20 h-20 bg-emerald-100 text-emerald-500 rounded-full flex items-center justify-center mx-auto shadow-sm">
-          <CheckCircle className="w-10 h-10 stroke-[2.5]" />
-        </div>
-        
-        <div className="space-y-2">
-          <h2 className="text-2xl font-black text-neutral-900 font-display">
-            Success! We will contact you shortly.
-          </h2>
-          <p className="text-sm text-slate-500 max-w-md mx-auto font-medium">
-            Your slot booking request for <strong className="text-slate-900">{selectedService.name}</strong> has been received. Our coordination desk will reach out to you within the next 30 minutes to finalize your schedule.
-          </p>
-        </div>
-
-        {/* Receipt details */}
-        <div className="border border-slate-200/80 rounded-card p-6 bg-slate-50/50 text-left space-y-4 max-w-md mx-auto text-xs">
-          <div className="flex justify-between pb-3 border-b border-slate-200/60 font-bold">
-            <span className="text-slate-400 uppercase tracking-wider">Booking Status</span>
-            <span className="text-emerald-600 font-extrabold uppercase">PENDING CONFIRMATION</span>
-          </div>
-          <div className="space-y-2 font-semibold text-slate-600">
-            <div className="flex justify-between">
-              <span>Service:</span>
-              <span className="text-slate-900">{selectedService.name}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Date:</span>
-              <span className="text-slate-900">{bookingDate}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Time Slot:</span>
-              <span className="text-slate-900">{timeSlot}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Client Name:</span>
-              <span className="text-slate-900">{name}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Estimated Price:</span>
-              <span className="text-primary-600 font-extrabold">{formattedTotal}</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="space-y-4 pt-4 max-w-sm mx-auto">
-          <button
-            onClick={handleWhatsAppRedirect}
-            className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-button text-xs font-black shadow-md shadow-emerald-600/10 transition cursor-pointer flex items-center justify-center gap-2"
-          >
-            Coordinate via WhatsApp
-            <ExternalLink className="w-3.5 h-3.5" />
-          </button>
-          
-          <Link
-            href="/"
-            className="inline-block text-xs font-bold text-slate-500 hover:text-primary-600 transition"
-          >
-            Return to Homepage
-          </Link>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <form onSubmit={handleSubmit} className="w-full">
@@ -619,7 +563,7 @@ export function CheckoutForm({ services }: CheckoutFormProps) {
           </div>
 
           {/* Checkout Submit Button */}
-          <div className="pt-2">
+          <div className="pt-2 space-y-3">
             <button
               type="submit"
               disabled={processing}
@@ -637,9 +581,71 @@ export function CheckoutForm({ services }: CheckoutFormProps) {
                 </>
               )}
             </button>
+            <p className="text-[10px] text-slate-400 max-w-sm mx-auto leading-relaxed select-none">
+              This site is protected by reCAPTCHA and the Google{" "}
+              <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-500">Privacy Policy</a> and{" "}
+              <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-500">Terms of Service</a> apply.
+            </p>
           </div>
         </div>
       </div>
+
+      {/* Dynamic Success Modal Overlay */}
+      {completed && selectedService && (
+        <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-md z-50 flex items-center justify-center p-6 animate-in fade-in duration-300">
+          <div className="bg-white border border-slate-200/80 rounded-card p-8 max-w-md w-full shadow-lg text-center space-y-6 animate-in zoom-in-95 duration-300 relative select-none">
+            
+            {/* Glowing success badge */}
+            <span className="w-16 h-16 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-sm">
+              <Check className="w-8 h-8 stroke-[3]" />
+            </span>
+            
+            {/* Messages */}
+            <div className="space-y-2 text-center">
+              <h3 className="text-2xl font-black text-slate-900 font-display">
+                Booking Confirmed!
+              </h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Hi <strong className="text-slate-800">{name}</strong>, your slot booking request for <strong className="text-slate-800">{selectedService.name}</strong> has been received.
+              </p>
+            </div>
+
+            {/* Summary card */}
+            <div className="border border-slate-100 rounded-xl p-4 bg-slate-50 text-left space-y-2.5 text-[11px] font-semibold text-slate-600">
+              <div className="flex justify-between">
+                <span className="text-slate-400">Date:</span>
+                <span className="text-slate-800">{bookingDate}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-400">Time Slot:</span>
+                <span className="text-slate-800">{timeSlot}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-400">Price Total:</span>
+                <span className="text-primary-600 font-black">{formattedTotal}</span>
+              </div>
+            </div>
+
+            {/* Redirections */}
+            <div className="space-y-3">
+              <button
+                onClick={handleWhatsAppRedirect}
+                className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-black shadow-sm flex items-center justify-center gap-2 cursor-pointer transition select-none"
+              >
+                Coordinate via WhatsApp
+              </button>
+              
+              <button
+                onClick={() => setCompleted(false)}
+                className="text-xs font-bold text-slate-400 hover:text-slate-600 transition cursor-pointer select-none"
+              >
+                Close & Return
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
 
     </div>
   </form>
