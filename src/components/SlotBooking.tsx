@@ -87,12 +87,54 @@ export function SlotBooking({ servicesList = SERVICES_LIST }: SlotBookingProps) 
     }
     setGpsLoading(true);
     navigator.geolocation.getCurrentPosition(
-      (position) => {
+      async (position) => {
         const lat = position.coords.latitude.toFixed(6);
         const lon = position.coords.longitude.toFixed(6);
         setCoordinates({ lat, lon });
         setGpsLoading(false);
         setGpsSuccess(true);
+
+        try {
+          // Reverse geocode via free OpenStreetMap Nominatim API
+          const response = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`,
+            {
+              headers: {
+                "User-Agent": "CleanWorldSolutions/1.0"
+              }
+            }
+          );
+          if (response.ok) {
+            const data = await response.json();
+            if (data && data.address) {
+              const road = data.address.road || data.address.suburb || data.address.neighbourhood || "";
+              const city = data.address.city || data.address.town || data.address.village || "Thiruvalla";
+              const postcode = data.address.postcode || "689531";
+              
+              // Match Kerala District
+              const searchStr = ((data.address.county || "") + " " + data.display_name).toLowerCase();
+              let matchedDistrict = "";
+              for (const dist of DISTRICTS) {
+                if (searchStr.includes(dist.toLowerCase())) {
+                  matchedDistrict = dist;
+                  break;
+                }
+              }
+
+              setFormData((prev) => ({
+                ...prev,
+                address: road 
+                  ? `${road}${data.address.suburb ? ", " + data.address.suburb : ""}`
+                  : data.display_name.split(",").slice(0, 3).join(", ").trim(),
+                city: city,
+                pinCode: postcode,
+                district: matchedDistrict || prev.district
+              }));
+            }
+          }
+        } catch (err) {
+          console.error("Reverse geocoding error:", err);
+        }
       },
       (error) => {
         console.error("GPS collection error:", error);
