@@ -19,7 +19,7 @@ const REVIEWS_DATA: ReviewItem[] = [
     author: "Ragesh Nair",
     location: "Kochi, Ernakulam",
     service: "Water Tank Cleaning",
-    avatar: "/hero/avatar2.jpg"
+    avatar: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/hero/avatar2.webp"
   },
   {
     rating: 5,
@@ -27,7 +27,7 @@ const REVIEWS_DATA: ReviewItem[] = [
     author: "Anitha Kurian",
     location: "Kottayam",
     service: "Grass Cutting & Weed Removal",
-    avatar: "/hero/avatar.jpg"
+    avatar: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/hero/avatar.webp"
   },
   {
     rating: 5,
@@ -35,7 +35,7 @@ const REVIEWS_DATA: ReviewItem[] = [
     author: "Deepak Menon",
     location: "Trivandrum",
     service: "CCTV Installation",
-    avatar: "/hero/avatar2.jpg"
+    avatar: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/hero/avatar2.webp"
   }
 ];
 
@@ -46,8 +46,8 @@ export function Reviews() {
       <div className="container mx-auto max-w-7xl text-center space-y-12">
         
         {/* Title */}
-        <div className="space-y-4 max-w-xl mx-auto">
-          <span className="text-xs font-bold text-primary-600 uppercase tracking-widest bg-primary-50 px-4 py-1.5 rounded-badge">
+        <div className="space-y-6 max-w-xl mx-auto">
+          <span className="inline-block text-xs font-bold text-primary-600 uppercase tracking-widest bg-primary-50 px-4 py-1.5 rounded-badge">
             Testimonials
           </span>
           <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-neutral-900 font-display">

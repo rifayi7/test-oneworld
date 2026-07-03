@@ -4,7 +4,6 @@ import { useState } from "react";
 import Image from "next/image";
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/Button";
-import { useLead } from "@/lead";
 
 interface GalleryItem {
   name: string;
@@ -18,30 +17,29 @@ const GALLERY_DATA: Record<string, GalleryItem> = {
     name: "Water Tank Cleaning",
     beforeDesc: "Silt deposits, algae growth, and bacterial sludge gathered at the bottom and walls.",
     afterDesc: "High pressure jet washing, antibacterial sanitization, and spotless vacuumed surface.",
-    img: "/services/water_tank.jpg"
+    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/water-tank.webp"
   },
   "Grass Cutting": {
     name: "Grass & Wild Weed Clearing",
     beforeDesc: "Overgrown weed vegetation, safety hazard, potential snake/pest shelter.",
     afterDesc: "Neatly cut lawns, trimmed edges, clean visible compound boundaries.",
-    img: "/services/grass_trimming.jpg"
+    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/grass-trimming.webp"
   },
   "Roof Waterproofing": {
     name: "Roof Leakage Coating",
     beforeDesc: "Cracked concrete slab, water dampness, interior wall fungus build-up.",
     afterDesc: "Elastomeric multi-coat protective chemical sealing applied, leak-proof finish.",
-    img: "/services/roof_waterproof.jpg"
+    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/roof-waterproof.webp"
   },
   "Deep Well": {
     name: "Deep Well Restoration",
     beforeDesc: "Fallen leaves, mud accumulation, murky colored drinking water.",
     afterDesc: "Debris vacuumed, descaled wall surface, clear clean groundwater.",
-    img: "/services/home_services.jpg"
+    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/home-services.webp"
   }
 };
 
 export function BeforeAfter() {
-  const { openModal } = useLead();
   const tabs = Object.keys(GALLERY_DATA);
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const [sliderPosition, setSliderPosition] = useState(50); // percentage
@@ -54,8 +52,8 @@ export function BeforeAfter() {
       <div className="container mx-auto max-w-7xl space-y-12">
         
         {/* Header */}
-        <div className="text-center space-y-4 max-w-xl mx-auto">
-          <span className="text-xs font-bold text-primary-600 uppercase tracking-widest bg-primary-50 px-4 py-1.5 rounded-badge">
+        <div className="text-center space-y-6 max-w-xl mx-auto">
+          <span className="inline-block text-xs font-bold text-primary-600 uppercase tracking-widest bg-primary-50 px-4 py-1.5 rounded-badge">
             Results
           </span>
           <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-neutral-900 font-display">
@@ -177,7 +175,7 @@ export function BeforeAfter() {
             </div>
 
             <div className="pt-4">
-              <Button onClick={openModal} variant="solid" color="blue">
+              <Button href="/checkout" variant="solid" color="blue">
                 Request Similar Service
               </Button>
             </div>

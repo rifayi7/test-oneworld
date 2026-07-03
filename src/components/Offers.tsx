@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useLead } from "@/lead";
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/Button";
 import { Droplet, Scissors, ShieldCheck, Zap, AlertTriangle } from "lucide-react";
@@ -13,6 +12,7 @@ interface OfferItem {
   validity: string;
   img: string;
   desc: string;
+  serviceId: number;
 }
 
 const OFFERS_DATA: OfferItem[] = [
@@ -21,46 +21,49 @@ const OFFERS_DATA: OfferItem[] = [
     badge: "Special Entry Rate",
     discount: "Starting from ₹799",
     validity: "Valid till July 31, 2026",
-    img: "/services/water_tank.jpg",
-    desc: "Complete disinfection and high pressure deep cleaning at lowest entry rates."
+    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/water-tank.webp",
+    desc: "Complete disinfection and high pressure deep cleaning at lowest entry rates.",
+    serviceId: 3
   },
   {
     service: "Grass Cutting Offer",
     badge: "Seasonal Deal",
     discount: "20% OFF Total Bill",
     validity: "Valid till July 15, 2026",
-    img: "/services/grass_trimming.jpg",
-    desc: "Clear out your compound and backyard gardens at customized discount rates."
+    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/grass-trimming.webp",
+    desc: "Clear out your compound and backyard gardens at customized discount rates.",
+    serviceId: 25
   },
   {
     service: "Roof Waterproofing",
     badge: "Free Consultation",
     discount: "Free Inspection",
     validity: "Limited Slots Available",
-    img: "/services/roof_waterproof.jpg",
-    desc: "Schedule a complete roof dampness checkup and leakage report by engineers."
+    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/roof-waterproof.webp",
+    desc: "Schedule a complete roof dampness checkup and leakage report by engineers.",
+    serviceId: 23
   },
   {
     service: "Solar Installation",
     badge: "Subsidy Support",
     discount: "Government Subsidy Available",
     validity: "Subject to KSEB approval",
-    img: "/services/home_services.jpg",
-    desc: "Get full subsidy integration guidance and custom capacity modeling free."
+    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/home-services.webp",
+    desc: "Get full subsidy integration guidance and custom capacity modeling free.",
+    serviceId: 24
   },
   {
     service: "Gas Leak Detector",
     badge: "Home Protection",
     discount: "Free Safety Check",
     validity: "With any major cleaning",
-    img: "/services/home_services.jpg",
-    desc: "Get a free LPG kitchen gas valve safety inspection and sensor calibration."
+    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/laccadives-coral-trails/services/home-services.webp",
+    desc: "Get a free LPG kitchen gas valve safety inspection and sensor calibration.",
+    serviceId: 22
   }
 ];
 
 export function Offers() {
-  const { openModal } = useLead();
-
   const offerIcons: Record<string, React.ReactNode> = {
     "Water Tank Cleaning": <Droplet className="w-4.5 h-4.5 text-primary-600 stroke-[2.5]" />,
     "Grass Cutting Offer": <Scissors className="w-4.5 h-4.5 text-primary-600 stroke-[2.5]" />,
@@ -75,8 +78,8 @@ export function Offers() {
         <div className="container mx-auto max-w-7xl text-center space-y-12">
 
           {/* Title Header */}
-          <div className="space-y-4 max-w-xl mx-auto">
-            <span className="text-xs font-bold text-primary-600 uppercase tracking-widest bg-primary-50 px-4 py-1.5 rounded-badge">
+          <div className="space-y-6 max-w-xl mx-auto">
+            <span className="inline-block text-xs font-bold text-primary-600 uppercase tracking-widest bg-primary-50 px-4 py-1.5 rounded-badge">
               Promotions
             </span>
             <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-neutral-900 font-display">
@@ -131,7 +134,7 @@ export function Offers() {
                       {offer.validity}
                     </span>
                     <Button
-                      onClick={openModal}
+                      href={`/checkout?serviceId=${offer.serviceId}`}
                       variant="solid"
                       color="blue"
                       className="px-5 py-2.5 text-[0.7rem] font-black shadow-sm"

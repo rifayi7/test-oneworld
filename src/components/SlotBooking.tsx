@@ -53,7 +53,11 @@ const DISTRICTS = [
   "Kasaragod"
 ];
 
-export function SlotBooking() {
+interface SlotBookingProps {
+  servicesList?: string[];
+}
+
+export function SlotBooking({ servicesList = SERVICES_LIST }: SlotBookingProps) {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
@@ -164,7 +168,7 @@ export function SlotBooking() {
                     className="px-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-600 transition"
                   >
                     <option value="">-- Choose a Service --</option>
-                    {SERVICES_LIST.map((srv) => (
+                    {servicesList.map((srv) => (
                       <option key={srv} value={srv}>{srv}</option>
                     ))}
                   </select>

@@ -1,6 +1,6 @@
 ---
 name: media-optimize
-description: Optimize images and video for landing pages and store them efficiently — convert to WebP/AVIF under weight budgets, encode video for playback AND scroll-scrubbing (all-intra HEVC + H.264), extract posters, AND upload to Cloudflare R2 (S3-compatible) with a clean shared-bucket folder structure instead of shipping in /public. Two optimization paths: CLI (ffmpeg/cwebp/avifenc) for local/build-time prep, and runtime `sharp` for in-app admin uploads. Use whenever raw assets need to become web-ready files, assets are too heavy, or you need an upload-to-R2 / object-storage media pipeline.
+description: Optimize images and video for landing pages and store them efficiently — convert to WebP/AVIF under weight budgets, encode video for playback AND scroll-scrubbing (all-intra HEVC + H.264), extract posters, AND upload to Cloudflare R2 (S3-compatible) with a clean shared-bucket folder structure instead of shipping in /public. Two optimization paths (CLI with ffmpeg/cwebp/avifenc for local/build-time prep, and runtime sharp for in-app admin uploads). Use whenever raw assets need to become web-ready files, assets are too heavy, or you need an upload-to-R2 / object-storage media pipeline.
 ---
 
 # Media optimization

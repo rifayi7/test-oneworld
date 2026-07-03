@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Elms_Sans, Plus_Jakarta_Sans } from "next/font/google";
-import { LeadProvider } from "@/lead";
 import { SITE_INFO } from "@/content";
 import "./globals.css";
 
@@ -29,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${elmsSans.variable} ${plusJakartaSans.variable}`}>
       <body className="antialiased">
-        <LeadProvider>{children}</LeadProvider>
+        {children}
       </body>
     </html>
   );

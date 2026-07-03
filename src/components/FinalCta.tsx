@@ -1,24 +1,11 @@
 "use client";
 
 import { SITE_INFO } from "@/content";
-import { useLead } from "@/lead";
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/Button";
 import { Phone, Calendar, MessageCircle } from "lucide-react";
 
 export function FinalCta() {
-  const { openModal } = useLead();
-
-  const handleBook = () => {
-    // Scroll to booking form or open modal
-    const bookSection = document.getElementById("book-slot");
-    if (bookSection) {
-      bookSection.scrollIntoView({ behavior: "smooth" });
-    } else {
-      openModal();
-    }
-  };
-
   const handleWhatsApp = () => {
     const cleanWaPhone = SITE_INFO.phone.replace(/[^0-9]/g, "");
     const waMsg = encodeURIComponent("Hi Clean World Solutions! I'd like to ask about your services.");
@@ -61,7 +48,7 @@ export function FinalCta() {
 
               {/* Book Service Button */}
               <Button
-                onClick={handleBook}
+                href="/checkout"
                 variant="solid"
                 color="white"
                 className="px-8 py-4 text-sm font-extrabold bg-white hover:bg-slate-50 text-primary-600 shadow-lg"
