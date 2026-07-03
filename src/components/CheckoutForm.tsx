@@ -60,6 +60,33 @@ export function CheckoutForm({ services }: CheckoutFormProps) {
   const [pinCode, setPinCode] = useState("");
   const [notes, setNotes] = useState("");
 
+  const [coordinates, setCoordinates] = useState<{ lat: string; lon: string } | null>(null);
+  const [gpsLoading, setGpsLoading] = useState(false);
+  const [gpsSuccess, setGpsSuccess] = useState(false);
+
+  const handleGetLocation = () => {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by your browser.");
+      return;
+    }
+    setGpsLoading(true);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude.toFixed(6);
+        const lon = position.coords.longitude.toFixed(6);
+        setCoordinates({ lat, lon });
+        setGpsLoading(false);
+        setGpsSuccess(true);
+      },
+      (error) => {
+        console.error("GPS collection error:", error);
+        alert("Failed to capture location coordinates. Please type it in the address field.");
+        setGpsLoading(false);
+      }
+    );
+  };
+
+
   // Status states
   const [processing, setProcessing] = useState(false);
   const [completed, setCompleted] = useState(false);
@@ -119,7 +146,13 @@ export function CheckoutForm({ services }: CheckoutFormProps) {
     data.append("phone", phone);
     data.append("location", fullAddress);
     data.append("notes", notes);
+    data.append("email", email);
     data.append("company", ""); // Honeypot
+    if (coordinates) {
+      data.append("latitude", coordinates.lat);
+      data.append("longitude", coordinates.lon);
+    }
+
 
     try {
       const response = await submitBooking(data);
@@ -230,7 +263,7 @@ export function CheckoutForm({ services }: CheckoutFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="w-full">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
         
         {/* Checkout Form Card (Left Column) */}
         <div className="lg:col-span-8 bg-white border border-slate-200/60 rounded-card p-6 md:p-8 shadow-soft text-left">
@@ -384,8 +417,13 @@ export function CheckoutForm({ services }: CheckoutFormProps) {
                 </div>
 
                 <div className="flex flex-col space-y-1.5 sm:col-span-2">
-                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                    Street Address
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center justify-between">
+                    <span>Street Address</span>
+                    {gpsSuccess && (
+                      <span className="text-[9px] text-emerald-600 font-extrabold uppercase">
+                        ✓ Location Detected
+                      </span>
+                    )}
                   </label>
                   <div className="relative flex items-center">
                     <MapPin className="absolute left-4 w-4 h-4 text-slate-400" />
@@ -398,6 +436,21 @@ export function CheckoutForm({ services }: CheckoutFormProps) {
                       placeholder="Street No, Apartment, Landmark..."
                       className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-600 transition"
                     />
+                  </div>
+                  <div className="pt-1 flex gap-2 items-center">
+                    <button
+                      type="button"
+                      disabled={gpsLoading || processing}
+                      onClick={handleGetLocation}
+                      className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 disabled:opacity-50 text-slate-800 border border-slate-200 rounded-lg text-[10px] font-bold transition cursor-pointer select-none flex items-center gap-1"
+                    >
+                      📍 {gpsLoading ? "Detecting Location..." : gpsSuccess ? "Location Captured" : "Detect My Location"}
+                    </button>
+                    {coordinates && (
+                      <span className="text-[9px] font-mono text-slate-400">
+                        ({coordinates.lat}, {coordinates.lon})
+                      </span>
+                    )}
                   </div>
                 </div>
 
@@ -452,8 +505,8 @@ export function CheckoutForm({ services }: CheckoutFormProps) {
         </div>
 
         {/* Order Summary (Right Column Wrapper) */}
-        <div className="lg:col-span-4">
-          <div className="lg:sticky lg:top-28 bg-white border border-slate-200/60 rounded-card p-6 md:p-8 shadow-soft text-left space-y-6">
+        <div className="lg:col-span-4 lg:sticky lg:top-28">
+          <div className="bg-white border border-slate-200/60 rounded-card p-6 md:p-8 shadow-soft text-left space-y-6">
           <h3 className="text-sm font-extrabold text-neutral-900 font-display pb-3 border-b border-slate-100">
             Order Summary
           </h3>

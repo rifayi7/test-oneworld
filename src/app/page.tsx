@@ -1,9 +1,14 @@
 import { SiteShell } from "@/components/SiteShell";
-import { getAllServices } from "@/db/queries";
+import { getAllServices, getApprovedFeedbacks } from "@/db/queries";
 
 export const revalidate = 60; // Cache for 60 seconds (ISR)
 
 export default async function Home() {
-  const services = await getAllServices();
-  return <SiteShell initialServices={services} />;
+  // Query both services catalog and approved customer reviews
+  const [services, feedbacks] = await Promise.all([
+    getAllServices(),
+    getApprovedFeedbacks(),
+  ]);
+
+  return <SiteShell initialServices={services} initialFeedbacks={feedbacks} />;
 }

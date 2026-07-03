@@ -44,7 +44,7 @@ export function WhyChoose() {
 
           {/* Header Block */}
           <div className="space-y-4 max-w-xl mx-auto">
-            <span className="text-xs font-bold text-primary-600 uppercase tracking-widest bg-primary-50 px-4 py-1.5 rounded-badge">
+            <span className="inline-block text-xs font-bold text-primary-600 uppercase tracking-widest bg-primary-50 px-4 py-1.5 rounded-badge">
               Why Us
             </span>
             <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-neutral-900 font-display">

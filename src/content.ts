@@ -2,9 +2,12 @@ export const SITE_INFO = {
   brandName: "Clean World",
   brandSuffix: "SOLUTIONS",
   tagline: "Your Complete Home Care Partner",
+  taglineMalayalam: "വീട്ടിലെ ആവശ്യമായ ജോലികൾക്കെല്ലാം ഇനിയും ഞങ്ങൾ നിങ്ങൾക്കൊപ്പമുണ്ട്",
   description: "Premium professional cleaning and housekeeping services tailored to your needs. Spotless spaces, eco-friendly products, and trusted service partners.",
+  descriptionMalayalam: "Deep Well Cleaning, Pond Cleaning, Water Tank Cleaning & UV Treatment, Pipeline Cleaning, Water Purifier Installation, Home Safety Services, CCTV Installation, Gas Leak Detector, Roof Waterproofing, Solar Installation, Grass Cutting, Termite Control, Disinfection Spraying മുതൽ Farm Services വരെ... എല്ലാം ഇനി ഒരു ഫോൺ കോളിൽ !",
   ctaLabel: "Book Now",
-  phone: "+91 1234 567 890",
+  phone: "+91 94460 56789",
+  email: "info@cleanworldsolutions.com",
 };
 
 export const NAV_LINKS = [
@@ -18,7 +21,7 @@ export const NAV_LINKS = [
 ];
 
 export const HERO_CONTENT = {
-  eyebrow: "Your Complete Home Care Partner",
+  eyebrow: "Clean World Solutions – House Keeping & Home Care Services",
   title: "One Partner For",
   titleHighlight: "Every Service Your Home Needs",
   description: "From Deep Cleaning To Repairs — We Keep Your Home Comfortable, Safe & Stress-Free.",
@@ -43,9 +46,9 @@ export const HERO_CONTENT = {
 
 export const FOOTER_CONTENT = {
   copyright: "© 2026 Clean World Solutions. All rights reserved.",
-  address: "Clean World Solutions Headquarters, Eco Tower, City Center",
-  email: "hello@cleanworldsolutions.com",
-  phone: "+91 1234 567 890",
+  address: "Clean World Solutions, Madhavi Gardens, Nellickal, Koipuram.PO, Thiruvalla Taluk, Pathanamthitta Dist, Kerala-689531",
+  email: "info@cleanworldsolutions.com",
+  phone: "+91 94460 56789",
   links: [
     { label: "Privacy Policy", href: "/privacy" },
     { label: "Terms of Service", href: "/terms" },

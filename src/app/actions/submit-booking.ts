@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/db/client";
+import { headers } from "next/headers";
 
 export interface SubmitBookingResponse {
   ok: boolean;
@@ -24,8 +25,13 @@ export async function submitBooking(formData: FormData): Promise<SubmitBookingRe
   const timeSlot = String(formData.get("timeSlot") ?? "").trim();
   const name = String(formData.get("name") ?? "").trim();
   const phone = String(formData.get("phone") ?? "").trim();
+  const email = String(formData.get("email") ?? "").trim() || null;
   const location = String(formData.get("location") ?? "").trim();
   const notes = String(formData.get("notes") ?? "").trim() || null;
+  
+  // Latitude and Longitude coordinates
+  const latitude = String(formData.get("latitude") ?? "").trim() || null;
+  const longitude = String(formData.get("longitude") ?? "").trim() || null;
 
   // Validation checks
   if (!service) return { ok: false, error: "Please select a service." };
@@ -39,11 +45,30 @@ export async function submitBooking(formData: FormData): Promise<SubmitBookingRe
     return { ok: false, error: "Please enter a valid phone number (minimum 7 digits)." };
   }
 
+  // Get network and device metadata from headers
+  const headersList = await headers();
+  const userAgent = headersList.get("user-agent") || "Unknown Browser";
+  const ipAddress = headersList.get("x-forwarded-for")?.split(",")[0].trim() || headersList.get("x-real-ip") || "127.0.0.1";
+  
+  let deviceType = "Desktop";
+  if (/mobile/i.test(userAgent)) {
+    deviceType = "Mobile";
+  } else if (/tablet|ipad/i.test(userAgent)) {
+    deviceType = "Tablet";
+  }
+
   try {
     const result = await db.execute({
-      sql: "INSERT INTO bookings (service, booking_date, time_slot, name, phone, location, notes) VALUES (?, ?, ?, ?, ?, ?, ?)",
-      args: [service, bookingDate, timeSlot, name, phone, location, notes],
+      sql: `INSERT INTO bookings (
+        service, booking_date, time_slot, name, phone, email, location, notes, 
+        latitude, longitude, ip_address, user_agent, device_type
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      args: [
+        service, bookingDate, timeSlot, name, phone, email, location, notes,
+        latitude, longitude, ipAddress, userAgent, deviceType
+      ],
     });
+
 
     const insertedId = Number(result.lastInsertRowid ?? 0);
 

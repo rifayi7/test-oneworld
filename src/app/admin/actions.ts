@@ -442,3 +442,60 @@ export async function deleteServiceAction(id: number) {
     return { error: "Failed to delete service." };
   }
 }
+
+// UPDATE Booking Payment Details (Admin only)
+export async function updateBookingPaymentAction(
+  id: number,
+  totalPrice: number,
+  advancePaid: number,
+  paymentStatus: string,
+  paymentLink: string | null
+) {
+  await requireEditor();
+
+  const balanceDue = Math.max(0, totalPrice - advancePaid);
+
+  try {
+    await db.execute({
+      sql: `UPDATE bookings 
+            SET total_price = ?, advance_paid = ?, balance_due = ?, payment_status = ?, payment_link = ? 
+            WHERE id = ?`,
+      args: [totalPrice, advancePaid, balanceDue, paymentStatus, paymentLink || null, id],
+    });
+    revalidatePath("/admin/bookings");
+    revalidatePath(`/payment-link/${id}`);
+    return { success: true };
+  } catch (error) {
+    console.error("Update booking payment error:", error);
+    return { error: "Failed to update booking payment details." };
+  }
+}
+
+// Pay Booking Balance (Public Customer Simulator)
+export async function payBookingBalanceAction(id: number) {
+  try {
+    // Get booking first to know the total price
+    const res = await db.execute({
+      sql: "SELECT total_price FROM bookings WHERE id = ?",
+      args: [id],
+    });
+    if (res.rows.length === 0) {
+      return { error: "Booking not found." };
+    }
+    const totalPrice = Number(res.rows[0].total_price ?? 0);
+
+    await db.execute({
+      sql: `UPDATE bookings 
+            SET advance_paid = ?, balance_due = 0, payment_status = 'Paid' 
+            WHERE id = ?`,
+      args: [totalPrice, id],
+    });
+    revalidatePath(`/payment-link/${id}`);
+    revalidatePath("/admin/bookings");
+    return { success: true };
+  } catch (error) {
+    console.error("Pay booking balance error:", error);
+    return { error: "Failed to process payment simulation." };
+  }
+}
+
