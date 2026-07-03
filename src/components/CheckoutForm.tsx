@@ -239,16 +239,8 @@ export function CheckoutForm({ services }: CheckoutFormProps) {
 
   const handleCloseSuccess = () => {
     setCompleted(false);
-    // Reset all form inputs
-    setName("");
-    setPhone("");
-    setEmail("");
-    setAddress("");
-    setCity("");
-    setPinCode("");
-    setNotes("");
-    setCoordinates(null);
-    setGpsSuccess(false);
+    // Redirect to services page
+    window.location.href = "/services";
   };
 
   return (

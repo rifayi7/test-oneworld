@@ -217,22 +217,8 @@ export function SlotBooking({ servicesList = SERVICES_LIST }: SlotBookingProps) 
 
   const handleCloseSuccess = () => {
     setSubmitted(false);
-    // Reset all form inputs to default values
-    setFormData({
-      service: servicesList[0] || "",
-      bookingDate: "",
-      timeSlot: "",
-      name: "",
-      phone: "",
-      email: "",
-      address: "",
-      city: "",
-      pinCode: "",
-      district: DISTRICTS[0] || "",
-      notes: ""
-    });
-    setCoordinates(null);
-    setGpsSuccess(false);
+    // Redirect to services page
+    window.location.href = "/services";
   };
 
   return (
