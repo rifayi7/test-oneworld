@@ -34,9 +34,7 @@ export function FeaturedServices({ initialServices = [] }: { initialServices?: S
       mrp_price: "₹1,799",
       images: [
         getServiceImg(3, "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/water-tank.webp"),
-        getServiceImg(1, "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/home-services.webp"),
-        "/portfolio/tank-cleaning.jpg",
-        "/services/water_tank.jpg"
+        getServiceImg(1, "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/home-services.webp")
       ],
       points: [
         "Complete mud and debris vacuuming",
@@ -57,8 +55,7 @@ export function FeaturedServices({ initialServices = [] }: { initialServices?: S
       mrp_price: "₹3,999",
       images: [
         getServiceImg(11, "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/home-services.webp"),
-        getServiceImg(8, "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/cctv-install.webp"),
-        "/portfolio/solar-cleaning.jpg"
+        getServiceImg(8, "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/cctv-install.webp")
       ],
       points: [
         "Up to 40% government subsidy paperwork",
@@ -79,8 +76,7 @@ export function FeaturedServices({ initialServices = [] }: { initialServices?: S
       mrp_price: "₹1,899",
       images: [
         getServiceImg(12, "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/grass-trimming.webp"),
-        getServiceImg(6, "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/home-services.webp"),
-        "/portfolio/garden-care.jpg"
+        getServiceImg(6, "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/home-services.webp")
       ],
       points: [
         "Multi-stage RO/UV mounting & plumbing",
