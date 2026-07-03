@@ -32,7 +32,7 @@ const OFFERS_DATA: OfferItem[] = [
     validity: "Valid till July 15, 2026",
     img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/grass-trimming.webp",
     desc: "Clear out your compound and backyard gardens at customized discount rates.",
-    serviceId: 25
+    serviceId: 12
   },
   {
     service: "Roof Waterproofing",
@@ -41,25 +41,25 @@ const OFFERS_DATA: OfferItem[] = [
     validity: "Limited Slots Available",
     img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/roof-waterproof.webp",
     desc: "Schedule a complete roof dampness checkup and leakage report by engineers.",
-    serviceId: 23
+    serviceId: 10
   },
   {
     service: "Solar Installation",
     badge: "Subsidy Support",
     discount: "Government Subsidy Available",
     validity: "Subject to KSEB approval",
-    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/home-services.webp",
+    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/whatsapp-image-2026-07-03-at-11-09-36-1-1783060609361-6w1nh0.webp",
     desc: "Get full subsidy integration guidance and custom capacity modeling free.",
-    serviceId: 24
+    serviceId: 11
   },
   {
     service: "Gas Leak Detector",
     badge: "Home Protection",
     discount: "Free Safety Check",
     validity: "With any major cleaning",
-    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/home-services.webp",
+    img: "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/whatsapp-image-2026-07-03-at-11-09-36-1783059944261-e0slhn.webp",
     desc: "Get a free LPG kitchen gas valve safety inspection and sensor calibration.",
-    serviceId: 22
+    serviceId: 9
   }
 ];
 
