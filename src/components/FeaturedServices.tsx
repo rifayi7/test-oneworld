@@ -13,81 +13,87 @@ import {
   Check
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { Service } from "@/db/queries";
 
-const SPOTLIGHT_SERVICES = [
-  {
-    id: 3, // Water Tank Cleaning ID
-    name: "Deep Well & Water Tank Cleaning",
-    category: "Water Care",
-    categoryIcon: Droplet,
-    desc: "Wells and tanks collect silt, leaves, and algae through the year. We drain and vacuum out the sludge, pressure-jet the walls, sterilise with UV, and test the water before handing it back.",
-    price: "₹799",
-    mrp_price: "₹1,799",
-    images: [
-      "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/water-tank.webp",
-      "/portfolio/tank-cleaning.jpg",
-      "/services/water_tank.jpg",
-      "/services/home_services.jpg"
-    ],
-    points: [
-      "Complete mud and debris vacuuming",
-      "Chemical-free disinfection & UV checks",
-      "High-pressure wall jet washing",
-      "pH quality test before handover"
-    ],
-    badgeText: "Deep sanitisation guaranteed",
-    btnLabel: "Book Tank Cleaning"
-  },
-  {
-    id: 24, // Solar Installation ID
-    name: "Solar Panel & CCTV Integration",
-    category: "Power & Security",
-    categoryIcon: Zap,
-    desc: "Make your home self-sufficient and secure. We handle complete solar system design, panel mounting, and KSEB subsidy registration. CCTV includes HD night vision and active mobile notifications.",
-    price: "₹2,999",
-    mrp_price: "₹3,999",
-    images: [
-      "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/cctv-install.webp",
-      "/portfolio/solar-cleaning.jpg",
-      "/services/cctv_install.jpg"
-    ],
-    points: [
-      "Up to 40% government subsidy paperwork",
-      "Full network pairing & mobile app feed",
-      "Night-vision HD motion sensors",
-      "Authorized warranty certificates"
-    ],
-    badgeText: "KSEB registered partners",
-    btnLabel: "Book Solar & CCTV"
-  },
-  {
-    id: 25, // Grass Cutting ID
-    name: "Lawn Care & Water Purifiers",
-    category: "Home & Outdoors",
-    categoryIcon: Leaf,
-    desc: "Keep your property pristine inside and out. We install domestic RO or UV water purifiers with strict TDS calibration. We also handle precision lawn trimming with commercial-grade brushcutters.",
-    price: "₹899",
-    mrp_price: "₹1,899",
-    images: [
-      "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/grass-trimming.webp",
-      "/portfolio/garden-care.jpg",
-      "/services/grass_trimming.jpg"
-    ],
-    points: [
-      "Multi-stage RO/UV mounting & plumbing",
-      "Precision brushcutter lawn trims",
-      "Green waste bagging & debris disposal",
-      "Post-work garden cleanup included"
-    ],
-    badgeText: "Same-day booking available",
-    btnLabel: "Book Lawn & Purifiers"
-  }
-];
-
-export function FeaturedServices() {
+export function FeaturedServices({ initialServices = [] }: { initialServices?: Service[] }) {
   const [activeTab, setActiveTab] = useState(0);
 
-  const activeService = SPOTLIGHT_SERVICES[activeTab];
+  // Helper to dynamically resolve images from database entries
+  const getServiceImg = (id: number, fallback: string) => {
+    return initialServices.find((s) => s.id === id)?.img || fallback;
+  };
+
+  const spotlightServices = [
+    {
+      id: 3, // Water Tank Cleaning ID
+      name: "Deep Well & Water Tank Cleaning",
+      category: "Water Care",
+      categoryIcon: Droplet,
+      desc: "Wells and tanks collect silt, leaves, and algae through the year. We drain and vacuum out the sludge, pressure-jet the walls, sterilise with UV, and test the water before handing it back.",
+      price: "₹799",
+      mrp_price: "₹1,799",
+      images: [
+        getServiceImg(3, "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/water-tank.webp"),
+        getServiceImg(1, "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/home-services.webp"),
+        "/portfolio/tank-cleaning.jpg",
+        "/services/water_tank.jpg"
+      ],
+      points: [
+        "Complete mud and debris vacuuming",
+        "Chemical-free disinfection & UV checks",
+        "High-pressure wall jet washing",
+        "pH quality test before handover"
+      ],
+      badgeText: "Deep sanitisation guaranteed",
+      btnLabel: "Book Tank Cleaning"
+    },
+    {
+      id: 11, // Solar Installation ID
+      name: "Solar Panel & CCTV Integration",
+      category: "Power & Security",
+      categoryIcon: Zap,
+      desc: "Make your home self-sufficient and secure. We handle complete solar system design, panel mounting, and KSEB subsidy registration. CCTV includes HD night vision and active mobile notifications.",
+      price: "₹2,999",
+      mrp_price: "₹3,999",
+      images: [
+        getServiceImg(11, "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/home-services.webp"),
+        getServiceImg(8, "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/cctv-install.webp"),
+        "/portfolio/solar-cleaning.jpg"
+      ],
+      points: [
+        "Up to 40% government subsidy paperwork",
+        "Full network pairing & mobile app feed",
+        "Night-vision HD motion sensors",
+        "Authorized warranty certificates"
+      ],
+      badgeText: "KSEB registered partners",
+      btnLabel: "Book Solar & CCTV"
+    },
+    {
+      id: 12, // Grass Cutting ID
+      name: "Lawn Care & Water Purifiers",
+      category: "Home & Outdoors",
+      categoryIcon: Leaf,
+      desc: "Keep your property pristine inside and out. We install domestic RO or UV water purifiers with strict TDS calibration. We also handle precision lawn trimming with commercial-grade brushcutters.",
+      price: "₹899",
+      mrp_price: "₹1,899",
+      images: [
+        getServiceImg(12, "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/grass-trimming.webp"),
+        getServiceImg(6, "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/home-services.webp"),
+        "/portfolio/garden-care.jpg"
+      ],
+      points: [
+        "Multi-stage RO/UV mounting & plumbing",
+        "Precision brushcutter lawn trims",
+        "Green waste bagging & debris disposal",
+        "Post-work garden cleanup included"
+      ],
+      badgeText: "Same-day booking available",
+      btnLabel: "Book Lawn & Purifiers"
+    }
+  ];
+
+  const activeService = spotlightServices[activeTab];
 
   // Animation variants for details switching
   const detailsVariants = {
@@ -116,7 +122,7 @@ export function FeaturedServices() {
 
           {/* Interactive Navigation Tabs */}
           <div className="flex flex-wrap items-center gap-3 pb-2 border-b border-slate-200/60 scrollbar-none overflow-x-auto">
-            {SPOTLIGHT_SERVICES.map((service, index) => {
+            {spotlightServices.map((service, index) => {
               const Icon = service.categoryIcon;
               const isActive = activeTab === index;
               return (
