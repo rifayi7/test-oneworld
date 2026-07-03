@@ -203,11 +203,11 @@ export function CheckoutForm({ services }: CheckoutFormProps) {
         setCompleted(true);
       } else {
         setErrorMsg(response.error || "Failed to confirm your slot reservation.");
-        setProcessing(false);
       }
     } catch (err) {
       console.error("Booking confirmation failed:", err);
       setErrorMsg("Connection failed. Please check your internet network.");
+    } finally {
       setProcessing(false);
     }
   };
@@ -235,6 +235,20 @@ export function CheckoutForm({ services }: CheckoutFormProps) {
     );
 
     window.open(`https://wa.me/${cleanPhone}?text=${waMsg}`, "_blank");
+  };
+
+  const handleCloseSuccess = () => {
+    setCompleted(false);
+    // Reset all form inputs
+    setName("");
+    setPhone("");
+    setEmail("");
+    setAddress("");
+    setCity("");
+    setPinCode("");
+    setNotes("");
+    setCoordinates(null);
+    setGpsSuccess(false);
   };
 
   return (
@@ -638,7 +652,7 @@ export function CheckoutForm({ services }: CheckoutFormProps) {
               </button>
               
               <button
-                onClick={() => setCompleted(false)}
+                onClick={handleCloseSuccess}
                 className="text-xs font-bold text-slate-400 hover:text-slate-600 transition cursor-pointer select-none"
               >
                 Close & Return
