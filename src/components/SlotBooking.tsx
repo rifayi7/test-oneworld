@@ -155,7 +155,9 @@ export function SlotBooking({ servicesList = SERVICES_LIST }: SlotBookingProps) 
     try {
       const SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!;
       token = await new Promise<string>((res) =>
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (window as any).grecaptcha.ready(() =>
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (window as any).grecaptcha.execute(SITE_KEY, { action: "submit" }).then(res)
         )
       );
