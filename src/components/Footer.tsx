@@ -69,8 +69,8 @@ export function Footer() {
               </li>
               <li className="space-y-1 mt-2">
                 <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Phone Lines:</span>
-                {(FOOTER_CONTENT as any).phones ? (
-                  (FOOTER_CONTENT as any).phones.map((ph: string) => (
+                {FOOTER_CONTENT.phones ? (
+                  FOOTER_CONTENT.phones.map((ph: string) => (
                     <a
                       key={ph}
                       href={`tel:${ph.replace(/\s+/g, "")}`}

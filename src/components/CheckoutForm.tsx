@@ -306,8 +306,8 @@ export function CheckoutForm({ services }: CheckoutFormProps) {
                       min={new Date().toISOString().split("T")[0]}
                       value={bookingDate}
                       onChange={(e) => setBookingDate(e.target.value)}
-                      onClick={(e) => { try { (e.target as any).showPicker(); } catch (err) {} }}
-                      onFocus={(e) => { try { (e.target as any).showPicker(); } catch (err) {} }}
+                      onClick={(e) => { try { (e.target as HTMLInputElement).showPicker(); } catch {} }}
+                      onFocus={(e) => { try { (e.target as HTMLInputElement).showPicker(); } catch {} }}
                       className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-600 transition"
                     />
                   </div>
