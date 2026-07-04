@@ -16,9 +16,37 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   display: "swap",
 });
 
+const getSiteUrl = () => {
+  let url =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "") ||
+    "http://localhost:3000";
+  if (url && !url.startsWith("http")) {
+    url = `https://${url}`;
+  }
+  return url;
+};
+
 export const metadata: Metadata = {
+  metadataBase: new URL(getSiteUrl()),
   title: `${SITE_INFO.brandName} - ${SITE_INFO.tagline}`,
   description: SITE_INFO.description,
+  openGraph: {
+    title: `${SITE_INFO.brandName} - ${SITE_INFO.tagline}`,
+    description: SITE_INFO.description,
+    type: "website",
+    images: [
+      {
+        url: "/icon.png",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: `${SITE_INFO.brandName} - ${SITE_INFO.tagline}`,
+    description: SITE_INFO.description,
+    images: ["/icon.png"],
+  },
 };
 
 export default function RootLayout({
