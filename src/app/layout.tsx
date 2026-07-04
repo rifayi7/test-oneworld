@@ -37,15 +37,15 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/icon.png",
+        url: "/og.png",
       },
     ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: `${SITE_INFO.brandName} - ${SITE_INFO.tagline}`,
     description: SITE_INFO.description,
-    images: ["/icon.png"],
+    images: ["/og.png"],
   },
 };
 
