@@ -3,6 +3,7 @@ import { Elms_Sans, Plus_Jakarta_Sans } from "next/font/google";
 import { SITE_INFO } from "@/content";
 import Script from "next/script";
 import "./globals.css";
+import { headers } from "next/headers";
 
 const elmsSans = Elms_Sans({
   subsets: ["latin"],
@@ -16,38 +17,38 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   display: "swap",
 });
 
-const getSiteUrl = () => {
-  let url =
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "") ||
-    "http://localhost:3000";
-  if (url && !url.startsWith("http")) {
-    url = `https://${url}`;
-  }
-  return url;
-};
+async function getMetadataBase(): Promise<URL> {
+  const h = await headers();
+  const host = h.get("x-forwarded-host") ?? h.get("host") ?? "localhost:3000";
+  const proto = h.get("x-forwarded-proto")
+    ?? (host.startsWith("localhost") || host.startsWith("127.0.0.1") ? "http" : "https");
+  return new URL(`${proto}://${host}`);
+}
 
-export const metadata: Metadata = {
-  metadataBase: new URL(getSiteUrl()),
-  title: `${SITE_INFO.brandName} - ${SITE_INFO.tagline}`,
-  description: SITE_INFO.description,
-  openGraph: {
+export async function generateMetadata(): Promise<Metadata> {
+  const metadataBase = await getMetadataBase();
+  return {
+    metadataBase,
     title: `${SITE_INFO.brandName} - ${SITE_INFO.tagline}`,
     description: SITE_INFO.description,
-    type: "website",
-    images: [
-      {
-        url: "/og.png",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${SITE_INFO.brandName} - ${SITE_INFO.tagline}`,
-    description: SITE_INFO.description,
-    images: ["/og.png"],
-  },
-};
+    openGraph: {
+      title: `${SITE_INFO.brandName} - ${SITE_INFO.tagline}`,
+      description: SITE_INFO.description,
+      type: "website",
+      images: [
+        {
+          url: "/og.png",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${SITE_INFO.brandName} - ${SITE_INFO.tagline}`,
+      description: SITE_INFO.description,
+      images: ["/og.png"],
+    },
+  };
+}
 
 export default function RootLayout({
   children,

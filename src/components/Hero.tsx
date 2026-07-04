@@ -158,8 +158,12 @@ export function Hero() {
           <div className="relative h-[500px] sm:h-[650px] w-full max-w-[580px] mx-auto pb-12 pt-6 select-none">
             
             {/* 1. Main Vertical Image (Top Right, rounded corners 32px) */}
-            <Reveal direction="left" delay={0.2}>
-              <div className="absolute top-0 right-0 w-[82%] sm:w-[410px] h-[400px] sm:h-[520px] rounded-image overflow-hidden shadow-soft border border-slate-200/10">
+            <Reveal
+              direction="left"
+              delay={0.2}
+              className="absolute top-0 right-0 w-[82%] sm:w-[410px] h-[400px] sm:h-[520px]"
+            >
+              <div className="relative w-full h-full rounded-image overflow-hidden shadow-soft border border-slate-200/10">
                 <Image
                   src={HERO_CONTENT.images.cleaners}
                   alt="Window Cleaning Service"
@@ -172,8 +176,12 @@ export function Hero() {
             </Reveal>
 
             {/* 2. Bottom Landscape Image (Bottom Center, rounded corners, overlaps vertical) */}
-            <Reveal direction="up" delay={0.28}>
-              <div className="absolute bottom-4 left-0 w-[72%] sm:w-[390px] h-[170px] sm:h-[240px] rounded-image overflow-hidden border-4 sm:border-8 border-white shadow-soft z-10">
+            <Reveal
+              direction="up"
+              delay={0.28}
+              className="absolute bottom-4 left-0 w-[72%] sm:w-[390px] h-[170px] sm:h-[240px] z-10"
+            >
+              <div className="relative w-full h-full rounded-image overflow-hidden border-4 sm:border-8 border-white shadow-soft">
                 <Image
                   src={HERO_CONTENT.images.plumber}
                   alt="Appliance Repair Technician"
@@ -185,24 +193,28 @@ export function Hero() {
             </Reveal>
 
             {/* 3. Floating Arrow (Top-right corner, Circular Blue button) */}
-            <Reveal direction="down" delay={0.32}>
-              <div className="absolute top-[-1rem] right-[-0.5rem] sm:right-[-1rem] z-20">
-                <span className="w-11 h-11 rounded-full bg-primary-600 text-white flex items-center justify-center font-bold text-xl shadow-md cursor-pointer hover:bg-primary-700 transition">
-                  <ArrowUpRight className="w-5 h-5 stroke-[2.5]" />
-                </span>
-              </div>
+            <Reveal
+              direction="down"
+              delay={0.32}
+              className="absolute top-[-1rem] right-[-0.5rem] sm:right-[-1rem] z-20"
+            >
+              <span className="w-11 h-11 rounded-full bg-primary-600 text-white flex items-center justify-center font-bold text-xl shadow-md cursor-pointer hover:bg-primary-700 transition">
+                <ArrowUpRight className="w-5 h-5 stroke-[2.5]" />
+              </span>
             </Reveal>
 
             {/* 5. Customer Satisfaction KPI Card (Bottom Right, Soft Blue BG) */}
-            <Reveal direction="up" delay={0.6}>
-              <div className="absolute bottom-[4%] right-[-0.5rem] sm:right-[-2.5rem] bg-primary-50 border border-primary-100 rounded-card p-5 w-36 sm:w-40 text-center shadow-soft z-30">
-                <span className="block text-[0.65rem] font-bold text-slate-500 uppercase tracking-widest leading-none">
-                  {HERO_CONTENT.satisfaction.label}
-                </span>
-                <span className="block text-3xl sm:text-4xl font-black text-primary-600 mt-2">
-                  {HERO_CONTENT.satisfaction.value}
-                </span>
-              </div>
+            <Reveal
+              direction="up"
+              delay={0.6}
+              className="absolute bottom-[4%] right-[-0.5rem] sm:right-[-2.5rem] bg-primary-50 border border-primary-100 rounded-card p-5 w-36 sm:w-40 text-center shadow-soft z-30"
+            >
+              <span className="block text-[0.65rem] font-bold text-slate-500 uppercase tracking-widest leading-none">
+                {HERO_CONTENT.satisfaction.label}
+              </span>
+              <span className="block text-3xl sm:text-4xl font-black text-primary-600 mt-2">
+                {HERO_CONTENT.satisfaction.value}
+              </span>
             </Reveal>
 
           </div>
