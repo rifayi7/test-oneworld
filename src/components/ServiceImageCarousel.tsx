@@ -65,7 +65,7 @@ export function ServiceImageCarousel({ images, alt }: ServiceImageCarouselProps)
 
   return (
     <div className="relative w-full h-full rounded-image overflow-hidden group bg-slate-100 shadow-sm">
-      <AnimatePresence initial={false} custom={direction} mode="popLayout">
+      <AnimatePresence initial={false} custom={direction}>
         <motion.div
           key={currentIndex}
           custom={direction}
