@@ -1,7 +1,7 @@
 export const SITE_INFO = {
   brandName: "Clean World",
   brandSuffix: "SOLUTIONS",
-  tagline: "A trusted partner for Home Hygienic & Solutions.",
+  tagline: "A trusted partner for Home Hygiene & Solutions.",
   taglineMalayalam: "വീട്ടിലെ ആവശ്യമായ ജോലികൾക്കെല്ലാം ഇനിയും ഞങ്ങൾ നിങ്ങൾക്കൊപ്പമുണ്ട്",
   description: "Premium professional cleaning and housekeeping services tailored to your needs. Spotless spaces, eco-friendly products, and trusted service partners.",
   descriptionMalayalam: "Deep Well Cleaning, Pond Cleaning, Water Tank Cleaning & UV Treatment, Pipeline Cleaning, Water Purifier Installation, Home Safety Services, CCTV Installation, Gas Leak Detector, Roof Waterproofing, Solar Installation, Grass Cutting, Termite Control, Disinfection Spraying മുതൽ Farm Services വരെ... എല്ലാം ഇനി ഒരു ഫോൺ കോളിൽ !",
@@ -31,7 +31,7 @@ export const HERO_CONTENT = {
   title: "One Partner For",
   titleHighlight: "Every Service Your Home Needs",
   description: "From Deep Cleaning To Repairs — We Keep Your Home Comfortable, Safe & Stress-Free.",
-  descriptionExtra: "Clean World Solutions: A trusted partner for Home Hygienic & Solutions.",
+  descriptionExtra: "Clean World Solutions: A trusted partner for Home Hygiene & Solutions.",
   primaryCta: "Book Your Service Now",
   customerCount: "12k+ Happy Customers",
   images: {
