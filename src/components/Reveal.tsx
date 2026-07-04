@@ -8,6 +8,7 @@ interface RevealProps {
   direction?: "up" | "down" | "left" | "right" | "none";
   delay?: number;
   duration?: number;
+  className?: string;
 }
 
 export function Reveal({
@@ -15,6 +16,7 @@ export function Reveal({
   direction = "up",
   delay = 0,
   duration = 0.6,
+  className = "",
 }: RevealProps) {
   const directions = {
     up: { y: 40, x: 0 },
@@ -26,6 +28,7 @@ export function Reveal({
 
   return (
     <motion.div
+      className={`opacity-0 ${className}`}
       initial={{
         opacity: 0,
         ...directions[direction],
