@@ -28,9 +28,9 @@ export const NAV_LINKS = [
 
 export const HERO_CONTENT = {
   eyebrow: "Clean World Solutions – House Keeping & Home Care Services",
-  title: "One Partner For",
-  titleHighlight: "Every Service Your Home Needs",
-  description: "From Deep Cleaning To Repairs — We Keep Your Home Comfortable, Safe & Stress-Free.",
+  title: "Your Trusted Partner for",
+  titleHighlight: "Home Hygiene Solutions",
+  description: "From your courtyard to your backyard, our comprehensive home hygiene services helps to maintain a healthy living environment.",
   descriptionExtra: "Clean World Solutions: A trusted partner for Home Hygiene & Solutions.",
   primaryCta: "Book Your Service Now",
   customerCount: "12k+ Happy Customers",

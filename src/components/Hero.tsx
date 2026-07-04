@@ -48,9 +48,7 @@ export function Hero() {
               <p className="text-base md:text-lg text-neutral-600 leading-relaxed max-w-md">
                 {HERO_CONTENT.description}
               </p>
-              <p className="text-sm font-extrabold text-neutral-900">
-                {HERO_CONTENT.descriptionExtra}
-              </p>
+
               
               {/* Malayalam Localized Highlight */}
               <div className="mt-6 p-4.5 border-l-4 border-primary-600 bg-primary-50/30 rounded-r-2xl max-w-xl text-left">
