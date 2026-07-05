@@ -82,7 +82,9 @@ export function Navbar() {
         {/* Contact Phone & Book buttons: Visible from 640px (sm) and up */}
         <div className="hidden sm:flex items-center gap-3">
           <Button
-            href={`tel:${SITE_INFO.phone.replace(/\s+/g, "")}`}
+            onClick={() => {
+              window.dispatchEvent(new CustomEvent("open-call-modal"));
+            }}
             variant="outline"
             color="blue"
             className="px-5 py-2.5 text-xs font-extrabold"
@@ -153,7 +155,9 @@ export function Navbar() {
           {/* Phone & Book Now buttons inside mobile menu (shown only under 640px mobile screens) */}
           <div className="sm:hidden pt-4 border-t border-slate-100 flex flex-col gap-3">
             <Button
-              href={`tel:${SITE_INFO.phone.replace(/\s+/g, "")}`}
+              onClick={() => {
+                window.dispatchEvent(new CustomEvent("open-call-modal"));
+              }}
               variant="outline"
               color="blue"
               className="w-full py-3.5 text-xs font-extrabold flex items-center justify-center gap-2"

@@ -81,13 +81,16 @@ export function FloatingWhatsApp() {
             </a>
 
             <div className="grid grid-cols-2 gap-2">
-              <a
-                href={`tel:${cleanPhone}`}
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.dispatchEvent(new CustomEvent("open-call-modal"));
+                }}
                 className="py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg text-[10px] font-extrabold flex items-center justify-center gap-1.5 transition cursor-pointer"
               >
                 <Phone className="w-3.5 h-3.5 text-primary-600" />
                 Call Direct
-              </a>
+              </button>
               <a
                 href={`mailto:${SITE_INFO.email}`}
                 className="py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg text-[10px] font-extrabold flex items-center justify-center gap-1.5 transition cursor-pointer"

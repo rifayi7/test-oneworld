@@ -1,4 +1,5 @@
 import { getServiceById, getAllServices } from "@/db/queries";
+import { parsePriceString } from "@/lib/price-utils";
 import { notFound } from "next/navigation";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -213,29 +214,12 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     INCLUSIONS_BY_CATEGORY[service.category] || DEFAULT_INCLUSIONS;
   const faqs = FAQS_BY_CATEGORY[service.category] || DEFAULT_FAQS;
 
-  // Generate list of images for the spotlight carousel
-  const galleryImages = [service.img];
-  if (service.category === "Water Services") {
-    galleryImages.push(
-      "/portfolio/tank-cleaning.jpg",
-      "/services/home_services.jpg",
-    );
-  } else if (service.category === "Home Safety") {
-    galleryImages.push(
-      "/portfolio/solar-cleaning.jpg",
-      "/services/cctv_install.jpg",
-    );
-  } else if (service.category === "Outdoor Services") {
-    galleryImages.push(
-      "/portfolio/garden-care.jpg",
-      "/services/grass_trimming.jpg",
-    );
-  } else {
-    galleryImages.push(
-      "/services/home_services.jpg",
-      "/services/water_tank.jpg",
-    );
-  }
+  // Generate list of images for the spotlight carousel (main service image + two common banners)
+  const galleryImages = [
+    service.img,
+    "/services/common-banner-1.webp",
+    "/services/common-banner-2.webp",
+  ];
 
   return (
     <div className="relative min-h-screen flex flex-col justify-between selection:bg-primary-50 bg-slate-50/50">
@@ -298,24 +282,29 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                     Starting price
                   </span>
                   {(() => {
-                    const offerVal =
-                      parseInt(
-                        (service.offer_price || service.price).replace(
-                          /[^0-9]/g,
-                          "",
-                        ),
-                      ) || 0;
+                    const { mainPrice, note } = parsePriceString(service.offer_price || service.price);
+                    const offerVal = parseInt(mainPrice.replace(/[^0-9]/g, "")) || 0;
                     const mrpStr =
                       service.mrp_price ||
                       `₹${(offerVal + 1000).toLocaleString("en-IN")}`;
                     return (
-                      <div className="flex items-baseline gap-2 mt-0.5">
-                        <span className="text-sm text-slate-400 line-through font-semibold">
-                          {mrpStr}
-                        </span>
-                        <div className="text-3xl font-black text-primary-600 font-display">
-                          {service.offer_price || service.price}
+                      <div className="space-y-2 mt-1">
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-sm text-slate-400 line-through font-semibold">
+                            {mrpStr}
+                          </span>
+                          <div className="text-3xl font-black text-primary-600 font-display">
+                            {mainPrice}
+                          </div>
+                          <span className="text-xs text-slate-400 font-bold">
+                            onwards
+                          </span>
                         </div>
+                        {note && (
+                          <div className="text-xs font-black text-amber-700 bg-amber-50 border border-amber-100 px-3 py-1 rounded-xl w-max tracking-wide">
+                            {note}
+                          </div>
+                        )}
                       </div>
                     );
                   })()}

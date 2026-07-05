@@ -5,30 +5,51 @@ import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { Service } from "@/db/queries";
+import { parsePriceString } from "@/lib/price-utils";
 
 interface ServicesOverviewProps {
   initialServices: Service[];
 }
 
 export function ServicesOverview({ initialServices }: ServicesOverviewProps) {
-  // Dynamically extract unique categories from initialServices database list
-  const categories = initialServices.length > 0
-    ? Array.from(new Set(initialServices.map((s) => s.category)))
-    : [
-        "Water Services",
-        "Home Safety",
-        "Outdoor Services",
-        "Pest Control",
-        "Farm Services",
-      ];
+  // Transform services to map to the new category structure dynamically
+  const transformedServices = initialServices.map((service) => {
+    // 1. Separate Roof Waterproofing to its own category
+    if (service.name === "Roof Waterproofing") {
+      return { ...service, category: "Rooftop Waterproofing Services for Leakages" };
+    }
+    // 2. Map other categories to display names
+    if (service.category === "Water Services") {
+      return { ...service, category: "Drinking Water Services" };
+    }
+    if (service.category === "Home Safety") {
+      return { ...service, category: "Home Safety Services" };
+    }
+    if (service.category === "Outdoor Services") {
+      return { ...service, category: "Courtyard & Backyard Services" };
+    }
+    if (service.category === "Pest Control") {
+      return { ...service, category: "Home Cleaning Services" };
+    }
+    return service;
+  });
 
-  // Group the services by category
+  // Group the services by the new category structure
+  const categories = [
+    "Drinking Water Services",
+    "Home Safety Services",
+    "Rooftop Waterproofing Services for Leakages",
+    "Courtyard & Backyard Services",
+    "Farm Services",
+    "Home Cleaning Services",
+  ].filter((cat) => transformedServices.some((s) => s.category === cat));
+
   const servicesByCategory = categories.reduce<Record<string, Service[]>>((acc, cat) => {
-    acc[cat] = initialServices.filter((s) => s.category === cat);
+    acc[cat] = transformedServices.filter((s) => s.category === cat);
     return acc;
   }, {});
 
-  const [activeCategory, setActiveCategory] = useState(categories[0]);
+  const [activeCategory, setActiveCategory] = useState(categories[0] || "Drinking Water Services");
   const activeServices = servicesByCategory[activeCategory] || [];
 
   return (
@@ -39,13 +60,13 @@ export function ServicesOverview({ initialServices }: ServicesOverviewProps) {
           {/* Title Block */}
           <div className="space-y-4 max-w-2xl mx-auto">
             <span className="inline-block text-xs font-bold text-primary-600 uppercase tracking-widest bg-primary-50 px-4 py-1.5 rounded-badge">
-              Services Catalog
+              Service Catalogue
             </span>
             <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-neutral-900 font-display">
-              Everything Your Home Needs
+              Every Home Care Service as You Desired
             </h2>
             <p className="text-sm md:text-base text-neutral-600 leading-relaxed">
-              Professional housekeeping and maintenance solutions under one roof. Choose your category to explore.
+              Professional housekeeping and hygiene solutions under one roof. Choose your category to explore
             </p>
           </div>
 
@@ -97,19 +118,27 @@ export function ServicesOverview({ initialServices }: ServicesOverviewProps) {
                       
                       {/* Price within card body */}
                       {(() => {
-                        const offerVal = parseInt((service.offer_price || service.price).replace(/[^0-9]/g, "")) || 0;
+                        const { mainPrice, note } = parsePriceString(service.offer_price || service.price);
+                        const offerVal = parseInt(mainPrice.replace(/[^0-9]/g, "")) || 0;
                         const mrpStr = service.mrp_price || `₹${(offerVal + 1000).toLocaleString("en-IN")}`;
                         return (
-                          <div className="flex items-center gap-2 pt-1 font-display">
-                            <span className="text-xs text-slate-400 line-through font-semibold">
-                              {mrpStr}
-                            </span>
-                            <span className="text-base font-black text-primary-600">
-                              {service.offer_price || service.price}
-                            </span>
-                            <span className="text-[10px] text-slate-400 font-bold font-sans">
-                              onwards
-                            </span>
+                          <div className="flex flex-col gap-1 pt-1 text-left">
+                            <div className="flex items-center gap-2 font-display">
+                              <span className="text-xs text-slate-400 line-through font-semibold">
+                                {mrpStr}
+                              </span>
+                              <span className="text-base font-black text-primary-600">
+                                {mainPrice}
+                              </span>
+                              <span className="text-[10px] text-slate-400 font-bold font-sans">
+                                onwards
+                              </span>
+                            </div>
+                            {note && (
+                              <div className="text-[10px] font-black text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-lg w-fit mt-1 select-none tracking-wide">
+                                {note}
+                              </div>
+                            )}
                           </div>
                         );
                       })()}

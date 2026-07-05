@@ -9,9 +9,9 @@ export const SITE_INFO = {
   phone: "+91 85899 93900",
   phones: [
     "+91 85899 93900",
-    "+91 85899 93400",
+    "+91 85899 93800",
     "+91 85899 93500",
-    "+91 85899 93800"
+    "+91 85899 93400"
   ],
   email: "Cleanworld46@gmail.com",
 };
@@ -28,9 +28,9 @@ export const NAV_LINKS = [
 
 export const HERO_CONTENT = {
   eyebrow: "Clean World Solutions – House Keeping & Home Care Services",
-  title: "Your Trusted Partner for",
-  titleHighlight: "Home Hygiene Solutions",
-  description: "From your courtyard to your backyard, our comprehensive home hygiene services helps to maintain a healthy living environment.",
+  title: "One Partner for All",
+  titleHighlight: "Home Service Needs",
+  description: "From your courtyard to your backyard, our comprehensive home hygiene services help maintain a healthy living environment.",
   descriptionExtra: "Clean World Solutions: A trusted partner for Home Hygiene & Solutions.",
   primaryCta: "Book Your Service Now",
   customerCount: "12k+ Happy Customers",
@@ -52,14 +52,20 @@ export const HERO_CONTENT = {
 
 export const FOOTER_CONTENT = {
   copyright: "© 2026 Clean World Solutions. All rights reserved.",
-  address: "Clean World Solutions, Madhavi Gardens, Koipuram.PO, Thiruvalla, Pathanamthitta Dist, Kerala-689531",
+  address: [
+    "Clean World Solutions",
+    "Koipuram P.O.",
+    "Thiruvalla",
+    "Pathanamthitta District",
+    "Kerala – 689531"
+  ],
   email: "Cleanworld46@gmail.com",
   phone: "+91 85899 93900",
   phones: [
     "+91 85899 93900",
-    "+91 85899 93400",
+    "+91 85899 93800",
     "+91 85899 93500",
-    "+91 85899 93800"
+    "+91 85899 93400"
   ],
   links: [
     { label: "Privacy Policy", href: "/privacy" },

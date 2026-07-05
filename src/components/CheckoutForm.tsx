@@ -4,6 +4,7 @@ import { useState, useMemo, FormEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import { Service } from "@/db/queries";
 import { submitBooking } from "@/app/actions/submit-booking";
+import { getUnitInfo } from "@/lib/price-utils";
 import { SITE_INFO } from "@/content";
 import Image from "next/image";
 import Link from "next/link";
@@ -59,6 +60,7 @@ export function CheckoutForm({ services }: CheckoutFormProps) {
   const [city, setCity] = useState("Kochi");
   const [pinCode, setPinCode] = useState("");
   const [notes, setNotes] = useState("");
+  const [quantity, setQuantity] = useState<number | "">("");
 
   const [coordinates, setCoordinates] = useState<{ lat: string; lon: string } | null>(null);
   const [gpsLoading, setGpsLoading] = useState(false);
@@ -128,6 +130,10 @@ export function CheckoutForm({ services }: CheckoutFormProps) {
     setSelectedService(s);
   };
 
+  const unitInfo = useMemo(() => {
+    return getUnitInfo(selectedService?.offer_price || selectedService?.price);
+  }, [selectedService]);
+
   // Price calculations
   const priceStats = useMemo(() => {
     if (!selectedService) return { mrp: 0, offer: 0, tax: 0, total: 0 };
@@ -137,13 +143,18 @@ export function CheckoutForm({ services }: CheckoutFormProps) {
       return parseInt(priceStr.replace(/[^0-9]/g, "")) || 0;
     };
 
-    const offer = parsePrice(selectedService.offer_price || selectedService.price);
-    const mrp = parsePrice(selectedService.mrp_price) || (offer + 1000);
+    const baseOffer = parsePrice(selectedService.offer_price || selectedService.price);
+    const baseMrp = parsePrice(selectedService.mrp_price) || (baseOffer + 1000);
+
+    const qty = unitInfo ? (Number(quantity) || 1) : 1;
+
+    const offer = baseOffer * qty;
+    const mrp = baseMrp * qty;
     const tax = Math.round(offer * 0.18); // 18% GST
     const total = offer + tax;
 
     return { mrp, offer, tax, total };
-  }, [selectedService]);
+  }, [selectedService, quantity, unitInfo]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -180,6 +191,10 @@ export function CheckoutForm({ services }: CheckoutFormProps) {
       console.error("Token creation error:", tokenErr);
     }
 
+    const finalNotes = quantity && unitInfo
+      ? `[Requested Quantity/Area: ${quantity} ${unitInfo.unit}] ${notes}`.trim()
+      : notes;
+
     const data = new FormData();
     data.append("service", selectedService.name);
     data.append("bookingDate", bookingDate);
@@ -187,7 +202,7 @@ export function CheckoutForm({ services }: CheckoutFormProps) {
     data.append("name", name);
     data.append("phone", phone);
     data.append("location", fullAddress);
-    data.append("notes", notes);
+    data.append("notes", finalNotes);
     data.append("email", email);
     data.append("company", ""); // Honeypot
     data.append("token", token);
@@ -221,11 +236,13 @@ export function CheckoutForm({ services }: CheckoutFormProps) {
     if (!selectedService) return;
     const cleanPhone = SITE_INFO.phone.replace(/[^0-9]/g, "");
     
+    const qtyLine = quantity && unitInfo ? `- *Quantity / Area*: ${quantity} ${unitInfo.unit}\n` : "";
     const waMsg = encodeURIComponent(
       `Hi Clean World Solutions!\n\n` +
       `I just submitted my slot booking request online.\n\n` +
       `*Booking Particulars*:\n` +
       `- *Service*: ${selectedService.name}\n` +
+      qtyLine +
       `- *Schedule*: ${bookingDate} (${timeSlot})\n` +
       `- *Booking Name*: ${name}\n` +
       `- *Phone*: ${phone}\n` +
@@ -292,6 +309,28 @@ export function CheckoutForm({ services }: CheckoutFormProps) {
                     ))}
                   </select>
                 </div>
+
+                {/* Dynamic Quantity / Area size Input */}
+                {unitInfo && (
+                  <div className="flex flex-col space-y-1.5 sm:col-span-3 animate-in fade-in slide-in-from-top-1 duration-200">
+                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                      {unitInfo.label} <span className="text-red-500">*</span>
+                    </label>
+                    <div className="relative flex items-center">
+                      <FileText className="absolute left-4 w-4 h-4 text-slate-400" />
+                      <input
+                        type="number"
+                        min="1"
+                        required
+                        disabled={processing}
+                        value={quantity}
+                        onChange={(e) => setQuantity(e.target.value ? Number(e.target.value) : "")}
+                        placeholder={unitInfo.placeholder}
+                        className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-600 transition"
+                      />
+                    </div>
+                  </div>
+                )}
 
                 <div className="flex flex-col space-y-1.5 sm:col-span-2">
                   <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">

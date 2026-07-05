@@ -1,6 +1,7 @@
 "use client";
 
 import { Navbar } from "@/components/Navbar";
+import { CallModal } from "@/components/CallModal";
 import { Service, Feedback } from "@/db/queries";
 import { Hero } from "@/components/Hero";
 import { ServicesOverview } from "@/components/ServicesOverview";
@@ -31,6 +32,7 @@ export function SiteShell({ initialServices, initialFeedbacks }: SiteShellProps)
     <MotionConfig reducedMotion="user">
       <div className="relative min-h-screen flex flex-col justify-between selection:bg-primary-50">
         <Navbar />
+        <CallModal />
 
         <main className="flex-grow">
           <Hero />
@@ -39,7 +41,7 @@ export function SiteShell({ initialServices, initialFeedbacks }: SiteShellProps)
           <Offers initialServices={initialServices} />
           <FeaturedServices initialServices={initialServices} />
           <HowItWorks />
-          <SlotBooking servicesList={initialServices.map((s) => s.name)} />
+          <SlotBooking services={initialServices} />
           <BeforeAfter />
           <Reviews initialFeedbacks={initialFeedbacks} />
           <ServiceAreas />

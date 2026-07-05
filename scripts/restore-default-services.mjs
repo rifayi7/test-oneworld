@@ -54,25 +54,6 @@ async function main() {
     console.log("Seeding default services from 0004_services.sql...");
     await db.execute(insertSql);
 
-    // 3. Re-apply the updated images for Solar Installation and Gas Leak Detector
-    console.log("Applying updated images for Solar & Gas Detector...");
-    
-    await db.execute({
-      sql: "UPDATE services SET img = ? WHERE id = ?",
-      args: [
-        "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/whatsapp-image-2026-07-03-at-11-09-36-1-1783060609361-6w1nh0.webp",
-        11
-      ]
-    });
-
-    await db.execute({
-      sql: "UPDATE services SET img = ? WHERE id = ?",
-      args: [
-        "https://pub-c2c4d3bdfe384b9ea9857d8c2158d659.r2.dev/clean-world-solutions/services/whatsapp-image-2026-07-03-at-11-09-36-1783059944261-e0slhn.webp",
-        9
-      ]
-    });
-
     console.log("Restore complete! Services table reset successfully.");
   } catch (error) {
     console.error("Error restoring services:", error);

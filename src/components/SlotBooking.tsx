@@ -6,6 +6,13 @@ import { SITE_INFO } from "@/content";
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/Button";
 import { Check } from "lucide-react";
+import { getUnitInfo } from "@/lib/price-utils";
+import type { Service } from "@/db/queries";
+
+interface SlotBookingProps {
+  servicesList?: string[];
+  services?: Service[];
+}
 
 const SERVICES_LIST = [
   "Water Tank Cleaning",
@@ -37,27 +44,16 @@ const TIME_SLOTS = [
 ];
 
 const DISTRICTS = [
-  "Thiruvananthapuram",
+  "Trivandrum",
   "Kollam",
-  "Pathanamthitta",
   "Alappuzha",
+  "Pathanamthitta",
   "Kottayam",
-  "Idukki",
   "Ernakulam",
-  "Thrissur",
-  "Palakkad",
-  "Malappuram",
-  "Kozhikode",
-  "Wayanad",
-  "Kannur",
-  "Kasaragod"
+  "Thrissur"
 ];
 
-interface SlotBookingProps {
-  servicesList?: string[];
-}
-
-export function SlotBooking({ servicesList = SERVICES_LIST }: SlotBookingProps) {
+export function SlotBooking({ servicesList = SERVICES_LIST, services = [] }: SlotBookingProps) {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
@@ -73,7 +69,8 @@ export function SlotBooking({ servicesList = SERVICES_LIST }: SlotBookingProps) 
     city: "Thiruvalla",
     pinCode: "689531",
     district: "",
-    notes: ""
+    notes: "",
+    quantity: ""
   });
 
   const [coordinates, setCoordinates] = useState<{ lat: string; lon: string } | null>(null);
@@ -144,6 +141,11 @@ export function SlotBooking({ servicesList = SERVICES_LIST }: SlotBookingProps) 
     );
   };
 
+  const displayServices = services.length > 0 ? services.map((s) => s.name) : servicesList;
+  const selectedServiceObj = services.find((s) => s.name === formData.service);
+  const priceStr = selectedServiceObj ? (selectedServiceObj.offer_price || selectedServiceObj.price) : "";
+  const unitInfo = getUnitInfo(priceStr);
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setErrorMsg("");
@@ -165,6 +167,10 @@ export function SlotBooking({ servicesList = SERVICES_LIST }: SlotBookingProps) 
       console.error("Token creation error:", tokenErr);
     }
 
+    const finalNotes = formData.quantity && unitInfo
+      ? `[Requested Quantity/Area: ${formData.quantity} ${unitInfo.unit}] ${formData.notes}`.trim()
+      : formData.notes;
+
     const data = new FormData();
     data.append("service", formData.service);
     data.append("bookingDate", formData.bookingDate);
@@ -173,7 +179,7 @@ export function SlotBooking({ servicesList = SERVICES_LIST }: SlotBookingProps) 
     data.append("phone", formData.phone);
     data.append("email", formData.email);
     data.append("location", fullAddress);
-    data.append("notes", formData.notes);
+    data.append("notes", finalNotes);
     data.append("company", ""); // Honeypot
     data.append("token", token);
     if (coordinates) {
@@ -192,6 +198,7 @@ export function SlotBooking({ servicesList = SERVICES_LIST }: SlotBookingProps) 
           `Hi Clean World Solutions! I have booked a service slot online:\n\n` +
           `• Name: ${formData.name}\n` +
           `• Service: ${formData.service}\n` +
+          (formData.quantity && unitInfo ? `• Quantity / Area: ${formData.quantity} ${unitInfo.unit}\n` : "") +
           `• Date: ${formData.bookingDate}\n` +
           `• Time: ${formData.timeSlot}\n` +
           `• Address: ${fullAddress}\n` +
@@ -267,11 +274,30 @@ export function SlotBooking({ servicesList = SERVICES_LIST }: SlotBookingProps) 
                   className="px-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-600 transition"
                 >
                   <option value="">-- Choose a Service --</option>
-                  {servicesList.map((srv) => (
+                  {displayServices.map((srv) => (
                     <option key={srv} value={srv}>{srv}</option>
                   ))}
                 </select>
               </div>
+
+              {/* Dynamic Quantity / Area Size Input */}
+              {unitInfo && (
+                <div className="flex flex-col space-y-2 animate-in fade-in slide-in-from-top-1 duration-200">
+                  <label className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
+                    {unitInfo.label} <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="number"
+                    min="1"
+                    required
+                    disabled={loading}
+                    value={formData.quantity || ""}
+                    onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
+                    placeholder={unitInfo.placeholder}
+                    className="px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-600 transition"
+                  />
+                </div>
+              )}
 
               {/* Date Selector */}
               <div className="flex flex-col space-y-2">

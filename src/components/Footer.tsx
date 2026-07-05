@@ -57,7 +57,17 @@ export function Footer() {
               Contact
             </h4>
             <ul className="space-y-2 text-sm text-slate-500">
-              <li>{FOOTER_CONTENT.address}</li>
+              <li className="space-y-1">
+                {Array.isArray(FOOTER_CONTENT.address) ? (
+                  FOOTER_CONTENT.address.map((line, idx) => (
+                    <span key={idx} className="block leading-relaxed">
+                      {line}
+                    </span>
+                  ))
+                ) : (
+                  <span>{FOOTER_CONTENT.address}</span>
+                )}
+              </li>
               <li>
                 Email:{" "}
                 <a
@@ -67,22 +77,48 @@ export function Footer() {
                   {FOOTER_CONTENT.email}
                 </a>
               </li>
-              <li className="space-y-1 mt-2">
-                <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Phone Lines:</span>
-                {FOOTER_CONTENT.phones ? (
-                  FOOTER_CONTENT.phones.map((ph: string) => (
-                    <a
-                      key={ph}
-                      href={`tel:${ph.replace(/\s+/g, "")}`}
-                      className="block hover:text-primary-600 transition-colors text-xs font-semibold"
-                    >
-                      {ph}
-                    </a>
-                  ))
+              <li className="space-y-1 mt-3">
+                <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">
+                  Contact Numbers:
+                </span>
+                {FOOTER_CONTENT.phones && FOOTER_CONTENT.phones.length >= 4 ? (
+                  <div className="text-xs font-semibold space-y-1">
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <a
+                        href={`tel:${FOOTER_CONTENT.phones[0].replace(/\s+/g, "")}`}
+                        className="hover:text-primary-600 transition-colors"
+                      >
+                        {FOOTER_CONTENT.phones[0]}
+                      </a>
+                      <span className="text-slate-300 select-none">|</span>
+                      <a
+                        href={`tel:${FOOTER_CONTENT.phones[1].replace(/\s+/g, "")}`}
+                        className="hover:text-primary-600 transition-colors"
+                      >
+                        {FOOTER_CONTENT.phones[1]}
+                      </a>
+                    </div>
+                    <div>
+                      <a
+                        href={`tel:${FOOTER_CONTENT.phones[2].replace(/\s+/g, "")}`}
+                        className="hover:text-primary-600 transition-colors"
+                      >
+                        {FOOTER_CONTENT.phones[2]}
+                      </a>
+                    </div>
+                    <div>
+                      <a
+                        href={`tel:${FOOTER_CONTENT.phones[3].replace(/\s+/g, "")}`}
+                        className="hover:text-primary-600 transition-colors"
+                      >
+                        {FOOTER_CONTENT.phones[3]}
+                      </a>
+                    </div>
+                  </div>
                 ) : (
                   <a
                     href={`tel:${FOOTER_CONTENT.phone}`}
-                    className="hover:text-primary-600 transition-colors"
+                    className="hover:text-primary-600 transition-colors text-xs font-semibold"
                   >
                     {FOOTER_CONTENT.phone}
                   </a>

@@ -37,7 +37,9 @@ export function FinalCta() {
 
               {/* Call Now Button */}
               <Button
-                href={`tel:${SITE_INFO.phone.replace(/\s+/g, "")}`}
+                onClick={() => {
+                  window.dispatchEvent(new CustomEvent("open-call-modal"));
+                }}
                 variant="outline"
                 color="white"
                 className="px-8 py-4 text-sm font-extrabold bg-white/10 hover:bg-white/20 text-white border-white/20"

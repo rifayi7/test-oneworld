@@ -4,12 +4,13 @@ import { Reveal } from "@/components/Reveal";
 import { MapPin, Globe } from "lucide-react";
 
 const FEATURED_DISTRICTS = [
-  { name: "Ernakulam", coverage: "Kochi, Aluva, Kakkanad, Tripunithura, Angamaly" },
-  { name: "Thiruvananthapuram", coverage: "Trivandrum City, Kazhakkoottam, Neyyattinkara" },
-  { name: "Kottayam", coverage: "Kottayam Town, Changanassery, Pala, Kanjirappally" },
-  { name: "Thrissur", coverage: "Thrissur City, Guruvayur, Chalakudy, Kunnamkulam" },
-  { name: "Kozhikode", coverage: "Calicut City, Vadakara, Koyilandy, Ramanattukara" },
-  { name: "Alappuzha", coverage: "Alappuzha Town, Cherthala, Kayamkulam, Harippad" }
+  { name: "Trivandrum", coverage: "Trivandrum City, Kazhakkoottam, Neyyattinkara, Attingal, Varkala" },
+  { name: "Kollam", coverage: "Kollam Town, Karunagappally, Kottarakkara, Punalur, Paravur" },
+  { name: "Alappuzha", coverage: "Alappuzha Town, Cherthala, Kayamkulam, Harippad, Mavelikkara" },
+  { name: "Pathanamthitta", coverage: "Thiruvalla Town, Adoor, Pathanamthitta Town, Kozhencherry, Mallappally" },
+  { name: "Kottayam", coverage: "Kottayam Town, Changanassery, Pala, Kanjirappally, Vaikom" },
+  { name: "Ernakulam", coverage: "Kochi, Aluva, Kakkanad, Tripunithura, Angamaly, Perumbavoor" },
+  { name: "Thrissur", coverage: "Thrissur City, Guruvayur, Chalakudy, Kunnamkulam, Kodungallur" }
 ];
 
 export function ServiceAreas() {

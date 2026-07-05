@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Service } from "@/db/queries";
+import { parsePriceString } from "@/lib/price-utils";
 import { Search, Sparkles, Shield, Wrench, Clock, Star } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -179,19 +180,27 @@ export function ServicesCatalog({ services }: ServicesCatalogProps) {
                       
                       {/* Price within card body */}
                       {(() => {
-                        const offerVal = parseInt((service.offer_price || service.price).replace(/[^0-9]/g, "")) || 0;
+                        const { mainPrice, note } = parsePriceString(service.offer_price || service.price);
+                        const offerVal = parseInt(mainPrice.replace(/[^0-9]/g, "")) || 0;
                         const mrpStr = service.mrp_price || `₹${(offerVal + 1000).toLocaleString("en-IN")}`;
                         return (
-                          <div className="flex items-center gap-2 pt-1 font-display">
-                            <span className="text-xs text-slate-400 line-through font-semibold">
-                              {mrpStr}
-                            </span>
-                            <span className="text-base font-black text-primary-600">
-                              {service.offer_price || service.price}
-                            </span>
-                            <span className="text-[10px] text-slate-400 font-bold font-sans">
-                              onwards
-                            </span>
+                          <div className="flex flex-col gap-1 pt-1 text-left">
+                            <div className="flex items-center gap-2 font-display">
+                              <span className="text-xs text-slate-400 line-through font-semibold">
+                                {mrpStr}
+                              </span>
+                              <span className="text-base font-black text-primary-600">
+                                {mainPrice}
+                              </span>
+                              <span className="text-[10px] text-slate-400 font-bold font-sans">
+                                onwards
+                              </span>
+                            </div>
+                            {note && (
+                              <div className="text-[10px] font-black text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-lg w-fit mt-1 select-none tracking-wide">
+                                {note}
+                              </div>
+                            )}
                           </div>
                         );
                       })()}
